@@ -1,0 +1,10 @@
+version: '2'
+services:
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_USER=mercadinho
+      - POSTGRES_PASSWORD=cjlt@123
+      - POSTGRES_DB=mercado 
+    ports:
+      - 5432:5432

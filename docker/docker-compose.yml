@@ -1,0 +1,15 @@
+version: '2'
+services:
+  
+  postgres:
+    extends:
+      file: postgres.yml
+      service: postgresql
+    container_name: postgresql
+  
+  registry:
+        extends:
+            file: jhipster-registry.yml
+            service: jhipster-registry
+        container_name: jhipster-registry
+
