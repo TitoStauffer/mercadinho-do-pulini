@@ -9,7 +9,8 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
-    url: jdbc:postgresql://localhost:5430/mercado
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/mercado
     username: mercadinho
     password: cjlt@123
   jackson:
