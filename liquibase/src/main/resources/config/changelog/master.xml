@@ -1,0 +1,7 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <include file="config/changelog/changelogs/20220309144500_create_table_permission.xml" relativeToChangelogFile="false"/>
+    <include file="config/changelog/changelogs/20220309144700_create_table_user.xml" relativeToChangelogFile="false"/>
+    <include file="config/changelog/changelogs/20220309145500_create_table_category.xml" relativeToChangelogFile="false"/>
+    <include file="config/changelog/changelogs/20220309145700_create_table_product.xml" relativeToChangelogFile="false"/>
+    <include file="config/changelog/changelogs/20220309150400_create_table_sale.xml" relativeToChangelogFile="false"/>
+</databaseChangeLog>

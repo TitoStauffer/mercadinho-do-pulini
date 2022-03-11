@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: TaskManager
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/mercado
+    username: mercadinho
+    password: cjlt@123
+  jackson:
+    date-format: dd-MM-yyyy
+    deserialization:
+      fail-on-unknown-properties: false
+
+  liquibase:
+    change-log: classpath:/config/changelog/master.xml
+server:
+  port: 8080

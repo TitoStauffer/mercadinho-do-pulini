@@ -1,0 +1,41 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20220309145700-01" author="joao.calixto">
+        <createTable tableName="product">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventoryWeight" type="numeric(6,2)"/>
+            <column name="inventoryAmount" type="int8"/>
+            <column name="barCode" type="varchar(13)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rfid" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purchasePrice" type="numeric(6,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salePrice" type="numeric(6,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="isCoffeeShop" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="int8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="product" baseColumnNames="category_id" constraintName="fk_product_category_id"
+                                 referencedTableName="category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
