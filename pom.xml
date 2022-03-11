@@ -12,5 +12,6 @@
     </parent>
     <modules>
         <module>liquibase</module>
+        <module>service</module>
     </modules>
 </project>
