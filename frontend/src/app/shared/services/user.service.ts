@@ -14,8 +14,13 @@ export class UserService {
         },
         {
             id: 2,
-            name: 'Rayane Merlo',
+            name: 'Zé do Pipo',
             cpf: '12312312313'
+        },
+        {
+            id: 3,
+            name: 'Manuel Pereira',
+            cpf: '12312312314'
         },
     ]
 
