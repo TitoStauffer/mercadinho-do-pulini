@@ -2,8 +2,8 @@ package com.ifes.service.service.mapper;
 
 import java.util.List;
 
-public interface EntityMapper<Entity, DTO> {
 
+public interface EntityMapper<Entity, DTO> {
   Entity toEntity(DTO dto);
 
   DTO toDTO(Entity entity);

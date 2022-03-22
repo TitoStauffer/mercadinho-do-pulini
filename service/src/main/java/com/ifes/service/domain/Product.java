@@ -27,33 +27,30 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "inventoryWeight")
+    @Column(name = "inventory_weight")
     private Double inventoryWeight;
 
-    @Column(name = "inventoryAmount")
-    private String inventoryAmount;
+    @Column(name = "inventory_amount")
+    private Integer inventoryAmount;
 
-    @Column(name = "barCode")
+    @Column(name = "bar_code")
     private String barCode;
 
     @Column(name = "rfid")
     private String rfid;
 
-    @Column(name = "purchasePrice")
+    @Column(name = "purchase_price")
     private Double purchasePrice;
 
-    @Column(name = "salePrice")
+    @Column(name = "sale_price")
     private Double salePrice;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "isCoffeeShop")
+    @Column(name = "is_coffee_shop")
     private boolean isCoffeeShop;
 
     @Column(name = "category_id")
     private Integer categoryId;
-
-
-
 }
