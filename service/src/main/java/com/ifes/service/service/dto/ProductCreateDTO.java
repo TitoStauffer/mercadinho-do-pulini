@@ -12,8 +12,8 @@ import java.io.Serializable;
 public class ProductCreateDTO implements Serializable {
     private Long id;
     private String description;
-//    private Double inventoryWeight;
-//    private String inventoryAmount;
+    private Double inventoryWeight;
+    private String inventoryAmount;
     private String barCode;
     private String rfid;
     private Double purchasePrice;

@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductModel} from '../../../models/product.model';
-import {CategoryModel} from '../../../models/category.model';
-import {FileUpload} from 'primeng';
+import {FileUpload, SelectItem} from 'primeng';
 import {ProductService} from '../../../shared/services/product.service';
 import {Router} from '@angular/router';
 
@@ -14,7 +13,7 @@ import {Router} from '@angular/router';
 export class ProductFormComponent implements OnInit {
 
     productForm: FormGroup;
-    categories: CategoryModel[];
+    categories: SelectItem[];
     @ViewChild('productImage') productImageElementRef: FileUpload;
 
     constructor(private productService: ProductService, private router: Router) {
@@ -39,12 +38,12 @@ export class ProductFormComponent implements OnInit {
     getCategories(): void {
         this.categories = [
             {
-                id: 1,
-                description: 'Massas'
+                value: 1,
+                label: 'Massas'
             },
             {
-                id: 2,
-                description: 'Destilados'
+                value: 2,
+                label: 'Destilados'
             }
         ];
     }
@@ -68,7 +67,7 @@ export class ProductFormComponent implements OnInit {
         }
         const image: string = await this.convertBase64(this.productImageElementRef.files[0]);
         const newProduct: ProductModel = {...this.productForm.value, image};
-        newProduct.categoryId = this.productForm.value.categoryId.id;
+        // newProduct.categoryId = this.productForm.value.categoryId.id;
         console.log(newProduct);
         this.productService.create(newProduct).subscribe(
             () => {
