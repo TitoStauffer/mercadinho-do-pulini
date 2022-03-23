@@ -1,0 +1,33 @@
+<div class="ui-g ui-fluid">
+    <p-fieldset legend="Detalhes do produto" class="ui-g-12">
+        <div class="ui-g-6 card">
+            <img [src]="getImage()" alt="" width="300rem">
+        </div>
+        <form [formGroup]="form" class="ui-g-6">
+            <div class="ui-g-12">
+                <span class="p-float-label">
+                    <input id="barCode" type="text" formControlName="barCode" pInputText>
+                    <label for="barCode">Código de Barras</label>
+                </span>
+            </div>
+            <div class="ui-g-12">
+                <span class="p-float-label">
+                    <input id="description" type="text" formControlName="description" pInputText>
+                    <label for="description">Descricção</label>
+                </span>
+            </div>
+            <div class="ui-g-12">
+                <span class="p-float-label">
+                    <input id="price" type="text" formControlName="price" pInputText>
+                    <label for="price">Preço Unitário</label>
+                </span>
+            </div>
+            <div class="ui-g-12">
+                <span class="p-float-label">
+                    <input id="totalPrice" type="text" formControlName="totalPrice" pInputText>
+                    <label for="totalPrice">Valor Total do Item</label>
+                </span>
+            </div>
+        </form>
+    </p-fieldset>
+</div>

@@ -1,0 +1,19 @@
+<div class="ui-g ui-fluid">
+    <form [formGroup]="form">
+        <div class="ui-g-12" [style]="{margin: '5px'}">
+            <span class="p-float-label">
+                <input id="barCode" type="text" formControlName="barCode" pInputText>
+                <label for="barCode">Código de Barras</label>
+            </span>
+            <span class="p-float-label">
+                <input id="amount" type="number" formControlName="amount" (change)="disableMeasure()" pInputText>
+                <label for="amount">Quantidade</label>
+            </span>
+            <span class="p-float-label">
+                <input id="weight" type="number" formControlName="weight" (change)="disableMeasure()" pInputText>
+                <label for="weight">Peso</label>
+            </span>
+            <button pButton label="Buscar" (click)="searchProduct()"></button>
+        </div>
+    </form>
+</div>
