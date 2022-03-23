@@ -1,0 +1,22 @@
+<input type="button" pButton value="Novo" routerLink="save"/>
+<p-table [columns]="cols" [value]="itens" responsiveLayout="scroll">
+    <ng-template pTemplate="header" let-columns>
+        <tr class="listProducts">
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr class="listProducts">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+            <td>
+                <input type="button" pButton value="Edit" routerLink="save" [queryParams]="{id: rowData.id}">
+                <input type="button" pButton value="Delete" (click)="delete(rowData)"/>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

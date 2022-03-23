@@ -1,0 +1,10 @@
+<div class="login">
+    <form [formGroup]="form" (ngSubmit)="login()">
+        <div class="form-group ls-login-user">
+            <label for="cpf">CPF</label>
+            <input class="form-control ls-login-bg-user input-lg" id="cpf" formControlName="cpf" type="text" aria-label="CPF" placeholder="cpf">
+        </div>
+        <input type="submit" value="Entrar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
+    </form>
+</div>
+

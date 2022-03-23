@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../shared/services/product.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-product-entry',
@@ -10,7 +10,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class ProductEntryComponent implements OnInit {
 
     productEntryForm: FormGroup;
-
+    products: any;
+    statuses: any;
 
     constructor(private productService: ProductService) {
         this.productEntryForm = new FormGroup({
