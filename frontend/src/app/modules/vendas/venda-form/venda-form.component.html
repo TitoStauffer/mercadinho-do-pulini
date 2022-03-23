@@ -1,0 +1,33 @@
+<div class="card ui-g ui-g-flex">
+    <div class="ui-card-title">
+        <h2> Realizar Venda</h2>
+    </div>
+    <div class="ui-g-12">
+        <div class="ui-g-12">
+            <button pButton [label]="'Informar Cartão'" (click)="readCard()"></button>
+        </div>
+        <p-fieldset *ngIf="principalUser" [legend]="'Informações do comprador'">
+            <span>
+                Titular da compra: {{principalUser.name}}
+            </span>
+            <p>Demais compradores:</p>
+            <span *ngFor="let other of nameOtherClients">
+                <p>{{other}}</p>
+            </span>
+        </p-fieldset>
+    </div>
+
+    <p-fieldset *ngIf="principalUser" [legend]="'Itens da venda'" class="ui-g-12">
+        <div class="ui-g-12">
+            <div class="ui-g-6">
+                <app-listar-itens-venda [itens]="itens" [totalValue]="totalPrice"></app-listar-itens-venda>
+            </div>
+            <div class="ui-g-6">
+                <app-details-product [product]="lastProduct"></app-details-product>
+            </div>
+        </div>
+        <button pButton label="Adicionar produto" (click)="addProduct()"></button>
+        <button pButton label="Finalizar compra" (click)="finishSale()"></button>
+    </p-fieldset>
+
+</div>

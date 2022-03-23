@@ -36,7 +36,7 @@ public class Sale implements Serializable {
     @Column(name = "weight")
     private Double weight;
 
-    @Column(name = "productPrice")
+    @Column(name = "product_price")
     private Double productPrice;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -46,8 +46,5 @@ public class Sale implements Serializable {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Product product;
-
-
-
 
 }
