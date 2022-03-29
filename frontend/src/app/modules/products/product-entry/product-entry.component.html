@@ -6,65 +6,29 @@
             <p-button icon="pi pi-search" (click)="findByBarCode()"></p-button>
         </div>
     </form>
+    <p-table [columns]="cols" [value]="products">
+        <ng-template pTemplate="header" let-columns>
+            <tr class="listProducts">
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr class="listProducts">
+                <td *ngFor="let col of columns">
+                    <img *ngIf="col.field == 'image'" [src]="rowData[col.field]" class="product-image">
+                    <span *ngIf="col.field !== 'image'">{{rowData[col.field]}}</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
-    <div class="card">
-        <h3>Produtos</h3>
-        <p-table [value]="products" dataKey="id" >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Nome</th>
-                    <th>Quantidade</th>
-                    <th>Preço</th>
-                    <th>Ações</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-                <tr>
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" formControlName="inventoryAmount">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{product.code}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="product.name" required>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{product.name}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{product.inventoryStatus}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="product.price">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{product.price | currency: 'USD'}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+    <h3>Quantidade</h3>
+
+    <div class="card" [formGroup]="productEntryForm">
+        <input type="text" pInputText formControlName="addAmount">
     </div>
 
-    <p-button label="Salvar Entrada" (click)="handleSubmitForm()"
-              [disabled]="productEntryForm.invalid"></p-button>
+    <p-button label="Salvar Entrada" (click)="handleSubmitForm()"></p-button>
 </p-card>

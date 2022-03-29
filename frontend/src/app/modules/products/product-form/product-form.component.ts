@@ -3,7 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductModel} from '../../../models/product.model';
 import {FileUpload, SelectItem} from 'primeng';
 import {ProductService} from '../../../shared/services/product.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-product-form',
@@ -13,11 +14,19 @@ import {Router} from '@angular/router';
 export class ProductFormComponent implements OnInit {
 
     productForm: FormGroup;
+    currentProductId: number;
     categories: SelectItem[];
+    currentAction: string;
+
     @ViewChild('productImage') productImageElementRef: FileUpload;
 
-    constructor(private productService: ProductService, private router: Router) {
+    constructor(
+        private route: ActivatedRoute,
+        private productService: ProductService,
+        private router: Router
+    ) {
         this.productForm = new FormGroup({
+            id: new FormControl(''),
             description: new FormControl('', [Validators.required]),
             inventoryAmount: new FormControl(''),
             inventoryWeight: new FormControl(''),
@@ -33,6 +42,31 @@ export class ProductFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCategories();
+        this.setAction();
+        if (this.currentAction === 'edit') {
+            this.loadProduct();
+        }
+    }
+
+    private setAction(): void {
+        if (this.route.snapshot.url[0].path === 'editar') {
+            this.currentAction = 'edit';
+        } else {
+            this.currentAction = 'new';
+        }
+    }
+
+    loadProduct(): void {
+        this.currentProductId = Number(this.route.snapshot.paramMap.get('productId'));
+        this.productService.readById(this.currentProductId).subscribe(
+            product => this.updateForm(product),
+            error => alert('Falha ao carregar o produto!')
+        );
+    }
+
+    updateForm(product: ProductModel): void {
+        this.productForm.patchValue(product);
+        this.productImageElementRef.files[0] = this.base64ToFile(product.image, product.description);
     }
 
     getCategories(): void {
@@ -48,7 +82,24 @@ export class ProductFormComponent implements OnInit {
         ];
     }
 
-    convertBase64(file: File): Promise<string> {
+    private base64ToFile(base64: string, filename: string): File {
+        const base64Substrings: string[] = base64.split(',');
+        const type = base64Substrings[0].match(/:(.*?);/)[1];
+        const blob = atob(base64Substrings[1]);
+        let size: number = blob.length;
+        const u8arr: Uint8Array = new Uint8Array(size);
+
+        while (size--) {
+            u8arr[size] = blob.charCodeAt(size);
+        }
+        const semdo: File = new File([u8arr], filename, {type});
+
+        // this.downbelow = window.URL.createObjectURL( u8arr );
+        // console.log(this.downbelow);
+        return semdo;
+    }
+
+    private convertBase64(file: File): Promise<string> {
         return new Promise(resolve => {
             const reader = new FileReader();
             reader.onload = event => {
@@ -67,18 +118,31 @@ export class ProductFormComponent implements OnInit {
         }
         const image: string = await this.convertBase64(this.productImageElementRef.files[0]);
         const newProduct: ProductModel = {...this.productForm.value, image};
-        // newProduct.categoryId = this.productForm.value.categoryId.id;
         console.log(newProduct);
-        this.productService.create(newProduct).subscribe(
-            () => {
-                alert('Produto criado com sucesso!');
-                this.router.navigateByUrl('produtos');
-            },
-            () => alert('Erro ao criar produto!')
-        );
+        if (this.currentAction === 'edit') {
+            this.productService.update(newProduct).subscribe(
+                () => {
+                    alert('Produto alterado com sucesso!');
+                    this.router.navigateByUrl('produtos');
+                },
+                () => alert('Erro ao alterar produto!')
+            );
+        } else {
+            this.productService.create(newProduct).subscribe(
+                () => {
+                    alert('Produto criado com sucesso!');
+                    this.router.navigateByUrl('produtos');
+                },
+                () => alert('Erro ao criar produto!')
+            );
+        }
     }
 
     get hasProductImage(): boolean {
         return this.productImageElementRef.files.length === 0;
+    }
+
+    teste(obj: any): void {
+        console.log(this.productImageElementRef);
     }
 }

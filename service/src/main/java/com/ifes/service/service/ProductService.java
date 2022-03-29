@@ -8,7 +8,6 @@ import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
+    private static final String MSG = "Product not found";
     private final ProductRepository productRepository;
     private final ProductCreateMapper productCreateMapper;
     private final ProductEditMapper productEditMapper;
-
-    private static final String MSG = "Product not found";
 
     public ProductCreateDTO save(ProductCreateDTO dto) {
         return productCreateMapper.toDTO(productRepository
@@ -65,5 +63,13 @@ public class ProductService {
         return productEditMapper.toDTO(productRepository
                 .findByRfid(rfid)
                 .orElseThrow(() -> new RuntimeException(MSG)));
+    }
+
+    public ProductEditDTO registerEntry(Long id, Integer amount, Double weight) {
+        Product current = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(MSG));
+        if (amount != null) current.setInventoryAmount(current.getInventoryAmount() + amount);
+        if (weight != null) current.setInventoryWeight(current.getInventoryWeight() + weight);
+        return update(productEditMapper.toDTO(current));
     }
 }

@@ -10,14 +10,16 @@ import {Router} from '@angular/router';
 })
 export class ProductListComponent implements OnInit {
     cols = [
+        // {header: 'Id', field: 'id'},
         {header: 'Descrição', field: 'description'},
         {header: 'Preço de Compra', field: 'purchasePrice'},
         {header: 'Preço de Venda', field: 'salePrice'},
         {header: 'Quantidade', field: 'inventoryAmount'},
-        {header: 'Peso', field: 'inventoryWeight'}
+        {header: 'Peso', field: 'inventoryWeight'},
+        {header: 'Imagem', field: 'image'}
     ];
 
-    products: ProductModel[];
+    products: ProductModel[] = [];
 
     constructor(private productService: ProductService, private router: Router) {
     }
@@ -30,5 +32,19 @@ export class ProductListComponent implements OnInit {
 
     handleClick(): void {
         this.router.navigateByUrl('produtos/novo');
+    }
+
+    delete(id: number): void {
+        this.productService.delete(id).subscribe(
+            () => {
+                alert('Producto excluido com sucesso!');
+                window.location.reload();
+            },
+            () => alert('Erro ao excluir produto!')
+        );
+    }
+
+    edit(id: number): void {
+        this.router.navigateByUrl(`produtos/editar/${id}`);
     }
 }

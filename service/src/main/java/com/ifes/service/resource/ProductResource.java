@@ -4,7 +4,6 @@ import com.ifes.service.service.ProductService;
 import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +33,15 @@ public class ProductResource {
     @PutMapping
     public ResponseEntity<ProductEditDTO> update(@RequestBody ProductEditDTO dto) {
         return ResponseEntity.ok(productService.update(dto));
+    }
+
+    @GetMapping("/entrada/{id}")
+    public ResponseEntity<ProductEditDTO> registerEntry(
+            @PathVariable Long id,
+            @RequestParam(name = "amount") Integer amount,
+            @RequestParam(name = "weight") Double weight
+    ) {
+        return ResponseEntity.ok(productService.registerEntry(id,amount,weight));
     }
 
     @DeleteMapping("/{id}")
