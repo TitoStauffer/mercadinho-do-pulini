@@ -1,0 +1,49 @@
+<p-card header="Novo Produto">
+    <form [formGroup]="productForm">
+        <div>
+            <p>Descrição</p>
+            <input type="text" pInputText formControlName="description"/>
+        </div>
+        <div>
+            <p>Peso em estoque</p>
+            <input type="number" pInputText formControlName="inventoryWeight"/>
+        </div>
+        <div>
+            <p>Quantidade em estoque</p>
+            <input type="number" pInputText formControlName="inventoryAmount"/>
+        </div>
+        <div>
+            <p>Código de barras</p>
+            <input type="text" pInputText formControlName="barCode"/>
+        </div>
+        <div>
+            <p>RFID</p>
+            <input type="text" pInputText formControlName="rfid"/>
+        </div>
+        <div>
+            <p>Preço de compra</p>
+            <p-inputNumber formControlName="purchasePrice" mode="currency" currency="BRL"
+                           locale="pt-BR"></p-inputNumber>
+        </div>
+        <div>
+            <p>Preço de venda</p>
+            <p-inputNumber formControlName="salePrice" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+        </div>
+        <div>
+            <p>Selecione a Categoria</p>
+            <p-dropdown [options]="categories" formControlName="categoryId"></p-dropdown>
+        </div>
+        <div>
+            <p-checkbox name="groupname" label="Produto da Cafeteria?" binary="true"
+                        formControlName="isCoffeeShop"></p-checkbox>
+        </div>
+        <div>
+            <p-fileUpload #productImage accept="image/*" [auto]="true"
+                          [fileLimit]="1"
+            ></p-fileUpload>
+        </div>
+    </form>
+
+    <p-button label="Novo Produto" (click)="handleSubmitForm()"
+              [disabled]="productForm.invalid || hasProductImage"></p-button>
+</p-card>
