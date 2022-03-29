@@ -5,15 +5,18 @@ import {DiarioErrosComponent} from "../components/diario-erros/diario-erros.comp
 import {LoginSuccessComponent} from "@nuvem/angular-base";
 import {UserListComponent} from "./user-list/user-list.component";
 import {UserComponent} from "./user/user.component";
-import {DashboardComponent} from "../components/dashboard/dashboard.component";
+import {ProductsModule} from "../modules/products/products.module";
+import {VendasModule} from "../modules/vendas/vendas.module";
 
 
 const routes: Routes = [
   {
-    path: '', component: DashboardComponent, children: [
+    path: '', component: AdminComponent, children: [
           { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
           { path: 'login-success', component: LoginSuccessComponent },
           { path: 'user',  component: UserListComponent },
+          { path: 'venda',  loadChildren: () => VendasModule },
+          { path: 'produto',  loadChildren: () => ProductsModule },
           { path: 'user/save',  component: UserComponent },
     ]
   }
