@@ -31,7 +31,7 @@ public class Product implements Serializable {
     private Double inventoryWeight;
 
     @Column(name = "inventory_amount")
-    private String inventoryAmount;
+    private Integer inventoryAmount;
 
     @Column(name = "bar_code")
     private String barCode;
@@ -53,7 +53,4 @@ public class Product implements Serializable {
 
     @Column(name = "category_id")
     private Integer categoryId;
-
-
-
 }

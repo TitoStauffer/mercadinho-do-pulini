@@ -42,7 +42,7 @@ export class ReadProductComponent implements OnInit {
             return;
         }
         this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
-        this.fechar.emit(this.setMeasureProduct(product));
+        // this.fechar.emit(this.setMeasureProduct(product));
     }
 
     setMeasureProduct(product: ProdutoVendaModel) {

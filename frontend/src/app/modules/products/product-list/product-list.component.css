@@ -1,0 +1,16 @@
+th {
+    background-color: #e3c77b !important;
+    color: #000000;
+}
+
+td {
+    background-color: #f0d58b !important;
+    color: #000000;
+}
+
+.button-container {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
