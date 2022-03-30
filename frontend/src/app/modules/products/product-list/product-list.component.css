@@ -14,3 +14,7 @@ td {
     align-items: center;
     justify-content: center;
 }
+
+.product-image {
+    width: 100px;
+}

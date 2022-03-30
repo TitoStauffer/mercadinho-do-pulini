@@ -20,11 +20,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
+    private static final String MSG = "Product not found";
     private final ProductRepository productRepository;
     private final ProductCreateMapper productCreateMapper;
     private final ProductEditMapper productEditMapper;
-
-    private static final String MSG = "Product not found";
 
     public ProductCreateDTO save(ProductCreateDTO dto) {
         return productCreateMapper.toDTO(productRepository
@@ -91,5 +90,13 @@ public class ProductService {
             }
         });
         return ids;
+    }
+
+    public ProductEditDTO registerEntry(Long id, Integer amount, Double weight) {
+        Product current = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(MSG));
+        if (amount != null) current.setInventoryAmount(current.getInventoryAmount() + amount);
+        if (weight != null) current.setInventoryWeight(current.getInventoryWeight() + weight);
+        return update(productEditMapper.toDTO(current));
     }
 }

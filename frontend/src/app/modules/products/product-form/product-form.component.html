@@ -38,12 +38,18 @@
                         formControlName="isCoffeeShop"></p-checkbox>
         </div>
         <div>
-            <p-fileUpload #productImage accept="image/*" [auto]="true"
+            <p-fileUpload #productImage accept="image/*" [auto]="true" multiple="false" (onSelect)="teste($event)"
                           [fileLimit]="1"
             ></p-fileUpload>
         </div>
     </form>
 
-    <p-button label="Novo Produto" (click)="handleSubmitForm()"
-              [disabled]="productForm.invalid || hasProductImage"></p-button>
+    <div *ngIf="currentAction == 'edit'">
+        <p-button label="Alterar Produto" (click)="handleSubmitForm()"
+                  [disabled]="productForm.invalid || hasProductImage"></p-button>
+    </div>
+    <div *ngIf="currentAction == 'new'">
+        <p-button label="Novo Produto" (click)="handleSubmitForm()"
+                  [disabled]="productForm.invalid || hasProductImage"></p-button>
+    </div>
 </p-card>

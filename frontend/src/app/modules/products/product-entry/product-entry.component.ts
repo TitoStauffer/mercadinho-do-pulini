@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../shared/services/product.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ProductModel} from '../../../models/product.model';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-product-entry',
@@ -9,22 +11,26 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class ProductEntryComponent implements OnInit {
 
+
+    cols = [
+        // {header: 'Id', field: 'id'},
+        {header: 'Descrição', field: 'description'},
+        {header: 'Preço de Compra', field: 'purchasePrice'},
+        {header: 'Preço de Venda', field: 'salePrice'},
+        {header: 'Quantidade', field: 'inventoryAmount'},
+        {header: 'Peso', field: 'inventoryWeight'},
+        {header: 'Imagem', field: 'image'}
+    ];
+
     productEntryForm: FormGroup;
-    products: any;
+    products: ProductModel[] = [];
     statuses: any;
 
-    constructor(private productService: ProductService) {
+    constructor(private productService: ProductService,
+                private router: Router) {
         this.productEntryForm = new FormGroup({
-            description: new FormControl(''),
-            inventoryAmount: new FormControl(''),
-            inventoryWeight: new FormControl(''),
             barCode: new FormControl(''),
-            rfid: new FormControl(''),
-            purchasePrice: new FormControl(''),
-            salePrice: new FormControl(''),
-            isCoffeeShop: new FormControl(),
-            categoryId: new FormControl(''),
-            image: new FormControl(''),
+            addAmount: new FormControl('')
         });
     }
 
@@ -32,11 +38,21 @@ export class ProductEntryComponent implements OnInit {
     }
 
     findByBarCode(): void {
-        console.log('teste');
-        // this.productService.findByBarCode('sd');
+        this.productService.findByBarCode(this.productEntryForm.value.barCode).subscribe(
+            product => {
+                this.products[0] = product;
+            },
+            () => alert('Produto não encontrado')
+        );
     }
 
     handleSubmitForm(): void {
-        console.log('submit');
+        this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount, this.productEntryForm.value.addAmount).subscribe(
+            () => {
+                alert('Produtos registrados com sucesso!');
+                this.router.navigateByUrl('produtos');
+            },
+            () => alert('Erro ao criar produto!')
+        );
     }
 }

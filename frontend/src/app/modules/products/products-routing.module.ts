@@ -15,6 +15,10 @@ const routes: Routes = [
         component: ProductFormComponent
     },
     {
+        path: 'editar/:productId',
+        component: ProductFormComponent
+    },
+    {
         path: 'entrada',
         component: ProductEntryComponent
     }
