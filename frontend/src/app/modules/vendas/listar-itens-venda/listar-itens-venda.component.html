@@ -4,12 +4,20 @@
             <th *ngFor="let col of columns">
                 {{col.header}}
             </th>
+            <th>
+                Ações
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr class="listProducts">
             <td *ngFor="let col of columns">
                 {{rowData[col.field]}}
+            </td>
+            <td>
+                <span>
+                    <button pButton label="Remover" (click)="removerItem(rowData)"></button>
+                </span>
             </td>
         </tr>
     </ng-template>

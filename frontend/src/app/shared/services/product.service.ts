@@ -72,6 +72,10 @@ export class ProductService {
         return this.http.get<ProductModel>(`${this.baseUrl}/bar-code?barCode=${barCode}`);
     }
 
+    findByBarCodeMock(barCode: string) {
+        return this.listProducts.find(produto => produto.barCode === barCode);
+    }
+
     findByRfid(rfid: string): Observable<ProductModel> {
         return this.http.get<ProductModel>(`${this.baseUrl}/rfid?rfid=${rfid}`);
     }

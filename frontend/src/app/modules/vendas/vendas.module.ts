@@ -10,7 +10,10 @@ import {UsersModule} from "../users/users.module";
 
 
 @NgModule({
-  declarations: [VendaFormComponent, ListarItensVendaComponent],
+  declarations: [
+      VendaFormComponent,
+      ListarItensVendaComponent
+  ],
   imports: [
     CommonModule,
     VendasRoutingModule,

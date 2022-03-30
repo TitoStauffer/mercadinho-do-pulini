@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Column} from "@nuvem/primeng-components";
 import {ProdutoVendaModel} from "../../../models/produto-venda.model";
 
@@ -20,10 +20,19 @@ export class ListarItensVendaComponent implements OnInit {
     @Input() totalValue: number;
 
     @Input() itens: ProdutoVendaModel[] = [];
+    @Output() itemRemovido = new EventEmitter();
 
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    removerItem(prod) {
+        const index = this.itens.findIndex(produto => produto.id === prod.id);
+        if(index !== -1) {
+            this.itens.splice(index, 1);
+        }
+        this.itemRemovido.emit();
     }
 
 }

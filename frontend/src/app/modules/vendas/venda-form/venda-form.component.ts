@@ -61,9 +61,13 @@ export class VendaFormComponent implements OnInit {
               this.itens.push(res);
               this.lastProduct = res;
               this.detaislProduct.onLoadEntity(res);
-              this.totalPrice = this.sumTotal();
+              this.setPrice();
           }
       })
+  }
+
+  setPrice() {
+      this.totalPrice = this.sumTotal();
   }
 
   sumTotal() {

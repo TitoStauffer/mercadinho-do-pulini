@@ -20,7 +20,7 @@
     <p-fieldset *ngIf="principalUser" [legend]="'Itens da venda'" class="ui-g-12">
         <div class="ui-g-12">
             <div class="ui-g-6">
-                <app-listar-itens-venda [itens]="itens" [totalValue]="totalPrice"></app-listar-itens-venda>
+                <app-listar-itens-venda [itens]="itens" [totalValue]="totalPrice" (itemRemovido)="setPrice()"></app-listar-itens-venda>
             </div>
             <div class="ui-g-6">
                 <app-details-product [product]="lastProduct"></app-details-product>

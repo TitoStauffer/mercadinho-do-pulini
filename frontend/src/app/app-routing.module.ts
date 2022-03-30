@@ -15,8 +15,8 @@ const routes: Routes = [
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
     { path: 'login-success', component: LoginSuccessComponent },
-    { path: 'vendas', loadChildren: () => VendasModule },
-    { path: 'produtos', loadChildren: () => ProductsModule }
+    // { path: 'vendas', loadChildren: () => VendasModule },
+    // { path: 'produtos', loadChildren: () => ProductsModule }
 ];
 
 @NgModule({
