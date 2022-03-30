@@ -4,11 +4,11 @@ import com.ifes.service.domain.Product;
 import com.ifes.service.repository.ProductRepository;
 import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
+import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +32,9 @@ public class ProductService {
     }
 
     public ProductEditDTO update(ProductEditDTO dto) {
-        Product existent = productRepository.findById(dto.getId())
+        var existent = productRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException(MSG));
-        Product product = productEditMapper.toEntity(dto);
+        var product = productEditMapper.toEntity(dto);
         BeanUtils.copyProperties(product, existent, "id");
         productRepository.save(existent);
         return productEditMapper.toDTO(existent);
@@ -65,5 +65,31 @@ public class ProductService {
         return productEditMapper.toDTO(productRepository
                 .findByRfid(rfid)
                 .orElseThrow(() -> new RuntimeException(MSG)));
+    }
+
+    public void stockOff(List<ProductSaleDTO> products){
+        List<Long> productsIds = getProductsIds(products);
+        List<Product> stocksProducts = productRepository.findAllById(productsIds);
+        setStockOff(stocksProducts, products);
+    }
+
+    private void setStockOff(List<Product> stocksProducts, List<ProductSaleDTO> products) {
+        stocksProducts.forEach(stockProduct -> products.forEach( product -> {
+            if(product.getId().equals(stockProduct.getId())){
+                stockProduct.setInventoryAmount(stockProduct.getInventoryAmount() - product.getAmount());
+                stockProduct.setInventoryWeight(stockProduct.getInventoryWeight() - product.getWeight());
+            }
+        }));
+        productRepository.saveAllAndFlush(stocksProducts);
+    }
+
+    private List<Long> getProductsIds(List<ProductSaleDTO> products) {
+        List<Long> ids = new ArrayList<>();
+        products.forEach(product -> {
+            if(!ids.contains(product.getId())){
+                ids.add(product.getId());
+            }
+        });
+        return ids;
     }
 }
