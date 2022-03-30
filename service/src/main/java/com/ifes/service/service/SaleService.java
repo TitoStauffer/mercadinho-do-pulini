@@ -30,6 +30,6 @@ public class SaleService {
     }
 
     public List<SaleDTO> findAllCoffeeSaleById(Long id) {
-        return saleMapper.toDTO(saleRepository.findAllByProductisCoffeeShopAndUserId(true, id));
+        return saleMapper.toDTO(saleRepository.findAllByProductIsCoffeeShopAndUserId(true, id));
     }
 }

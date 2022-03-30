@@ -11,5 +11,5 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     List<Sale> findAllByUserId(Long id);
 
-    List<Sale> findAllByProductisCoffeeShopAndUserId(boolean isCoffee, Long userId);
+    List<Sale> findAllByProductIsCoffeeShopAndUserId(boolean isCoffee, Long userId);
 }
