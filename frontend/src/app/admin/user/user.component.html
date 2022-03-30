@@ -1,20 +1,21 @@
 <div class="login">
     <form [formGroup]="form" (ngSubmit)="save()">
         <div class="form-group">
-            <div>
+            <div style="padding: 12px">
                 <label for="name">Nome </label>
                 <input pInputText class="form-control input input-lg" id="name" formControlName="name" type="text" placeholder="Nome">
             </div>
-            <div>
+            <div style="padding: 12px">
                 <label for="cpf">CPF </label>
                 <input pInputText class="form-control input input-lg" id="cpf" formControlName="cpf" type="text" placeholder="cpf">
             </div>
-            <div>
-                <label for="cpf">Perfil </label>
-                <input pInputText class="form-control input input-lg" id="profile" formControlName="profile" type="text" placeholder="Perfil">
+            <div style="padding: 12px">
+                <p-dropdown [options]="perfils" formControlName="profile" placeholder="Selecione um perfil" [showClear]="true"></p-dropdown>
             </div>
         </div>
-        <input pButton type="submit" value="Salvar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
+        <div style="padding: 12px">
+            <input pButton type="submit" value="Salvar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
+        </div>
     </form>
 </div>
 

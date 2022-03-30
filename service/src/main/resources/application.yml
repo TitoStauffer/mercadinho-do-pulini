@@ -11,8 +11,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/mercado
-    username: postgres
-    password: 3312
+    username: mercadinho
+    password: cjlt@123
   jackson:
     date-format: dd-MM-yyyy
     deserialization:
@@ -20,3 +20,6 @@ spring:
 
 server:
   port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always

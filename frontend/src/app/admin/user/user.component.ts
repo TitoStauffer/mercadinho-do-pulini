@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import {UserService} from "../../services/user.service";
-import {UserModel} from "../models/userModel";
+import {PerfilEnum} from "../../shared/Utils/PerfilEnum";
+import {SelectItem} from "primeng";
 
 @Component({
   selector: 'app-user',
@@ -13,6 +14,14 @@ export class UserComponent implements OnInit {
 
     form: FormGroup;
     submit = false;
+    perfils: SelectItem[] = [
+        PerfilEnum.Admin,
+        PerfilEnum.Cliente,
+        PerfilEnum.Caixa,
+        PerfilEnum.Cafeteria,
+        PerfilEnum.Estoque,
+        PerfilEnum.Recepcao,
+    ];
 
     constructor(
     private fb: FormBuilder,

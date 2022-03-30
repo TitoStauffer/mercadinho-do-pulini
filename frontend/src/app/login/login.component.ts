@@ -12,7 +12,6 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit {
 
     form: FormGroup;
-    submit = false;
 
     constructor(
         private fb: FormBuilder,
@@ -32,14 +31,11 @@ export class LoginComponent implements OnInit {
     }
 
     login(){
-        this.submit = true;
-
         this.loginService.login(this.form.value.cpf).subscribe( user => {
           localStorage.setItem('token', user.cpf);
           localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['../admin']);
         }, erro => {
-            this.submit = false;
             this.notification.addErrorMessage(erro.error.message);
             localStorage.clear();
         } );

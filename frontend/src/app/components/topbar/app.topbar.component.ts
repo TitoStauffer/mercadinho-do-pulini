@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AppComponent } from '../../app.component';
 import { Authentication, User } from '@nuvem/angular-base';
 import {AdminComponent} from "../../admin/admin.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-topbar',
@@ -9,7 +9,7 @@ import {AdminComponent} from "../../admin/admin.component";
 })
 export class AppTopbarComponent {
 
-    constructor(public app: AdminComponent, private readonly _authentication: Authentication<User>) {
+    constructor(public app: AdminComponent, private readonly _authentication: Authentication<User>,private router: Router) {
     }
 
     get usuario() {
@@ -18,5 +18,11 @@ export class AppTopbarComponent {
 
     isAuthenticated() {
         return this._authentication.isAuthenticated();
+    }
+
+    logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.router.navigate(['../login']);
     }
 }

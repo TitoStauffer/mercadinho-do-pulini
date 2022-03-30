@@ -35,6 +35,9 @@ public class UserService {
     }
 
     public UserDTO findByCPF(String cpf) {
+        if (cpf.length() != 11) {
+            throw new RegraNegocioException("Usuario não encontrado");
+        }
         User user = userRepository.findByCpf(cpf);
 
         if (Objects.isNull(user)) {
