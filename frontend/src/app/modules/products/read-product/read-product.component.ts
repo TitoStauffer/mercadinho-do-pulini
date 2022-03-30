@@ -36,14 +36,16 @@ export class ReadProductComponent implements OnInit {
             return;
         }
 
-        const product = this.productService.findByBarCodeMock(this.form.controls['barCode'].value);
-        if(!product) {
-            this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
-            return;
+        this.productService.findByBarCode(this.form.controls['barCode'].value)
+            .subscribe(prod => {
+                this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
+                this.fechar.emit(this.setMeasureProduct({...prod, price: prod.salePrice}));
+            },
+            error => {
+                this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
+                return;
+            });
         }
-        this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
-        this.fechar.emit(this.setMeasureProduct(product));
-    }
 
     setMeasureProduct(product: ProdutoVendaModel) {
         product.weight = this.form.controls['weight'].value;
