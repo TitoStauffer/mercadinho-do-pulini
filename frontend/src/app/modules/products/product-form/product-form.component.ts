@@ -94,8 +94,6 @@ export class ProductFormComponent implements OnInit {
         }
         const semdo: File = new File([u8arr], filename, {type});
 
-        // this.downbelow = window.URL.createObjectURL( u8arr );
-        // console.log(this.downbelow);
         return semdo;
     }
 
@@ -123,7 +121,7 @@ export class ProductFormComponent implements OnInit {
             this.productService.update(newProduct).subscribe(
                 () => {
                     alert('Produto alterado com sucesso!');
-                    this.router.navigateByUrl('produtos');
+                    this.router.navigateByUrl('admin/produtos');
                 },
                 () => alert('Erro ao alterar produto!')
             );
@@ -131,7 +129,7 @@ export class ProductFormComponent implements OnInit {
             this.productService.create(newProduct).subscribe(
                 () => {
                     alert('Produto criado com sucesso!');
-                    this.router.navigateByUrl('produtos');
+                    this.router.navigateByUrl('admin/produtos');
                 },
                 () => alert('Erro ao criar produto!')
             );
