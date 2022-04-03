@@ -14,8 +14,7 @@ export class ProductListComponent implements OnInit {
         {header: 'Descrição', field: 'description'},
         {header: 'Preço de Compra', field: 'purchasePrice'},
         {header: 'Preço de Venda', field: 'salePrice'},
-        {header: 'Quantidade', field: 'inventoryAmount'},
-        {header: 'Peso', field: 'inventoryWeight'},
+        {header: 'Código de barras', field: 'barCode'},
         {header: 'Imagem', field: 'image'}
     ];
 

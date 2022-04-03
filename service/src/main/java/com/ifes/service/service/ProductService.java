@@ -65,11 +65,11 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException(MSG)));
     }
 
-    public ProductEditDTO registerEntry(Long id, Integer amount, Double weight) {
+    public ProductEditDTO registerEntry(Long id, double amount) {
         Product current = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(MSG));
-        if (amount != null) current.setInventoryAmount(current.getInventoryAmount() + amount);
-        if (weight != null) current.setInventoryWeight(current.getInventoryWeight() + weight);
+        if (current.getInventoryAmount() != null) current.setInventoryAmount(current.getInventoryAmount() + (int) amount);
+        if (current.getInventoryWeight() != null) current.setInventoryWeight(current.getInventoryWeight() + amount);
         return update(productEditMapper.toDTO(current));
     }
 }
