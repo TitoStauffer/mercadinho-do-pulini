@@ -3,6 +3,7 @@ package com.ifes.service.resource;
 import com.ifes.service.service.ProductService;
 import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
+import com.ifes.service.service.dto.ProductSaleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +68,10 @@ public class ProductResource {
     @GetMapping("/rfid")
     public ResponseEntity<ProductEditDTO> getByRfid(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfid(rfid));
+    }
+
+    @GetMapping("/rfid/sale")
+    public ResponseEntity<ProductSaleDTO> getByRfidForSale(@RequestParam(name = "rfid") String rfid) {
+        return ResponseEntity.ok(productService.getByRfidForSale(rfid));
     }
 }
