@@ -5,6 +5,7 @@ import {DialogService} from "primeng";
 import {SearchUserModalComponent} from "../../users/search-user/search-user-modal.component";
 import {VendaModel} from "../../../models/venda.model";
 import {SaleService} from "../../../shared/services/sale.service";
+import {ProductService} from "../../../shared/services/product.service";
 
 @Component({
   selector: 'app-venda-cafeteria-form',
@@ -23,10 +24,19 @@ export class VendaCafeteriaFormComponent implements OnInit {
 
     constructor(
         private dialogService: DialogService,
-        private saleService: SaleService
+        private saleService: SaleService,
+        private productService: ProductService
     ) { }
 
     ngOnInit(): void {
+        this.loadProducts();
+    }
+
+    loadProducts() {
+        this.productService.findAllByCoffee()
+            .subscribe(res => {
+                this.itens = res;
+            })
     }
 
     getImage(item) {

@@ -99,4 +99,8 @@ public class ProductService {
         if (weight != null) current.setInventoryWeight(current.getInventoryWeight() + weight);
         return update(productEditMapper.toDTO(current));
     }
+
+    public List<ProductSaleDTO> findAllByIsCoffe() {
+        return productRepository.findAllByIsCoffe();
+    }
 }

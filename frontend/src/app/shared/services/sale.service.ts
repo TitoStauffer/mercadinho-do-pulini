@@ -16,4 +16,8 @@ export class SaleService {
     save(sale: VendaModel): Observable<any> {
         return this.http.post(this.resource, sale);
     }
+
+    saveCoffe(sale: VendaModel): Observable<any> {
+        return this.http.post(this.resource + '/cafeteria', sale);
+    }
 }

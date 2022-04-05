@@ -79,4 +79,8 @@ export class ProductService {
     registerEntry(id: number, amount: number, weight: number): Observable<ProductModel> {
         return this.http.get<ProductModel>(`${this.baseUrl}/entrada/${id}?amount=${amount}&weight=${weight}`);
     }
+
+    findAllByCoffee(): Observable<ProdutoVendaModel[]> {
+        return this.http.get<ProdutoVendaModel[]>(this.baseUrl + '/cafeteria');
+    }
 }

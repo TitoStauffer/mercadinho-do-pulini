@@ -22,7 +22,12 @@ public class SaleResource {
 
     @PostMapping
     public void finalizeSale(@RequestBody SaleDTO sale){
-        this.saleService.finishSale(sale);
+        this.saleService.finishSale(sale, false);
+    }
+
+    @PostMapping("/cafeteria")
+    public void finalizeSaleCoffee(@RequestBody SaleDTO sale){
+        this.saleService.finishSale(sale, true);
     }
 
     @GetMapping("/{id}")

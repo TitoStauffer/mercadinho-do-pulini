@@ -29,11 +29,12 @@ public class SaleService {
     private final ProductSaleMapper productSaleMapper;
 
     private static final String FINISHED = "Finalizado";
+    private static final String AWAITING = "Pendente";
 
-    public void finishSale(SaleDTO sale){
+    public void finishSale(SaleDTO sale, Boolean isCoffee){
         var finishedSale = saleMapper.toEntity(sale);
         productService.stockOff(sale.getProducts());
-        finishedSale.setStatus(FINISHED);
+        finishedSale.setStatus(isCoffee ? FINISHED : AWAITING);
         saleRepository.save(finishedSale);
     }
 

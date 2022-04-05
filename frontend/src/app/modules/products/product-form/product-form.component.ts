@@ -123,7 +123,7 @@ export class ProductFormComponent implements OnInit {
             this.productService.update(newProduct).subscribe(
                 () => {
                     alert('Produto alterado com sucesso!');
-                    this.router.navigateByUrl('produtos');
+                    this.router.navigateByUrl('produto');
                 },
                 () => alert('Erro ao alterar produto!')
             );
@@ -131,7 +131,7 @@ export class ProductFormComponent implements OnInit {
             this.productService.create(newProduct).subscribe(
                 () => {
                     alert('Produto criado com sucesso!');
-                    this.router.navigateByUrl('produtos');
+                    this.router.navigateByUrl('produto');
                 },
                 () => alert('Erro ao criar produto!')
             );

@@ -19,4 +19,12 @@ public class ProductSaleDTO implements Serializable {
     private String barCode;
     private String image;
     private Double totalPrice;
+
+    public ProductSaleDTO(Long id, String description, Double price, String barCode, String image) {
+        this.id = id;
+        this.description = description;
+        this.price = price;
+        this.barCode = barCode;
+        this.image = image;
+    }
 }

@@ -31,7 +31,7 @@ export class ProductListComponent implements OnInit {
     }
 
     handleClick(): void {
-        this.router.navigateByUrl('produtos/novo');
+        this.router.navigateByUrl('admin/produto/novo');
     }
 
     delete(id: number): void {
@@ -45,6 +45,6 @@ export class ProductListComponent implements OnInit {
     }
 
     edit(id: number): void {
-        this.router.navigateByUrl(`produtos/editar/${id}`);
+        this.router.navigateByUrl(`produto/editar/${id}`);
     }
 }

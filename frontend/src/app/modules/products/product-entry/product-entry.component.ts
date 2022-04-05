@@ -50,7 +50,7 @@ export class ProductEntryComponent implements OnInit {
         this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount, this.productEntryForm.value.addAmount).subscribe(
             () => {
                 alert('Produtos registrados com sucesso!');
-                this.router.navigateByUrl('produtos');
+                this.router.navigateByUrl('produto');
             },
             () => alert('Erro ao criar produto!')
         );
