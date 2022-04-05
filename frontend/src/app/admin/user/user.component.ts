@@ -15,12 +15,12 @@ export class UserComponent implements OnInit {
     form: FormGroup;
     submit = false;
     perfils: SelectItem[] = [
-        PerfilEnum.Admin,
-        PerfilEnum.Cliente,
-        PerfilEnum.Caixa,
-        PerfilEnum.Cafeteria,
-        PerfilEnum.Estoque,
-        PerfilEnum.Recepcao,
+        {label: PerfilEnum.Admin, value: PerfilEnum.Admin },
+        {label: PerfilEnum.Cliente, value: PerfilEnum.Cliente },
+        {label: PerfilEnum.Caixa, value: PerfilEnum.Caixa },
+        {label: PerfilEnum.Cafeteria, value: PerfilEnum.Cafeteria },
+        {label: PerfilEnum.Estoque, value: PerfilEnum.Estoque },
+        {label: PerfilEnum.Recepcao, value: PerfilEnum.Recepcao },
     ];
 
     constructor(
