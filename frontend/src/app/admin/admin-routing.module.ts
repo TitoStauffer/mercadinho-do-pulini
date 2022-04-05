@@ -7,17 +7,20 @@ import {UserListComponent} from "./user-list/user-list.component";
 import {UserComponent} from "./user/user.component";
 import {ProductsModule} from "../modules/products/products.module";
 import {VendasModule} from "../modules/vendas/vendas.module";
+import {PermissionGuard} from "../guard/permission.guard";
+import {PermissionListComponent} from "./permission-list/permission-list.component";
 
 
 const routes: Routes = [
   {
     path: '', component: AdminComponent, children: [
-          { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
+          { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} , canActivate: [PermissionGuard]},
           { path: 'login-success', component: LoginSuccessComponent },
-          { path: 'user',  component: UserListComponent },
-          { path: 'venda',  loadChildren: () => VendasModule },
-          { path: 'produto',  loadChildren: () => ProductsModule },
-          { path: 'user/save',  component: UserComponent },
+          { path: 'user',  component: UserListComponent, canActivate: [PermissionGuard] },
+          { path: 'permissao',  component: PermissionListComponent, canActivate: [PermissionGuard] },
+          { path: 'venda',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
+          { path: 'produto',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
+          { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
     ]
   }
 ];

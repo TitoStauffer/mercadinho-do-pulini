@@ -12,6 +12,7 @@ import {UserComponent} from "./user/user.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {UserListComponent} from "./user-list/user-list.component";
 import {DashboardComponent} from "../components/dashboard/dashboard.component";
+import {PermissionListComponent} from "./permission-list/permission-list.component";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {DashboardComponent} from "../components/dashboard/dashboard.component";
     AppFooterComponent,
     UserComponent,
     UserListComponent,
-    DashboardComponent
+    DashboardComponent,
+    PermissionListComponent
   ],
     imports: [
         CommonModule,
