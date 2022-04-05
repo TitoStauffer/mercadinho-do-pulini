@@ -7,10 +7,11 @@ import {SharedModule} from "../../shared/shared.module";
 import { ListarItensVendaComponent } from './listar-itens-venda/listar-itens-venda.component';
 import {ProductsModule} from "../products/products.module";
 import {UsersModule} from "../users/users.module";
+import { VendaCafeteriaFormComponent } from './venda-cafeteria-form/venda-cafeteria-form.component';
 
 
 @NgModule({
-  declarations: [VendaFormComponent, ListarItensVendaComponent],
+  declarations: [VendaFormComponent, ListarItensVendaComponent, VendaCafeteriaFormComponent],
   imports: [
     CommonModule,
     VendasRoutingModule,

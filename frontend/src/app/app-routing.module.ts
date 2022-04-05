@@ -14,9 +14,7 @@ const routes: Routes = [
     { path: 'admin', loadChildren: () => AdminModule, canActivate: [AuthGuard]},
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
-    { path: 'login-success', component: LoginSuccessComponent },
-    { path: 'vendas', loadChildren: () => VendasModule },
-    { path: 'produtos', loadChildren: () => ProductsModule }
+    { path: 'login-success', component: LoginSuccessComponent }
 ];
 
 @NgModule({
