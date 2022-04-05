@@ -43,7 +43,7 @@ export class VendaCafeteriaFormComponent implements OnInit {
         if(!item.image) {
             return 'assets/images/image_default.jpg';
         }
-        return 'data:image/png;base64,' + item.image;
+        return item.image;
     }
 
     getTotalValue() {

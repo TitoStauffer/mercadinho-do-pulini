@@ -47,10 +47,9 @@ public class ProductResource {
     @GetMapping("/entrada/{id}")
     public ResponseEntity<ProductEditDTO> registerEntry(
             @PathVariable Long id,
-            @RequestParam(name = "amount") Integer amount,
-            @RequestParam(name = "weight") Double weight
+            @RequestParam(name = "amount") double amount
     ) {
-        return ResponseEntity.ok(productService.registerEntry(id,amount,weight));
+        return ResponseEntity.ok(productService.registerEntry(id,amount));
     }
 
     @DeleteMapping("/{id}")
@@ -77,6 +76,11 @@ public class ProductResource {
     @GetMapping("/rfid")
     public ResponseEntity<ProductEditDTO> getByRfid(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfid(rfid));
+    }
+
+    @GetMapping("/rfid/sale")
+    public ResponseEntity<ProductSaleDTO> getByRfidForSale(@RequestParam(name = "rfid") String rfid) {
+        return ResponseEntity.ok(productService.getByRfidForSale(rfid));
     }
 
     @GetMapping("/cafeteria")

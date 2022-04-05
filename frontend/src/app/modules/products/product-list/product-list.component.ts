@@ -14,8 +14,7 @@ export class ProductListComponent implements OnInit {
         {header: 'Descrição', field: 'description'},
         {header: 'Preço de Compra', field: 'purchasePrice'},
         {header: 'Preço de Venda', field: 'salePrice'},
-        {header: 'Quantidade', field: 'inventoryAmount'},
-        {header: 'Peso', field: 'inventoryWeight'},
+        {header: 'Código de barras', field: 'barCode'},
         {header: 'Imagem', field: 'image'}
     ];
 
@@ -31,7 +30,7 @@ export class ProductListComponent implements OnInit {
     }
 
     handleClick(): void {
-        this.router.navigateByUrl('admin/produto/novo');
+        this.router.navigateByUrl('admin/produtos/novo');
     }
 
     delete(id: number): void {
@@ -45,6 +44,6 @@ export class ProductListComponent implements OnInit {
     }
 
     edit(id: number): void {
-        this.router.navigateByUrl(`produto/editar/${id}`);
+        this.router.navigateByUrl(`admin/produtos/editar/${id}`);
     }
 }

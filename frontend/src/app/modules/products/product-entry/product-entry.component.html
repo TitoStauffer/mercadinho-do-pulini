@@ -1,4 +1,4 @@
-<p-card header="Novo Produto">
+<p-card header="Entrada de Produto">
     <form [formGroup]="productEntryForm">
         <div>
             <p>Buscar por Código de barras</p>
@@ -12,6 +12,7 @@
                 <th *ngFor="let col of columns">
                     {{col.header}}
                 </th>
+                <th>Quantidade em estoque</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -20,11 +21,15 @@
                     <img *ngIf="col.field == 'image'" [src]="rowData[col.field]" class="product-image">
                     <span *ngIf="col.field !== 'image'">{{rowData[col.field]}}</span>
                 </td>
+                <td>
+                    <p *ngIf="rowData.inventoryAmount == null">{{rowData.inventoryWeight}} Kg</p>
+                    <p *ngIf="rowData.inventoryWeight == null">{{rowData.inventoryAmount}} Un</p>
+                </td>
             </tr>
         </ng-template>
     </p-table>
 
-    <h3>Quantidade</h3>
+    <h3>Quantidade a ser adicionada em estoque:</h3>
 
     <div class="card" [formGroup]="productEntryForm">
         <input type="text" pInputText formControlName="addAmount">

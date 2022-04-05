@@ -32,10 +32,9 @@ public class SaleService {
     private static final String AWAITING = "Pendente";
 
     public void finishSale(SaleDTO sale, Boolean isCoffee){
-        var finishedSale = saleMapper.toEntity(sale);
-        productService.stockOff(sale.getProducts());
-        finishedSale.setStatus(isCoffee ? FINISHED : AWAITING);
-        saleRepository.save(finishedSale);
+        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId());
+        sales.forEach(sale1 -> sale1.setStatus(isCoffee ? FINISHED : AWAITING));
+        saleRepository.saveAllAndFlush(sales);
     }
 
     public List<SaleDTO> findAllCoffeeSaleAndIsUserId(Long id, boolean isUserId) {

@@ -4,7 +4,6 @@ import {ProductModel} from '../../../models/product.model';
 import {FileUpload, SelectItem} from 'primeng';
 import {ProductService} from '../../../shared/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-product-form',
@@ -12,7 +11,10 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
     styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-
+    items: SelectItem[] = [
+        {label: 'Peso (Kg)', value: true},
+        {label: 'Unidade (Un)', value: false}
+    ];
     productForm: FormGroup;
     currentProductId: number;
     categories: SelectItem[];
@@ -28,8 +30,8 @@ export class ProductFormComponent implements OnInit {
         this.productForm = new FormGroup({
             id: new FormControl(''),
             description: new FormControl('', [Validators.required]),
-            inventoryAmount: new FormControl(''),
-            inventoryWeight: new FormControl(''),
+            inventoryAmount: new FormControl(0.0),
+            inventoryWeight: new FormControl(0.0),
             barCode: new FormControl('', [Validators.required]),
             rfid: new FormControl('', [Validators.required]),
             purchasePrice: new FormControl('', [Validators.required]),
@@ -37,6 +39,7 @@ export class ProductFormComponent implements OnInit {
             isCoffeeShop: new FormControl(false),
             categoryId: new FormControl('', [Validators.required]),
             image: new FormControl(''),
+            weight: new FormControl(true),
         });
     }
 
@@ -59,7 +62,9 @@ export class ProductFormComponent implements OnInit {
     loadProduct(): void {
         this.currentProductId = Number(this.route.snapshot.paramMap.get('productId'));
         this.productService.readById(this.currentProductId).subscribe(
-            product => this.updateForm(product),
+            product => {
+                this.updateForm(product);
+            },
             error => alert('Falha ao carregar o produto!')
         );
     }
@@ -94,8 +99,6 @@ export class ProductFormComponent implements OnInit {
         }
         const semdo: File = new File([u8arr], filename, {type});
 
-        // this.downbelow = window.URL.createObjectURL( u8arr );
-        // console.log(this.downbelow);
         return semdo;
     }
 
@@ -123,15 +126,17 @@ export class ProductFormComponent implements OnInit {
             this.productService.update(newProduct).subscribe(
                 () => {
                     alert('Produto alterado com sucesso!');
-                    this.router.navigateByUrl('produto');
+                    this.router.navigateByUrl('admin/produtos');
                 },
                 () => alert('Erro ao alterar produto!')
             );
         } else {
+            if (this.productForm.value.weight) newProduct.inventoryAmount = null;
+            else newProduct.inventoryWeight = null;
             this.productService.create(newProduct).subscribe(
                 () => {
                     alert('Produto criado com sucesso!');
-                    this.router.navigateByUrl('produto');
+                    this.router.navigateByUrl('admin/produtos');
                 },
                 () => alert('Erro ao criar produto!')
             );
@@ -140,9 +145,5 @@ export class ProductFormComponent implements OnInit {
 
     get hasProductImage(): boolean {
         return this.productImageElementRef.files.length === 0;
-    }
-
-    teste(obj: any): void {
-        console.log(this.productImageElementRef);
     }
 }

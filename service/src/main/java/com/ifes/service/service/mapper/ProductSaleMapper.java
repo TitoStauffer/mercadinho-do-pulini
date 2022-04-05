@@ -7,13 +7,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ProductSaleMapper extends EntityMapper<Product, ProductSaleDTO> {
-
+public interface ProductSaleMapper extends EntityMapper<Product, ProductSaleDTO>{
     @Override
-    @Mapping(source = "price" , target = "salePrice")
-    Product toEntity(ProductSaleDTO productSaleDTO);
+    @Mapping(target = "salePrice", source = "price")
+    @Mapping(target = "inventoryAmount", source = "amount")
+    @Mapping(target = "inventoryWeight", source = "weight")
+    Product toEntity(ProductSaleDTO dto);
 
     @Override
     @InheritInverseConfiguration
-    ProductSaleDTO toDTO(Product product);
+    ProductSaleDTO toDTO(Product entity);
 }

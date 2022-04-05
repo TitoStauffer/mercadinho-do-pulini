@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../shared/services/product.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {ProductModel} from '../../../models/product.model';
 import {Router} from '@angular/router';
 
@@ -17,8 +17,6 @@ export class ProductEntryComponent implements OnInit {
         {header: 'Descrição', field: 'description'},
         {header: 'Preço de Compra', field: 'purchasePrice'},
         {header: 'Preço de Venda', field: 'salePrice'},
-        {header: 'Quantidade', field: 'inventoryAmount'},
-        {header: 'Peso', field: 'inventoryWeight'},
         {header: 'Imagem', field: 'image'}
     ];
 
@@ -30,7 +28,8 @@ export class ProductEntryComponent implements OnInit {
                 private router: Router) {
         this.productEntryForm = new FormGroup({
             barCode: new FormControl(''),
-            addAmount: new FormControl('')
+            addAmount: new FormControl(''),
+            weight: new FormControl(true)
         });
     }
 
@@ -47,10 +46,10 @@ export class ProductEntryComponent implements OnInit {
     }
 
     handleSubmitForm(): void {
-        this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount, this.productEntryForm.value.addAmount).subscribe(
+        this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount).subscribe(
             () => {
                 alert('Produtos registrados com sucesso!');
-                this.router.navigateByUrl('produto');
+                this.router.navigateByUrl('admin/produtos');
             },
             () => alert('Erro ao criar produto!')
         );
