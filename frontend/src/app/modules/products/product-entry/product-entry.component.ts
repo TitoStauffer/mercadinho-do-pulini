@@ -17,8 +17,6 @@ export class ProductEntryComponent implements OnInit {
         {header: 'Descrição', field: 'description'},
         {header: 'Preço de Compra', field: 'purchasePrice'},
         {header: 'Preço de Venda', field: 'salePrice'},
-        {header: 'Quantidade', field: 'inventoryAmount'},
-        {header: 'Peso', field: 'inventoryWeight'},
         {header: 'Imagem', field: 'image'}
     ];
 
@@ -47,10 +45,10 @@ export class ProductEntryComponent implements OnInit {
     }
 
     handleSubmitForm(): void {
-        this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount, this.productEntryForm.value.addAmount).subscribe(
+        this.productService.registerEntry(this.products[0].id, this.productEntryForm.value.addAmount).subscribe(
             () => {
                 alert('Produtos registrados com sucesso!');
-                this.router.navigateByUrl('produtos');
+                this.router.navigateByUrl('admin/produtos');
             },
             () => alert('Erro ao criar produto!')
         );

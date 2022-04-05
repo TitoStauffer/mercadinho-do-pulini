@@ -10,7 +10,7 @@ import {AdminModule} from "./admin/admin.module";
 import {ProductsModule} from "./modules/products/products.module";
 
 const routes: Routes = [
-    {path: '', redirectTo: 'admin', pathMatch: 'full'},
+    { path: '', redirectTo: 'admin', pathMatch: 'full'},
     { path: 'admin', loadChildren: () => AdminModule, canActivate: [AuthGuard]},
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AdminComponent } from './admin.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AdminComponent} from './admin.component';
 import {DiarioErrosComponent} from "../components/diario-erros/diario-erros.component";
 import {LoginSuccessComponent} from "@nuvem/angular-base";
 import {UserListComponent} from "./user-list/user-list.component";
@@ -19,7 +19,7 @@ const routes: Routes = [
           { path: 'user',  component: UserListComponent, canActivate: [PermissionGuard] },
           { path: 'permissao',  component: PermissionListComponent, canActivate: [PermissionGuard] },
           { path: 'venda',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
-          { path: 'produto',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
+          { path: 'produtos',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
           { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
     ]
   }

@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class ProductSaleDTO implements Serializable {
-
     private Long id;
     private String description;
     private Double price;
@@ -19,4 +18,5 @@ public class ProductSaleDTO implements Serializable {
     private String barCode;
     private String image;
     private Double totalPrice;
+    private String rfid;
 }
