@@ -33,9 +33,9 @@ public class ProductService {
     }
 
     public ProductEditDTO update(ProductEditDTO dto) {
-        Product existent = productRepository.findById(dto.getId())
+        var existent = productRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException(MSG));
-        Product product = productEditMapper.toEntity(dto);
+        var product = productEditMapper.toEntity(dto);
         BeanUtils.copyProperties(product, existent, "id");
         productRepository.save(existent);
         return productEditMapper.toDTO(existent);
@@ -75,6 +75,33 @@ public class ProductService {
     }
 
     public ProductEditDTO registerEntry(Long id, double amount) {
+    public void stockOff(List<ProductSaleDTO> products){
+        List<Long> productsIds = getProductsIds(products);
+        List<Product> stocksProducts = productRepository.findAllById(productsIds);
+        setStockOff(stocksProducts, products);
+    }
+
+    private void setStockOff(List<Product> stocksProducts, List<ProductSaleDTO> products) {
+        stocksProducts.forEach(stockProduct -> products.forEach( product -> {
+            if(product.getId().equals(stockProduct.getId())){
+                stockProduct.setInventoryAmount(stockProduct.getInventoryAmount() - product.getAmount());
+                stockProduct.setInventoryWeight(stockProduct.getInventoryWeight() - product.getWeight());
+            }
+        }));
+        productRepository.saveAllAndFlush(stocksProducts);
+    }
+
+    private List<Long> getProductsIds(List<ProductSaleDTO> products) {
+        List<Long> ids = new ArrayList<>();
+        products.forEach(product -> {
+            if(!ids.contains(product.getId())){
+                ids.add(product.getId());
+            }
+        });
+        return ids;
+    }
+
+    public ProductEditDTO registerEntry(Long id, Integer amount, Double weight) {
         Product current = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(MSG));
         if (current.getInventoryAmount() != null) current.setInventoryAmount(current.getInventoryAmount() + (int) amount);

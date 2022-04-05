@@ -18,28 +18,9 @@
                 </a>
                 <ul class="ultima-menu animated fadeInDown">
                     <li role="menuitem">
-                        <a routerLink="/diario-erros">
-                            <i class="material-icons">error</i>
-                            <span>Diário de Erros</span>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a logout>
+                        <a logout (click)="logout()">
                             <i class="material-icons">power_settings_new</i>
                             <span>Sair</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li #user [ngClass]="{'active-top-menu':app.activeTopbarItem === user}" *ngIf="isAuthenticated">
-                <a href="#" (click)="app.onTopbarItemClick($event,user)">
-                    <i class="topbar-icon material-icons">person</i>
-                    <span class="topbar-item-name">Usuário</span>
-                </a>
-                <ul class="ultima-menu animated fadeInDown">
-                    <li role="menuitem">
-                        <a>
-                            <span user><strong>Usuário: </strong></span>
                         </a>
                     </li>
                 </ul>

@@ -1,17 +1,22 @@
 package com.ifes.service.service.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductSaleDTO implements Serializable {
     private Long id;
     private String description;
     private Double price;
-    private Double amount;
-    private Integer weight;
+    private Integer amount;
+    private Double weight;
     private String barCode;
-    private String rfid;
     private String image;
+    private Double totalPrice;
+    private String rfid;
 }
