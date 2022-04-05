@@ -5,7 +5,6 @@ export class ProdutoVendaModel {
     amount?: number;
     weight?: number;
     barCode: string;
-    rfid: string;
     image?: string;
     totalPrice?: number;
 }
