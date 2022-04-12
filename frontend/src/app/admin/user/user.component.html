@@ -16,6 +16,9 @@
         <div style="padding: 12px">
             <input pButton type="submit" value="Salvar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
         </div>
+        <div style="padding: 12px" *ngIf="this.form.value.id">
+            <input pButton type="button" (click)="salvarBiometria()" value="Salvar Biometria" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
+        </div>
     </form>
 </div>
 
