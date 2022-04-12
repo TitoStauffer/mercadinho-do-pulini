@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     iniciarForm(){
         this.form = this.fb.group({
             cpf: [null, [Validators.required]],
+            password: [null],
         })
     }
 
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
     }
 
     login(){
-        this.loginService.login(this.form.value.cpf).subscribe(
+        this.loginService.login(this.form.value).subscribe(
             user => this.saveStorageAndLogin(user),
                 erro => {
             this.notification.addErrorMessage(erro.error.message);
