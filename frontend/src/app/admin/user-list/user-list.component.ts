@@ -12,7 +12,6 @@ export class UserListComponent implements OnInit {
         {header: 'Id', field: 'id'},
         {header: 'Name', field: 'name'},
         {header: 'Cpf', field: 'cpf'},
-        {header: 'Fingerprint', field: 'fingerprint'},
     ];
 
     @Input() totalValue: number;
