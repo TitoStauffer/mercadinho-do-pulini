@@ -46,7 +46,6 @@ export class PermissionGuard implements CanActivate {
           return true;
       }
       return PerfilEnum.Recepcao === perfil && this.telasRecepcao.includes(tela);
-
   }
 
 }
