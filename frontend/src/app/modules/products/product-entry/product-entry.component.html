@@ -1,8 +1,8 @@
 <p-card header="Entrada de Produto">
-    <form [formGroup]="productEntryForm">
+    <form>
         <div>
             <p>Buscar por Código de barras</p>
-            <input type="text" pInputText formControlName="barCode">
+            <input type="text" pInputText [(ngModel)]="barCode" [ngModelOptions]="{standalone: true}">
             <p-button icon="pi pi-search" (click)="findByBarCode()"></p-button>
         </div>
     </form>
@@ -31,9 +31,15 @@
 
     <h3>Quantidade a ser adicionada em estoque:</h3>
 
-    <div class="card" [formGroup]="productEntryForm">
-        <input type="text" pInputText formControlName="addAmount">
+    <div class="card">
+        <input type="number" pInputText [(ngModel)]="addAmount">
     </div>
 
     <p-button label="Salvar Entrada" (click)="handleSubmitForm()"></p-button>
+
+    <h3>Digite o IP da balança:</h3>
+    <div class="card">
+        <input type="text" pInputText [(ngModel)]="weighingScale">
+    </div>
+    <p-button label="Salvar IP da balança" (click)="saveWeighingScaleIP()"></p-button>
 </p-card>
