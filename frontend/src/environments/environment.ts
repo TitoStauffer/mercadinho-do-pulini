@@ -15,5 +15,6 @@ export const environment = {
         storage: localStorage,
         userStorageIndex: 'user',
         loginSuccessRoute: '/#/login-success'
-    }
+    },
+    balanceUrl: 'http://192.168.43.150:80'
 };
