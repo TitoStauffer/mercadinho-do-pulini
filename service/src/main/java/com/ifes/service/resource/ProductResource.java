@@ -65,6 +65,11 @@ public class ProductResource {
         return ResponseEntity.ok(productService.getByBarCode(barCode));
     }
 
+    @GetMapping("/bar-code/terminal/{barcode}")
+    public String getByBarCodeForTerminal(@PathVariable("barcode") String barCode) {
+        return "Arroz - R$ 22,50";
+    }
+
     @GetMapping("/rfid")
     public ResponseEntity<ProductEditDTO> getByRfid(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfid(rfid));
