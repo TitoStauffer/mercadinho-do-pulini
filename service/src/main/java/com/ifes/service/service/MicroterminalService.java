@@ -33,12 +33,13 @@ public class MicroterminalService {
                     BufferedReader in =                                          // 3rd statement
                             new BufferedReader(
                                     new InputStreamReader(socket.getInputStream()));
+                    dos.flush();
+                    dos.writeUTF(" Codigo de barras:");
                     var line = in.readLine();
-                    if(line != null) {
+                    while(line != null) {
                         System.out.println(line);
-                        limparTerminal(dos);
-                        String response = getProductByBarCode(line);
-                        dos.writeUTF(response);
+                        getProductByBarCode(line, dos);
+                        line = null;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -53,7 +54,7 @@ public class MicroterminalService {
         }
     }
 
-    private String getProductByBarCode(String barcode) throws IOException {
+    private void getProductByBarCode(String barcode, DataOutputStream dos) throws IOException {
         var urlBarCode = new URL("http://localhost:8080/api/product/bar-code/terminal/" + barcode);
         HttpURLConnection con = (HttpURLConnection) urlBarCode.openConnection();
         con.setRequestMethod("GET");
@@ -68,16 +69,12 @@ public class MicroterminalService {
             }
             in.close();
             con.disconnect();
-            return content.toString();
+            dos.flush();
+            dos.writeUTF(content.toString());
         }
         catch (Exception e) {
-            return "Erro ao buscar produto";
-        }
-    }
-
-    private void limparTerminal(DataOutputStream dos) throws IOException {
-        for (var i = 0; i < 4; i++) {
-            dos.writeUTF("******************");
+            dos.flush();
+            dos.writeUTF("Erro ao buscar produto!");
         }
     }
 

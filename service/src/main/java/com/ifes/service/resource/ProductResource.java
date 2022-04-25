@@ -67,7 +67,7 @@ public class ProductResource {
 
     @GetMapping("/bar-code/terminal/{barcode}")
     public String getByBarCodeForTerminal(@PathVariable("barcode") String barCode) {
-        return "Arroz - R$ 22,50";
+        return productService.getByBarCodeFromMicroterminal(barCode);
     }
 
     @GetMapping("/rfid")
