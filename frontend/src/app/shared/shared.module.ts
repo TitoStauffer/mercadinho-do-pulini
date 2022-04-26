@@ -8,14 +8,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         PRIMENG_IMPORTS,
         ServicesModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
     ],
     providers: [],
     exports: [
         PRIMENG_IMPORTS,
         ServicesModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
     ]
 })
 export class SharedModule { }

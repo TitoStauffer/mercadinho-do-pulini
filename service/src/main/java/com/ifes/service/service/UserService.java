@@ -7,7 +7,6 @@ import com.ifes.service.service.dto.UserDTO;
 import com.ifes.service.service.exception.RegraNegocioException;
 import com.ifes.service.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

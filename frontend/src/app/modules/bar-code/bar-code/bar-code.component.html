@@ -1,0 +1,25 @@
+<p-card header="Imprimir código de Barras">
+    <div class="login">
+        <form [formGroup]="form" (ngSubmit)="print()">
+            <div class="form-group">
+                <div class="ui-g">
+                    <div style="padding: 12px" class="ui-g-8">
+                        <label for="barcode">Código de Barras </label>
+                        <input pInputText class="form-control input input-lg" id="barcode" formControlName="barcode" type="number" placeholder="Código de Barras">
+                    </div>
+                    <div style="padding: 12px" class="ui-g-2">
+                        <button pButton type="submit" class="ui-button-rounded" icon="pi pi-check" [disabled]="form.invalid || submit"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div style="text-align:center">
+            <ngx-barcode6
+                [bc-format]="'EAN13'"
+                [bc-value]="'12345678901231'"
+                [bc-display-value]="true"
+            >
+            </ngx-barcode6>
+    </div>
+</p-card>

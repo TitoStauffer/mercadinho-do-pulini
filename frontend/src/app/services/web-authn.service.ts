@@ -8,7 +8,7 @@ export class WebAuthnService {
 
   constructor() { }
 
-  webAuthnSignup(user: UserModel): Promise<CredentialType> {
+  webAuthnSignup(user: UserModel): Promise<any> {
     const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
       challenge: Uint8Array.from('someChallengeIsHereComOn', c => c.charCodeAt(0)),
       rp: {
@@ -33,7 +33,7 @@ export class WebAuthnService {
     });
   }
 
-  webAuthnSignin(user: UserModel): Promise<CredentialType> {
+  webAuthnSignin(user: UserModel): Promise<any> {
     const allowCredentials: PublicKeyCredentialDescriptor[] = user.credentials.map(c => {
       console.log(c.credentialId);
       return { type: 'public-key', id: Uint8Array.from(Object.values(c.credentialId)) };

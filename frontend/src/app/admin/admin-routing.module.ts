@@ -9,6 +9,7 @@ import {ProductsModule} from "../modules/products/products.module";
 import {VendasModule} from "../modules/vendas/vendas.module";
 import {PermissionGuard} from "../guard/permission.guard";
 import {PermissionListComponent} from "./permission-list/permission-list.component";
+import {BarCodeModule} from "../modules/bar-code/bar-code.module";
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
           { path: 'permissao',  component: PermissionListComponent, canActivate: [PermissionGuard] },
           { path: 'venda',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
           { path: 'produtos',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
+          { path: 'barcodes',  loadChildren: () => BarCodeModule, canActivate: [PermissionGuard] },
           { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
     ]
   }
