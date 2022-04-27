@@ -1,0 +1,8 @@
+/*@media print {*/
+/*    :not(.printMe) {*/
+/*        display: none !important;*/
+/*    }*/
+/*    :not(#barcodecontent) {*/
+/*        display: none !important;*/
+/*    }*/
+/*}*/
