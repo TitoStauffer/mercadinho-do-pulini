@@ -5,6 +5,8 @@ import com.ifes.service.repository.ProductRepository;
 import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
+import com.ifes.service.service.dto.Relatorio1RequestDTO;
+import com.ifes.service.service.dto.Relatorio1ResponseDTO;
 import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
 import com.ifes.service.service.mapper.ProductSaleMapper;
@@ -107,5 +109,9 @@ public class ProductService {
         if (Objects.nonNull(current.getInventoryAmount())) current.setInventoryAmount(current.getInventoryAmount() + (int) amount);
         if (Objects.nonNull(current.getInventoryWeight())) current.setInventoryWeight(current.getInventoryWeight() + amount);
         return update(productEditMapper.toDTO(current));
+    }
+
+    public List<Relatorio1ResponseDTO> getRelatorio1Result(Relatorio1RequestDTO id) {
+        return null;
     }
 }

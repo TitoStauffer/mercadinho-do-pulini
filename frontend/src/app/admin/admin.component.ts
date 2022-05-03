@@ -64,6 +64,8 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
               { label: 'Produto', icon: 'people', routerLink: ['./produtos'] },
               { label: 'Entrada de produto', icon: 'people', routerLink: ['./produtos/entrada'] },
               { label: 'Venda', icon: 'people', routerLink: ['./vendas'] },
+              { label: 'Relatorio 1', icon: 'people', routerLink: ['./relatorio1'] },
+              { label: 'Relatorio 2', icon: 'people', routerLink: ['./relatorio2'] },
           ];
       }
       if (PerfilEnum.Caixa === perfil) {

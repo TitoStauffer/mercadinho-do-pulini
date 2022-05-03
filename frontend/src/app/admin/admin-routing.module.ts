@@ -9,6 +9,8 @@ import {ProductsModule} from "../modules/products/products.module";
 import {VendasModule} from "../modules/vendas/vendas.module";
 import {PermissionGuard} from "../guard/permission.guard";
 import {PermissionListComponent} from "./permission-list/permission-list.component";
+import {Relatorio1Component} from "./relatorio1/relatorio1.component";
+import {Relatorio2Component} from "./relatorio2/relatorio2.component";
 
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
           { path: 'venda',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
           { path: 'produtos',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
           { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
+          { path: 'relatorio1',  component: Relatorio1Component, canActivate: [PermissionGuard] },
+          { path: 'relatorio2',  component: Relatorio2Component, canActivate: [PermissionGuard] },
     ]
   }
 ];
