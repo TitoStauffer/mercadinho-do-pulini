@@ -4,6 +4,7 @@ import {ProductService} from "./product.service";
 import {SaleService} from "./sale.service";
 import {DialogService} from "primeng";
 import {UserService} from "./user.service";
+import {WeighingScaleService} from "./weighing-scale.service";
 
 
 
@@ -16,7 +17,8 @@ import {UserService} from "./user.service";
         ProductService,
         SaleService,
         DialogService,
-        UserService
+        UserService,
+        WeighingScaleService
     ]
 })
 export class ServicesModule { }
