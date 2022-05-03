@@ -108,4 +108,8 @@ public class ProductService {
         if (Objects.nonNull(current.getInventoryWeight())) current.setInventoryWeight(current.getInventoryWeight() + amount);
         return update(productEditMapper.toDTO(current));
     }
+
+    public String getByBarCodeFromMicroterminal(String barCode) {
+        return productRepository.getProductFromMicroterminal(barCode);
+    }
 }
