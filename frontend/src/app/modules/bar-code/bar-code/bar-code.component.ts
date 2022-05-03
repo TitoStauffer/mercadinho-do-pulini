@@ -1,5 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup} from "@angular/forms";
+import {MessageService, SelectItem} from "primeng";
+import {ProductService} from "../../../shared/services/product.service";
+import {ProductListBarcode} from "../../../models/product-list-barcode";
+import {DisplayText} from "@syncfusion/ej2-angular-barcode-generator";
+
 
 @Component({
     selector: 'app-bar-code',
@@ -7,16 +12,53 @@ import { FormGroup} from "@angular/forms";
     styleUrls: ['./bar-code.component.css']
 })
 export class BarCodeComponent implements OnInit {
-    value: number;
-    form: FormGroup;
+      public displayText: DisplayText;
 
-  constructor() { }
+      form: FormGroup;
+      produtos: ProductListBarcode[] = [];
+      convertedProducts: SelectItem[] = [];
+      produto: ProductListBarcode
+      valor: string;
+      qtd: number;
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private productService: ProductService,
+        private messageService: MessageService) { }
 
-    onPrint() {
-        window.print();
+    ngOnInit(): void {
+        this.carregarProdutos();
     }
 
+      carregarProdutos(){
+          this.productService.getAllSelect().subscribe(
+              (res => {
+                  this.produtos = res
+                  console.log(this.produtos)
+
+              }),
+              () => this.messageService.add({severity:'error', summary:'Erro', detail:'Nenhum Produto Encontrado!'}),
+              () => this.convertedProducts = this.convertProducts(this.produtos)
+          )
+      }
+
+      convertProducts(products: ProductListBarcode[]) {
+          let newList: SelectItem[] = [];
+          products.forEach(product => {
+              newList.push({
+                  label: product.description,
+                  value: {
+                      id: product.id,
+                      description: product.description,
+                      barCode: product.barCode
+                  }
+              })
+          })
+          newList.unshift({value: null, label: "Selecione"});
+          return newList;
+      }
+
+      alteraValor(){
+          this.valor = this.produto.barCode;
+          this.displayText.text = this.produto.description
+     }
 }

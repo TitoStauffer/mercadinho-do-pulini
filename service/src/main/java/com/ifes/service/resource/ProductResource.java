@@ -2,6 +2,7 @@ package com.ifes.service.resource;
 
 import com.ifes.service.service.ProductService;
 import com.ifes.service.service.dto.ProductCreateDTO;
+import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
 import lombok.RequiredArgsConstructor;
@@ -73,5 +74,10 @@ public class ProductResource {
     @GetMapping("/rfid/sale")
     public ResponseEntity<ProductSaleDTO> getByRfidForSale(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfidForSale(rfid));
+    }
+
+    @GetMapping("/dropdown")
+    public ResponseEntity<List<ProductDropdownDTO>> getAllProductDropdown(){
+        return ResponseEntity.ok(productService.getAllProductDropDown());
     }
 }

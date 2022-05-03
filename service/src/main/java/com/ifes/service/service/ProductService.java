@@ -3,9 +3,11 @@ package com.ifes.service.service;
 import com.ifes.service.domain.Product;
 import com.ifes.service.repository.ProductRepository;
 import com.ifes.service.service.dto.ProductCreateDTO;
+import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.mapper.ProductCreateMapper;
+import com.ifes.service.service.mapper.ProductDropdownMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
 import com.ifes.service.service.mapper.ProductSaleMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class ProductService {
     private final ProductCreateMapper productCreateMapper;
     private final ProductEditMapper productEditMapper;
     private final ProductSaleMapper productSaleMapper;
+    private final ProductDropdownMapper productDropdownMapper;
 
     public ProductCreateDTO save(ProductCreateDTO dto) {
         return productCreateMapper.toDTO(productRepository
@@ -107,5 +110,9 @@ public class ProductService {
         if (Objects.nonNull(current.getInventoryAmount())) current.setInventoryAmount(current.getInventoryAmount() + (int) amount);
         if (Objects.nonNull(current.getInventoryWeight())) current.setInventoryWeight(current.getInventoryWeight() + amount);
         return update(productEditMapper.toDTO(current));
+    }
+
+    public List<ProductDropdownDTO> getAllProductDropDown(){
+        return productDropdownMapper.toDTO(productRepository.findAll());
     }
 }

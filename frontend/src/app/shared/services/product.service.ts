@@ -4,6 +4,7 @@ import {ProductModel} from '../../models/product.model';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {ProductListBarcode} from "../../models/product-list-barcode";
 
 @Injectable({
     providedIn: 'root'
@@ -78,5 +79,9 @@ export class ProductService {
 
     registerEntry(id: number, amount: number): Observable<ProductModel> {
         return this.http.get<ProductModel>(`${this.baseUrl}/entrada/${id}?amount=${amount}`);
+    }
+
+    getAllSelect(): Observable<ProductListBarcode[]> {
+        return this.http.get<ProductListBarcode[]>(`${this.baseUrl}/dropdown`);
     }
 }
