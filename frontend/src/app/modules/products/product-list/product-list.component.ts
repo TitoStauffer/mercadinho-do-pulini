@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../shared/services/product.service';
 import {ProductModel} from '../../../models/product.model';
 import {Router} from '@angular/router';
+import {ThermalPrinterService} from "../../../shared/services/thermal-printer.service";
 
 @Component({
     selector: 'app-product-list',
@@ -20,7 +21,12 @@ export class ProductListComponent implements OnInit {
 
     products: ProductModel[] = [];
 
-    constructor(private productService: ProductService, private router: Router) {
+    constructor(
+        private productService: ProductService,
+        private router: Router,
+        private printService: ThermalPrinterService
+    ) {
+        this.printService.getLocalStoragePrinterPersistence();
     }
 
     ngOnInit(): void {
@@ -45,5 +51,13 @@ export class ProductListComponent implements OnInit {
 
     edit(id: number): void {
         this.router.navigateByUrl(`admin/produtos/editar/${id}`);
+    }
+
+    connectPrinter(): void {
+        this.printService.requestUsb().then(r => console.log("Conectado"));
+    }
+
+    testePrint(product: ProductModel): void {
+        this.printService.printProduct(product);
     }
 }

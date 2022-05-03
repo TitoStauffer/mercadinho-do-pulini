@@ -18,7 +18,7 @@ const routes: Routes = [
           { path: 'login-success', component: LoginSuccessComponent },
           { path: 'user',  component: UserListComponent, canActivate: [PermissionGuard] },
           { path: 'permissao',  component: PermissionListComponent, canActivate: [PermissionGuard] },
-          { path: 'venda',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
+          { path: 'vendas',  loadChildren: () => VendasModule, canActivate: [PermissionGuard] },
           { path: 'produtos',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
           { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
     ]
