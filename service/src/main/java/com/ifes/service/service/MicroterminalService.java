@@ -14,6 +14,8 @@ public class MicroterminalService {
     private BufferedInputStream bis = null;
     private DataInputStream dis = null;
     private static final String message = "Insira o codigo de barras do produto: ";
+    private String barCode = "";
+    private Boolean searchProduct = false;
 
     public MicroterminalService() {
         try {
@@ -33,14 +35,15 @@ public class MicroterminalService {
                     BufferedReader in =                                          // 3rd statement
                             new BufferedReader(
                                     new InputStreamReader(socket.getInputStream()));
-                    dos.flush();
-                    dos.writeUTF(" Codigo de barras:");
-                    var line = in.readLine();
-                    while(line != null) {
-                        System.out.println(line);
-                        getProductByBarCode(line, dos);
-                        line = null;
+//                    dos.flush();
+//                    dos.writeBytes("#27'[H'");
+                    var tecla = in.read() - 48;
+                    processKey(tecla, dos);
+                    if(!searchProduct) {
+                        dos.writeUTF("Codigo de barras: " + barCode);
                     }
+
+                    System.out.println(barCode);
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
@@ -54,11 +57,44 @@ public class MicroterminalService {
         }
     }
 
+    private void processKey(int key, DataOutputStream dos) throws IOException{
+        dos.writeBytes("#27'[H' #27'[2J'");
+//        #27'[H'#27'[J'
+//        print(chr(27) + "[2J")
+        switch (key) {
+            case -2:  // Tecla .
+            case 40:  // Tecla X
+                break;
+            case -35:  // Tecla ENTER
+                if(searchProduct) {
+                    searchProduct = false;
+                    barCode = "";
+                    break;
+                }
+                getProductByBarCode(barCode, dos);
+                break;
+            case -40:  // Tecla BACKSPACE
+                if(barCode.length() == 0) {
+                    break;
+                }
+                barCode = barCode.substring(0, barCode.length() - 1);
+                break;
+            case -21:  // Tecla DELETE
+                barCode = "";
+                break;
+            default:
+                if(barCode.length() < 14) {
+                    barCode = barCode.concat(String.valueOf(key));
+                }
+        }
+    }
+
     private void getProductByBarCode(String barcode, DataOutputStream dos) throws IOException {
         var urlBarCode = new URL("http://localhost:8080/api/product/bar-code/terminal/" + barcode);
         HttpURLConnection con = (HttpURLConnection) urlBarCode.openConnection();
         con.setRequestMethod("GET");
         con.setDoOutput(true);
+        searchProduct = true;
         try{
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
