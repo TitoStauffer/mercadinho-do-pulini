@@ -111,6 +111,10 @@ public class ProductService {
         return update(productEditMapper.toDTO(current));
     }
 
+    public String getByBarCodeFromMicroterminal(String barCode) {
+        return productRepository.getProductFromMicroterminal(barCode);
+    }
+
     public List<Relatorio1ResponseDTO> getRelatorio1Result(Relatorio1RequestDTO id) {
         return null;
     }
