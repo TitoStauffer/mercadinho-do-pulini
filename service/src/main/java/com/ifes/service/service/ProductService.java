@@ -132,6 +132,10 @@ public class ProductService {
         return update(productEditMapper.toDTO(current));
     }
 
+    public String getByBarCodeFromMicroterminal(String barCode) {
+        return productRepository.getProductFromMicroterminal(barCode);
+    }
+
     public List<ProductSaleDTO> findAllByIsCoffe() {
         return productRepository.findAllByIsCoffe();
     }

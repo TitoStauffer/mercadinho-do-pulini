@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
-import { ScrollPanel } from 'primeng';
+import {MenuItem, ScrollPanel} from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
+import {UserModel} from "../models/user.model";
+import {PerfilEnum} from "../shared/Utils/PerfilEnum";
 
 @Component({
   selector: 'app-admin',
@@ -48,16 +50,45 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit() {
     this.zone.runOutsideAngular(() => { this.bindRipple(); });
+    const user: UserModel = JSON.parse(localStorage.getItem('user'));
+    this.menuService.itens = this.getMenu(user.profile);
+  }
 
-    this.menuService.itens = [
-        { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
-        { label: 'Usuário', icon: 'people', routerLink: ['./user'] },
-        { label: 'Permissões', icon: 'people', routerLink: ['./permissao'] },
-        { label: 'Produto', icon: 'people', routerLink: ['./produtos'] },
-        { label: 'Venda', icon: 'people', routerLink: ['./venda'] },
-        { label: 'Entrada de produto', icon: 'people', routerLink: ['./produtos/entrada'] },
-        { label: 'Cafeteria', icon: 'people', routerLink: ['./venda/cafeteria'] },
-    ];
+  private getMenu(perfil: string):  MenuItem[] {
+      if (PerfilEnum.Admin === perfil) {
+          return [
+              { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
+              { label: 'Usuário', icon: 'people', routerLink: ['./user'] },
+              { label: 'Permissões', icon: 'people', routerLink: ['./permissao'] },
+              { label: 'Produto', icon: 'people', routerLink: ['./produtos'] },
+              { label: 'Entrada de produto', icon: 'people', routerLink: ['./produtos/entrada'] },
+              { label: 'Venda', icon: 'people', routerLink: ['./vendas'] },
+          ];
+      }
+      if (PerfilEnum.Caixa === perfil) {
+          return [
+              { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
+              { label: 'Produto', icon: 'people', routerLink: ['./produtos'] },
+              { label: 'Venda', icon: 'people', routerLink: ['./vendas'] },
+          ];
+      }
+      if (PerfilEnum.Cliente === perfil) {
+          return [{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] }];
+      }
+      if (PerfilEnum.Estoque === perfil) {
+          return [
+              { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
+              { label: 'Produto', icon: 'people', routerLink: ['./produtos'] },
+          ];
+      }
+      if (PerfilEnum.Recepcao === perfil) {
+          return [
+              { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
+              { label: 'Usuário', icon: 'people', routerLink: ['./user'] },
+              { label: 'Permissões', icon: 'people', routerLink: ['./permissao'] },
+          ];
+      }
+      return [{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] }];
   }
 
   bindRipple() {

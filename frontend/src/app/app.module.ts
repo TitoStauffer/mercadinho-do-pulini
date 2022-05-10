@@ -34,7 +34,7 @@ import {LoginComponent} from "./login/login.component";
         ErrorModule,
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
-        MenuModule,
+        MenuModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }

@@ -1,6 +1,7 @@
 package com.ifes.service.resource;
 
 import com.ifes.service.service.UserService;
+import com.ifes.service.service.dto.LoginDTO;
 import com.ifes.service.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,8 @@ public class UserResource {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> save(@RequestBody String cpf) {
-        return  new ResponseEntity<>(userService.findByCPF(cpf), HttpStatus.OK);
+    public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
+        return  new ResponseEntity<>(userService.login(loginDTO), HttpStatus.OK);
     }
 
     @PostMapping

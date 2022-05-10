@@ -74,6 +74,22 @@ h1 {
     transform: 0.2s;
 }
 
+.login input[type="button"]{
+    border: none;
+    outline: none;
+    height: 35px;
+    color: #000;
+    background: #fff;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.login input[type="button"]:hover{
+    cursor: pointer;
+    background: #BFCDD9;
+    transform: 0.2s;
+}
+
 .login a {
     font-weight: bold;
     text-decoration: none;
