@@ -35,7 +35,7 @@ export class DetailsProductComponent implements OnInit {
     }
 
     getImage() {
-        return 'data:image/png;base64,' + this.product.image;
+        return this.product.image;
     }
 
 }

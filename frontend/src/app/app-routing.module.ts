@@ -8,6 +8,7 @@ import {GuestGuard} from "./guard/guest.guard";
 import {AdminModule} from "./admin/admin.module";
 import {ProductsModule} from "./modules/products/products.module";
 import {BarCodeModule} from "./modules/bar-code/bar-code.module";
+import {VendasModule} from "./modules/vendas/vendas.module";
 
 const routes: Routes = [
     { path: '', redirectTo: 'admin', pathMatch: 'full'},
