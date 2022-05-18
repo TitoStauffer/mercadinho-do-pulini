@@ -39,7 +39,7 @@ export class ProductEntryComponent implements OnInit {
             product => {
                 this.products[0] = product;
                 this.barCode = '';
-                if (product.inventoryWeight != null) this.getWeight();
+                // if (product.inventoryWeight != null) this.getWeight();
             },
             () => alert('Produto não encontrado')
         );
