@@ -30,15 +30,14 @@ export class SearchUserComponent implements OnInit {
     }
 
     search() {
-        const user = this.userService.findByCPF(this.form.value.cpf);
-
-        if(!user) {
-            this.pageNotification.addErrorMessage('Usuário não foi localizado no sistema');
-            return;
-        }
-
-        this.pageNotification.addSuccessMessage('Usuário encontrado com sucesso');
-        this.fechar.emit(user);
+        this.userService.findByCPF(this.form.value.cpf)
+            .subscribe(user => {
+                this.pageNotification.addSuccessMessage('Usuário encontrado com sucesso');
+                this.fechar.emit(user);
+            },
+            erro => {
+                this.pageNotification.addErrorMessage(erro.title);
+            });
     }
 
 }
