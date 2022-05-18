@@ -1,23 +1,40 @@
 <p-card>
     <div class="ui-g">
-        <div class="ui-g-6">
-            <p-dropdown [options]="convertedProducts" [(ngModel)]="produto" (onChange)="alteraValor()"></p-dropdown>
+        <div class="ui-g-3">
+            <p-dropdown [options]="convertedProducts" [(ngModel)]="produto"></p-dropdown>
         </div>
-    </div>
-    <div class="ui-g">
-        <div style="padding: 12px" class="ui-g-8">
-            <label>Código de Barras </label>
-            <input *ngIf="produto != null" [disabled]="true" pInputText class="form-control input input-lg" type="number" [(ngModel)]="valor">
+        <div class="ui-g-3">
+            <input type="number" [(ngModel)]="qtd" pInputText  />
         </div>
         <div class="ui-g-2">
-            <label for="quantity" >Quantidade</label>
-            <input type="number" id="quantity" pInputText class="form-control input input-lg" [(ngModel)]="qtd"/>
+            <button pButton type="button" [disabled]="qtd==undefined || produto==null" class="ui-button-info" (click)="atualizaValor()">Atualizar</button>
         </div>
-        <button printTitle="Print" printSectionId="print-section" ngxPrint>Print</button>
-        <div style="width: 900px" id="print-section" class="print">
-            <ejs-barcodegenerator *ngIf="produto != null" [displayText]="displayText" class="print" style="display: inline-block; margin: 10px 30px"  #barcode height="130px" width="200px" mode="SVG" type="Code11" [value]="produto.barCode"></ejs-barcodegenerator>
-            <ejs-barcodegenerator *ngIf="produto != null" [displayText]="displayText" class="print" style="display: inline-block; margin: 10px 60px"  #barcode height="130px" width="200px" mode="SVG" type="Code11" [value]="produto.barCode"></ejs-barcodegenerator>
-            <ejs-barcodegenerator *ngIf="produto != null" [displayText]="displayText" class="print" style="display: inline-block; margin: 10px 20px"  #barcode height="130px" width="200px" mode="SVG" type="Code11" [value]="produto.barCode"></ejs-barcodegenerator>
+        <div class="ui-g-2">
+            <button pButton type="button" [disabled]="qtd==undefined || produto==null" class="ui-button-info" printTitle="Print" printSectionId="print-section" ngxPrint>Imprimir</button>
+        </div>
+    </div>
+
+    <div class="ui-g">
+        <div style="width: 900px" style="display: flex" id="print-section" class="print">
+            <div *ngIf="maisDeUmaLinha">
+                <div *ngFor="let linha of qtdLinhasArray">
+                    <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                    <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                    <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 20px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                </div>
+            </div>
+            <div *ngIf="qtdPrintIndividual==1">
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+            </div>
+            <div *ngIf="qtdPrintIndividual==2">
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px" #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px" #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+            </div>
+            <div *ngIf="qtdPrintIndividual==0 && !maisDeUmaLinha">
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 25px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+                <ejs-barcodegenerator *ngIf="produto != null" #barcode id="barcode" [displayText]="displayText" style="display: inline-block; margin-left: 20px; margin-top: 10px"  #barcode height="130px" width="250px" mode="SVG" type="Codabar" [value]="produto.barCode"></ejs-barcodegenerator>
+            </div>
         </div>
     </div>
 </p-card>
