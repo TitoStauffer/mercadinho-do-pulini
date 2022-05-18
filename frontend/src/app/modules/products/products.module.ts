@@ -11,6 +11,7 @@ import {ProductFormComponent} from './product-form/product-form.component';
 import {ProductEntryComponent} from './product-entry/product-entry.component';
 import {InputNumberModule} from 'primeng';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ThermalPrintModule} from "ng-thermal-print";
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         ProductsRoutingModule,
         ReactiveFormsModule,
         SharedModule,
-        InputNumberModule
+        InputNumberModule,
+        ThermalPrintModule
     ],
     entryComponents: [
         ReadProductModalComponent

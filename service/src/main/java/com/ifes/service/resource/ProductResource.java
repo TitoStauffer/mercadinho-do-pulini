@@ -8,7 +8,15 @@ import com.ifes.service.service.dto.ProductSaleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
@@ -66,6 +74,11 @@ public class ProductResource {
         return ResponseEntity.ok(productService.getByBarCode(barCode));
     }
 
+    @GetMapping("/bar-code/terminal/{barcode}")
+    public String getByBarCodeForTerminal(@PathVariable("barcode") String barCode) {
+        return productService.getByBarCodeFromMicroterminal(barCode);
+    }
+
     @GetMapping("/rfid")
     public ResponseEntity<ProductEditDTO> getByRfid(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfid(rfid));
@@ -79,5 +92,10 @@ public class ProductResource {
     @GetMapping("/dropdown")
     public ResponseEntity<List<ProductDropdownDTO>> getAllProductDropdown(){
         return ResponseEntity.ok(productService.getAllProductDropDown());
+    }
+
+    @GetMapping("/cafeteria")
+    public ResponseEntity<List<ProductSaleDTO>> findAllIsCoffe() {
+        return ResponseEntity.ok(productService.findAllByIsCoffe());
     }
 }

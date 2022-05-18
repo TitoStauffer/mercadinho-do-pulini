@@ -84,4 +84,8 @@ export class ProductService {
     getAllSelect(): Observable<ProductListBarcode[]> {
         return this.http.get<ProductListBarcode[]>(`${this.baseUrl}/dropdown`);
     }
+
+    findAllByCoffee(): Observable<ProdutoVendaModel[]> {
+        return this.http.get<ProdutoVendaModel[]>(this.baseUrl + '/cafeteria');
+    }
 }

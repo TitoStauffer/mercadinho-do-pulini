@@ -5,7 +5,6 @@ import {LoginSuccessComponent} from '@nuvem/angular-base';
 import {AuthGuard} from "./guard/auth.guard";
 import {LoginComponent} from "./login/login.component";
 import {GuestGuard} from "./guard/guest.guard";
-import {VendasModule} from "./modules/vendas/vendas.module";
 import {AdminModule} from "./admin/admin.module";
 import {ProductsModule} from "./modules/products/products.module";
 import {BarCodeModule} from "./modules/bar-code/bar-code.module";

@@ -3,7 +3,6 @@ import {MenuItem, ScrollPanel} from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 import {UserModel} from "../models/user.model";
 import {PerfilEnum} from "../shared/Utils/PerfilEnum";
-import {TelaEnum} from "../shared/Utils/TelaEnum";
 
 @Component({
   selector: 'app-admin',
