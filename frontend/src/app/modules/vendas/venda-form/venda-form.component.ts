@@ -8,6 +8,7 @@ import {DetailsProductComponent} from "../../products/details-product/details-pr
 import {VendaModel} from "../../../models/venda.model";
 import {SaleService} from "../../../shared/services/sale.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
+import {ThermalPrinterService} from "../../../shared/services/thermal-printer.service";
 
 @Component({
   selector: 'app-venda-form',
@@ -27,7 +28,8 @@ export class VendaFormComponent implements OnInit {
   constructor(
       private modalService: DialogService,
       private saleService: SaleService,
-      private pageNotification: PageNotificationService
+      private pageNotification: PageNotificationService,
+      private printService: ThermalPrinterService
   ) { }
 
   ngOnInit(): void {
@@ -76,8 +78,10 @@ export class VendaFormComponent implements OnInit {
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;
-
+      console.log(sale.products[0]);
+      this.printService.printSale(sale.products[0]);
       this.saleService.save(sale).subscribe(() =>{
+          console.log("TEste");
           this.resetPage();
           this.pageNotification.addSuccessMessage('Venda finalizada com sucesso');
       });

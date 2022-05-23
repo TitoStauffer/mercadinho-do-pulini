@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ProductService} from "../../../shared/services/product.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProdutoVendaModel} from "../../../models/produto-venda.model";
 
 @Component({
-  selector: 'app-read-product',
-  templateUrl: './read-product.component.html'
+    selector: 'app-read-product',
+    templateUrl: './read-product.component.html'
 })
 export class ReadProductComponent implements OnInit {
 
@@ -16,7 +16,8 @@ export class ReadProductComponent implements OnInit {
     constructor(
         private productService: ProductService,
         private pageNotification: PageNotificationService,
-        private formBuilder: FormBuilder) { }
+        private formBuilder: FormBuilder) {
+    }
 
     ngOnInit(): void {
         this.form = this.buildReactiveForm();
@@ -31,24 +32,24 @@ export class ReadProductComponent implements OnInit {
     }
 
     searchProduct() {
-        if(!this.validateForm()) {
+        if (!this.validateForm()) {
             this.pageNotification.addErrorMessage('Campos preenchidos incorretamente. Preencha o código de barras e infome a medida');
             return;
         }
 
-        const product = this.productService.findByBarCode(this.form.controls['barCode'].value);
-        if(!product) {
-            this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
-            return;
-        }
-        this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
-        // this.fechar.emit(this.setMeasureProduct(product));
+        this.productService.findByBarCode(this.form.controls['barCode'].value)
+            .subscribe(res => {
+                const prod: ProdutoVendaModel = {...res, price: res.salePrice};
+                this.fechar.emit(this.setMeasureProduct(prod));
+                this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
+            })
+
     }
 
     setMeasureProduct(product: ProdutoVendaModel) {
         product.weight = this.form.controls['weight'].value;
         product.amount = this.form.controls['amount'].value;
-        if(product.amount) {
+        if (product.amount) {
             product.totalPrice = product.price * product.amount;
             return product;
         }
@@ -60,12 +61,12 @@ export class ReadProductComponent implements OnInit {
         return this.form.valid && (this.form.controls['amount'].value || this.form.controls['weight'].value);
     }
 
-    disableMeasure(){
-        if(this.form.controls['weight'].value) {
+    disableMeasure() {
+        if (this.form.controls['weight'].value) {
             this.disableAndEnableFields('amount', 'weight');
             return
         }
-        if(this.form.controls['amount'].value) {
+        if (this.form.controls['amount'].value) {
             this.disableAndEnableFields('weight', 'amount');
             return
         }

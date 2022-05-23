@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {PrintService, UsbDriver} from "ng-thermal-print";
 import {ProductModel} from "../../models/product.model";
+import {ProdutoVendaModel} from "../../models/produto-venda.model";
 
 @Injectable({
     providedIn: "root",
@@ -59,7 +60,7 @@ export class ThermalPrinterService {
     }
 
     printProduct(product: ProductModel): void {
-        if(!this.printerStatus) return;
+        if (!this.printerStatus) return;
         this.printService.init();
         this.printService
             .setBold(true)
@@ -70,6 +71,24 @@ export class ThermalPrinterService {
             .writeLine(`Codigo de barras: ${product.barCode}`)
             .writeLine(`Quantidade em estoque: ${product.inventoryAmount || product.inventoryWeight} ${product.inventoryWeight ? 'kg' : 'un'}`)
             .writeLine(`RFID: ${product.rfid}`)
+            .feed(1)
+            .cut('full')
+            .flush()
+        ;
+    }
+
+    printSale(product: ProdutoVendaModel): void {
+        if (!this.printerStatus) return;
+        this.printService.init();
+        this.printService
+            .setBold(true)
+            .writeLine("CUPOM FISCAL")
+            .setBold(false)
+            .feed(1)
+            .writeLine(`Descricao: ${product.description}`)
+            .writeLine(`Preco do produto: ${product.price}`)
+            .writeLine(`Quantidade: ${product.amount || product.weight} ${product.weight ? 'kg' : 'un'}`)
+            .writeLine(`Preco Total: ${product.totalPrice}`)
             .feed(1)
             .cut('full')
             .flush()

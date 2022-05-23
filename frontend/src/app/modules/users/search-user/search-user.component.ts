@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../shared/services/user.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
+import {UserService} from "../../../services/user.service";
 
 @Component({
     selector: 'app-search-user',
@@ -30,7 +30,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     search() {
-        const user = this.userService.findByCpf(this.form.value.cpf);
+        const user = this.userService.findByCPF(this.form.value.cpf);
 
         if(!user) {
             this.pageNotification.addErrorMessage('Usuário não foi localizado no sistema');
