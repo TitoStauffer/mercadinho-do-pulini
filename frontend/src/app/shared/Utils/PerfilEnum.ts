@@ -4,6 +4,7 @@ export class PerfilEnum {
     public static Caixa = 'Caixa';
     public static Estoque = 'Estoque';
     public static Recepcao = 'Recepcao';
+    public static Cafeteria = 'Cafeteria';
 }
 
 

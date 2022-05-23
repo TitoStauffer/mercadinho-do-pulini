@@ -5,12 +5,6 @@ import {FileUpload, SelectItem} from 'primeng';
 import {ProductService} from '../../../shared/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
-
-class City {
-    name: string;
-    code: string;
-}
-
 @Component({
     selector: 'app-product-form',
     templateUrl: './product-form.component.html',

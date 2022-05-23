@@ -37,16 +37,20 @@ export class ReadProductComponent implements OnInit {
             return;
         }
 
-        this.productService.findByBarCode(this.form.controls['barCode'].value)
-            .subscribe(res => {
-                const prod: ProdutoVendaModel = {...res, price: res.salePrice};
-                this.fechar.emit(this.setMeasureProduct(prod));
+        this.productService.findByBarCode(this.form.controls['barCode'].value).subscribe(
+            produto => {
+                if(!produto) {
+                    this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
+                    return;
+                }
                 this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
-            })
+                this.fechar.emit(this.setMeasureProduct(produto));
+            }
+        );
 
     }
 
-    setMeasureProduct(product: ProdutoVendaModel) {
+    setMeasureProduct(product: any) {
         product.weight = this.form.controls['weight'].value;
         product.amount = this.form.controls['amount'].value;
         if (product.amount) {

@@ -4,44 +4,12 @@ import {ProductModel} from '../../models/product.model';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {ProductListBarcode} from "../../models/product-list-barcode";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
-
-    listProducts: ProdutoVendaModel[] = [
-        {
-            id: 1,
-            description: 'Arroz Bela Dica',
-            price: 18.25,
-            barCode: '1111111111111',
-        },
-        {
-            id: 2,
-            description: 'Carne Bovina - Patinho',
-            price: 35.75,
-            barCode: '2222222222222'
-        },
-        {
-            id: 3,
-            description: 'Feijão Carioca',
-            price: 7.99,
-            barCode: '3333333333333'
-        },
-        {
-            id: 4,
-            description: 'Cerveja Budweiser cx/6',
-            price: 24.00,
-            barCode: '4444444444444'
-        },
-        {
-            id: 5,
-            description: 'Queijo Minas',
-            price: 23.45,
-            barCode: '5555555555555'
-        },
-    ];
 
     baseUrl = environment.apiUrl + 'product';
 
@@ -78,5 +46,13 @@ export class ProductService {
 
     registerEntry(id: number, amount: number): Observable<ProductModel> {
         return this.http.get<ProductModel>(`${this.baseUrl}/entrada/${id}?amount=${amount}`);
+    }
+
+    getAllSelect(): Observable<ProductListBarcode[]> {
+        return this.http.get<ProductListBarcode[]>(`${this.baseUrl}/dropdown`);
+    }
+
+    findAllByCoffee(): Observable<ProdutoVendaModel[]> {
+        return this.http.get<ProdutoVendaModel[]>(this.baseUrl + '/cafeteria');
     }
 }

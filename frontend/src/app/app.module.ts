@@ -12,6 +12,11 @@ import {ErrorModule, SecurityModule, VersionTagModule} from '@nuvem/angular-base
 import {DiarioErrosComponent} from './components/diario-erros/diario-erros.component';
 import {BlockUIModule} from 'ng-block-ui';
 import {LoginComponent} from "./login/login.component";
+import {
+    BarcodeGeneratorAllModule,
+    DataMatrixGeneratorAllModule,
+    QRCodeGeneratorAllModule
+} from "@syncfusion/ej2-angular-barcode-generator";
 
 @NgModule({
     declarations: [
@@ -20,6 +25,9 @@ import {LoginComponent} from "./login/login.component";
         LoginComponent
     ],
     imports: [
+        BarcodeGeneratorAllModule,
+        QRCodeGeneratorAllModule ,
+        DataMatrixGeneratorAllModule,
         BlockUIModule.forRoot({
             message: "Carregando..."
         }),

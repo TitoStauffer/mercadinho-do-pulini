@@ -1,11 +1,15 @@
 package com.ifes.service.service;
 
 import com.ifes.service.domain.Product;
+import com.ifes.service.domain.Sale;
+import com.ifes.service.domain.User;
 import com.ifes.service.repository.ProductRepository;
 import com.ifes.service.service.dto.ProductCreateDTO;
+import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.mapper.ProductCreateMapper;
+import com.ifes.service.service.mapper.ProductDropdownMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
 import com.ifes.service.service.mapper.ProductSaleMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +31,7 @@ public class ProductService {
     private final ProductCreateMapper productCreateMapper;
     private final ProductEditMapper productEditMapper;
     private final ProductSaleMapper productSaleMapper;
+    private final ProductDropdownMapper productDropdownMapper;
 
     public ProductCreateDTO save(ProductCreateDTO dto) {
         return productCreateMapper.toDTO(productRepository
@@ -75,20 +80,41 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException(MSG)));
     }
 
-    public void stockOff(List<ProductSaleDTO> products){
+    public List<Sale> stockOff(List<ProductSaleDTO> products, Long userId){
         List<Long> productsIds = getProductsIds(products);
         List<Product> stocksProducts = productRepository.findAllById(productsIds);
-        setStockOff(stocksProducts, products);
+
+        return setStockOff(stocksProducts, products, userId);
     }
 
-    private void setStockOff(List<Product> stocksProducts, List<ProductSaleDTO> products) {
+    private List<Sale> setStockOff(List<Product> stocksProducts, List<ProductSaleDTO> products, Long userId) {
+        List<Sale> sales = new ArrayList<>();
         stocksProducts.forEach(stockProduct -> products.forEach( product -> {
             if(product.getId().equals(stockProduct.getId())){
-                stockProduct.setInventoryAmount(stockProduct.getInventoryAmount() - product.getAmount());
-                stockProduct.setInventoryWeight(stockProduct.getInventoryWeight() - product.getWeight());
+                if(Objects.nonNull(stockProduct.getInventoryAmount()) && Objects.nonNull(product.getAmount())) {
+                    stockProduct.setInventoryAmount(stockProduct.getInventoryAmount() - product.getAmount());
+                }
+                if(Objects.nonNull(stockProduct.getInventoryWeight()) && Objects.nonNull(product.getWeight())) {
+                    stockProduct.setInventoryWeight(stockProduct.getInventoryWeight() - product.getWeight());
+                }
+                sales.add(createSale(stockProduct, product, userId));
             }
         }));
         productRepository.saveAllAndFlush(stocksProducts);
+        return sales;
+    }
+
+    private Sale createSale(Product stockProduct, ProductSaleDTO product, Long userId) {
+        Sale sale = new Sale();
+        sale.setProduct(stockProduct);
+        sale.setAmount(Double.parseDouble(product.getAmount().toString()));
+        sale.setWeight(product.getWeight());
+        sale.setProductPrice(stockProduct.getSalePrice());
+        User user = new User();
+        user.setId(userId);
+        sale.setUser(user);
+
+        return sale;
     }
 
     private List<Long> getProductsIds(List<ProductSaleDTO> products) {
@@ -111,5 +137,13 @@ public class ProductService {
 
     public String getByBarCodeFromMicroterminal(String barCode) {
         return productRepository.getProductFromMicroterminal(barCode);
+    }
+
+    public List<ProductSaleDTO> findAllByIsCoffe() {
+        return productRepository.findAllByIsCoffe();
+    }
+
+    public List<ProductDropdownDTO> getAllProductDropDown(){
+        return productDropdownMapper.toDTO(productRepository.findAll());
     }
 }
