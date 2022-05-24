@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PerfilEnum} from "../../shared/Utils/PerfilEnum";
-import {TelaEnum} from "../../shared/Utils/TelaEnum";
+import {PerfilEnum} from "../../shared/utils/PerfilEnum";
+import {TelaEnum} from "../../shared/utils/TelaEnum";
 
 @Component({
   selector: 'app-user-list',
@@ -15,7 +15,7 @@ export class PermissionListComponent implements OnInit {
 
     @Input() totalValue: number;
     @Input() itens: any[] = [
-        {name: PerfilEnum.Admin, tela: TelaEnum.Dashboard.name + ', ' + TelaEnum.Usuario.name + ', ' + TelaEnum.Permissaes.name + ', ' + TelaEnum.Produto.name + ', ' + TelaEnum.Venda.name },
+        {name: PerfilEnum.Admin, tela: TelaEnum.Dashboard.name + ', ' + TelaEnum.Usuario.name + ', ' + TelaEnum.Permissaes.name + ', ' + TelaEnum.Produto.name + ', ' + TelaEnum.Venda.name + ', ' + TelaEnum.CodigoDeBarras.name},
         {name: PerfilEnum.Cliente, tela: TelaEnum.Dashboard.name},
         {name: PerfilEnum.Caixa, tela: TelaEnum.Dashboard.name + ', ' +  TelaEnum.Produto.name + ', ' + TelaEnum.Venda.name },
         {name: PerfilEnum.Estoque, tela: TelaEnum.Dashboard.name + ', ' + TelaEnum.Produto.name },

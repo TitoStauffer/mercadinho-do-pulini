@@ -5,6 +5,7 @@ export class TelaEnum {
     public static Produto = { name: 'Produto', path: 'produtos'};
     public static Venda = { name: 'Venda', path: 'vendas'};
     public static Relatorio1 = { name: 'Relatorio 1', path: 'relatorio1'};
+    public static CodigoDeBarras = { name: 'Código de Barras', path: 'barcodes'};
 
 }
 

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {UserModel} from "../models/user.model";
-import {TelaEnum} from "../shared/Utils/TelaEnum";
-import {PerfilEnum} from "../shared/Utils/PerfilEnum";
+import {TelaEnum} from "../shared/utils/TelaEnum";
+import {PerfilEnum} from "../shared/utils/PerfilEnum";
 
 @Injectable({
   providedIn: 'root'

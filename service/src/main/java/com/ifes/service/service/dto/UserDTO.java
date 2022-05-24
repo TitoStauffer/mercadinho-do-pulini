@@ -16,4 +16,5 @@ public class UserDTO implements Serializable {
     private String profile;
     private String cpf;
     private String fingerprint;
+    private String rfid;
 }
