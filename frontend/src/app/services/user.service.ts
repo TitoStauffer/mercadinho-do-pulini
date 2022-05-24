@@ -28,6 +28,10 @@ export class UserService {
         return this.http.get<UserModel>(this.resourceUrl + '/cpf/' + cpf);
     }
 
+    findByRFID(rfid: string): Observable<UserModel> {
+        return this.http.get<UserModel>(this.resourceUrl + '/rfid/' + rfid);
+    }
+
     findAll(): Observable<UserModel[]> {
         return this.http.get<UserModel[]>(this.resourceUrl);
     }

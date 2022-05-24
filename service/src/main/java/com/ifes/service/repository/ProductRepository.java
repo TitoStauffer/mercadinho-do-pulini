@@ -5,7 +5,6 @@ import com.ifes.service.service.dto.ProductSaleDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,5 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     String getProductFromMicroterminal(@Param("barcode") String barCode);
 
     @Query("select new com.ifes.service.service.dto.ProductSaleDTO(p.id, p.description, p.salePrice, p.barCode, p.image) from Product p where p.isCoffeeShop = true")
-    List<ProductSaleDTO> findAllByIsCoffe();
+    Optional<List<ProductSaleDTO>> findAllByIsCoffe();
 }
