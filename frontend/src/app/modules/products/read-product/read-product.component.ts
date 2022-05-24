@@ -31,7 +31,6 @@ export class ReadProductComponent implements OnInit {
     }
 
     searchProduct() {
-        console.log("produto")
         if(!this.validateForm()) {
             this.pageNotification.addErrorMessage('Campos preenchidos incorretamente. Preencha o código de barras e infome a medida');
             return;
