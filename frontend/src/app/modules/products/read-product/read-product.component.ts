@@ -1,8 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ProductService} from "../../../shared/services/product.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProdutoVendaModel} from "../../../models/produto-venda.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-read-product',
