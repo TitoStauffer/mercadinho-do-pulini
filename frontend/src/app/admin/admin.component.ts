@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, 
 import {MenuItem, ScrollPanel} from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 import {UserModel} from "../models/user.model";
-import {PerfilEnum} from "../shared/Utils/PerfilEnum";
+import {PerfilEnum} from "../shared/utils/PerfilEnum";
 
 @Component({
   selector: 'app-admin',

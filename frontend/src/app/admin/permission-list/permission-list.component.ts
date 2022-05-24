@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PerfilEnum} from "../../shared/Utils/PerfilEnum";
-import {TelaEnum} from "../../shared/Utils/TelaEnum";
+import {PerfilEnum} from "../../shared/utils/PerfilEnum";
+import {TelaEnum} from "../../shared/utils/TelaEnum";
 
 @Component({
   selector: 'app-user-list',
