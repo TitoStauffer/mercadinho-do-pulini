@@ -89,6 +89,11 @@ public class ProductResource {
         return ResponseEntity.ok(productService.getByRfidForSale(rfid));
     }
 
+    @GetMapping("/bar-code/sale")
+    public ResponseEntity<ProductSaleDTO> getByBarCodeForSale(@RequestParam(name = "barCode") String barCode) {
+        return ResponseEntity.ok(productService.getByBarCodeForSale(barCode));
+    }
+
     @GetMapping("/dropdown")
     public ResponseEntity<List<ProductDropdownDTO>> getAllProductDropdown(){
         return ResponseEntity.ok(productService.getAllProductDropDown());

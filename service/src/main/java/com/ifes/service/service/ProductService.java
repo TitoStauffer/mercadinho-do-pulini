@@ -159,4 +159,10 @@ public class ProductService {
     public List<ProductDropdownDTO> getAllProductDropDown(){
         return productDropdownMapper.toDTO(productRepository.findAll());
     }
+
+    public ProductSaleDTO getByBarCodeForSale(String barCode) {
+        return productSaleMapper.toDTO(productRepository
+                .findByBarCode(barCode)
+                .orElseThrow(() -> new RuntimeException(MSG)));
+    }
 }

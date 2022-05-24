@@ -52,7 +52,7 @@ public class UserResource {
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
-        return  new ResponseEntity<>(userService.login(loginDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.login(loginDTO), HttpStatus.OK);
     }
 
     @PostMapping

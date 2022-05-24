@@ -31,12 +31,13 @@ export class ReadProductComponent implements OnInit {
     }
 
     searchProduct() {
+        console.log("produto")
         if(!this.validateForm()) {
             this.pageNotification.addErrorMessage('Campos preenchidos incorretamente. Preencha o código de barras e infome a medida');
             return;
         }
 
-        this.productService.findByBarCode(this.form.controls['barCode'].value).subscribe(
+        this.productService.findByBarCodeForSale(this.form.controls['barCode'].value).subscribe(
             produto => {
                 if(!produto) {
                     this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
