@@ -55,4 +55,8 @@ export class ProductService {
     findAllByCoffee(): Observable<ProdutoVendaModel[]> {
         return this.http.get<ProdutoVendaModel[]>(this.baseUrl + '/cafeteria');
     }
+
+    findByBarCodeForSale(barCode: string): Observable<ProdutoVendaModel> {
+        return this.http.get<ProdutoVendaModel>(`${this.baseUrl}/bar-code/sale?barCode=${barCode}`);
+    }
 }
