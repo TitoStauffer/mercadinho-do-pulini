@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PageNotificationService} from "@nuvem/primeng-components";
 import {UserService} from "../../../services/user.service";
 import {UserModel} from "../../../models/user.model";
+import {MessageService} from "primeng";
 
 @Component({
     selector: 'app-search-user-rfid',
@@ -19,7 +20,8 @@ export class SearchUserRfidComponent implements OnInit {
     constructor(
         private userService: UserService,
         private formBuilder: FormBuilder,
-        private pageNotification: PageNotificationService
+        private pageNotification: PageNotificationService,
+        private messageService: MessageService
     ) { }
 
     ngOnInit(): void {
@@ -35,7 +37,7 @@ export class SearchUserRfidComponent implements OnInit {
     search() {
         this.userService.findByRFID(this.form.value.rfid)
             .subscribe(user => this.userFound = user,
-                () => this.pageNotification.addErrorMessage("Usuário não encontrado"));
+                (error) => this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message}));
     }
 
     finishCoffeeSale(){

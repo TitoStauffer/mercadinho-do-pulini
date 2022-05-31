@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ProductListBarcode} from "../../models/product-list-barcode";
+import {SelectItem} from "primeng";
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +13,7 @@ import {ProductListBarcode} from "../../models/product-list-barcode";
 export class ProductService {
 
     baseUrl = environment.apiUrl + 'product';
+    baseUrlCategory = environment.apiUrl + 'category';
 
     constructor(private http: HttpClient) {
     }
@@ -58,5 +60,9 @@ export class ProductService {
 
     findByBarCodeForSale(barCode: string): Observable<ProdutoVendaModel> {
         return this.http.get<ProdutoVendaModel>(`${this.baseUrl}/bar-code/sale?barCode=${barCode}`);
+    }
+
+    findAllCategories():Observable<SelectItem[]> {
+        return this.http.get<SelectItem[]>(`${this.baseUrlCategory}`);
     }
 }

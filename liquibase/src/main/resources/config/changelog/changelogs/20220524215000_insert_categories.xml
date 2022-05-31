@@ -1,0 +1,15 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20220524215000-01" author="tito.stauffer">
+        <insert tableName="category" >
+            <column name="id">1</column>
+            <column name="description">Massas</column>
+        </insert>
+
+        <insert tableName="category" >
+            <column name="id">2</column>
+            <column name="description">Bebidas</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

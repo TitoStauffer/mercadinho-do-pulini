@@ -3,6 +3,7 @@ import {ProductService} from '../../../shared/services/product.service';
 import {ProductModel} from '../../../models/product.model';
 import {Router} from '@angular/router';
 import {ThermalPrinterService} from "../../../shared/services/thermal-printer.service";
+import {MessageService} from "primeng";
 
 @Component({
     selector: 'app-product-list',
@@ -22,6 +23,7 @@ export class ProductListComponent implements OnInit {
     products: ProductModel[] = [];
 
     constructor(
+        private messageService: MessageService,
         private productService: ProductService,
         private router: Router,
         private printService: ThermalPrinterService
@@ -42,11 +44,10 @@ export class ProductListComponent implements OnInit {
     delete(id: number): void {
         this.productService.delete(id).subscribe(
             () => {
-                alert('Producto excluido com sucesso!');
+                this.messageService.add({severity: "success", summary: "Sucesso", detail: "Produto excluido com sucesso!"})
                 window.location.reload();
             },
-            () => alert('Erro ao excluir produto!')
-        );
+            () =>                 this.messageService.add({severity: "error", summary: "Erro", detail: "Erro ao excluir produto!"}));
     }
 
     edit(id: number): void {
