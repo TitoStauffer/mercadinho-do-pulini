@@ -1,5 +1,7 @@
 package com.ifes.service.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductEditDTO implements Serializable {
     private Long id;
     private String description;
@@ -19,6 +22,7 @@ public class ProductEditDTO implements Serializable {
     private Double purchasePrice;
     private Double salePrice;
     private String image;
+    @JsonProperty("isCoffeeShop")
     private boolean isCoffeeShop;
     private Integer categoryId;
 }

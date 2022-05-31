@@ -64,7 +64,4 @@ public class UserResource {
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
         return  new ResponseEntity<>(userService.save(userDTO), HttpStatus.OK);
     }
-
-
-
 }

@@ -7,6 +7,7 @@ import com.ifes.service.service.dto.SaleCancelProductDTO;
 import com.ifes.service.service.dto.SaleDTO;
 import com.ifes.service.service.mapper.ProductSaleMapper;
 import com.ifes.service.service.mapper.SaleMapper;
+import com.ifes.service.service.mapper.SaleProductSaleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -28,13 +30,18 @@ public class SaleService {
 
     private final ProductSaleMapper productSaleMapper;
 
+    private final SaleProductSaleMapper saleProductSaleMapper;
+
     private static final String FINISHED = "Finalizado";
     private static final String AWAITING = "Pendente";
 
     public void finishSale(SaleDTO sale, Boolean isCoffee){
-        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId());
-        sales.forEach(sale1 -> sale1.setStatus(isCoffee ? FINISHED : AWAITING));
+        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId(), isCoffee);
+        sales.forEach(sale1 -> sale1.setStatus(Boolean.FALSE.equals(isCoffee) ? FINISHED : AWAITING));
         saleRepository.saveAllAndFlush(sales);
+        if(Boolean.FALSE.equals(isCoffee)) {
+            saleRepository.finishCoffeeSales(sale.getUserId(), sale.getOtherUserIds());
+        }
     }
 
     public List<SaleDTO> findAllCoffeeSaleAndIsUserId(Long id, boolean isUserId) {
@@ -100,5 +107,16 @@ public class SaleService {
             }
         });
         return salesDTO;
+    }
+
+    public List<ProductSaleDTO> getOpenSaleByUserId(Long id) {
+        List<Sale> sales = saleRepository.findAllByUserIdAndStatus(id, AWAITING);
+        List<ProductSaleDTO> products = saleProductSaleMapper.toDTO(sales);
+        products.forEach(item -> item.setTotalPrice(
+                item.getPrice() *
+                        (Objects.nonNull(item.getAmount()) ? item.getAmount() : item.getWeight())
+                )
+        );
+        return products;
     }
 }

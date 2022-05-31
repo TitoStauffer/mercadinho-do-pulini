@@ -8,6 +8,8 @@ import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
+import com.ifes.service.service.dto.Relatorio1RequestDTO;
+import com.ifes.service.service.dto.Relatorio1ResponseDTO;
 import com.ifes.service.service.exception.RegraNegocioException;
 import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductDropdownMapper;
@@ -81,12 +83,14 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException(MSG)));
     }
 
-    public List<Sale> stockOff(List<ProductSaleDTO> saleProducts, Long userId){
+    public List<Sale> stockOff(List<ProductSaleDTO> saleProducts, Long userId, Boolean isCoffeeShop){
         List<Sale> sale = new ArrayList<>();
 
         saleProducts.forEach(saleProduct -> {
             var product = this.findById(saleProduct.getId());
-            quantityAndHeightCalculator(saleProduct, product);
+            if(Boolean.FALSE.equals(isCoffeeShop)) {
+                quantityAndHeightCalculator(saleProduct, product);
+            }
             sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
         });
 
@@ -128,6 +132,7 @@ public class ProductService {
         sale.setProduct(product);
         sale.setProductPrice(productSale.getPrice());
         sale.setUser(user);
+        sale.setId(productSale.getSaleId());
 
         return sale;
     }
@@ -164,5 +169,9 @@ public class ProductService {
         return productSaleMapper.toDTO(productRepository
                 .findByBarCode(barCode)
                 .orElseThrow(() -> new RuntimeException(MSG)));
+    }
+
+    public List<Relatorio1ResponseDTO> getRelatorio1Result(Relatorio1RequestDTO id) {
+        return null;
     }
 }

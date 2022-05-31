@@ -48,6 +48,7 @@ export class UserComponent implements OnInit {
             cpf: [null, [Validators.required]],
             name: [null, [Validators.required]],
             profile: [null, [Validators.required]],
+            rfid: [null],
             fingerprint: [null]
         },{updateOn:"change"})
     }

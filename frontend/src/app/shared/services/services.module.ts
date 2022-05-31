@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {ProductService} from "./product.service";
 import {SaleService} from "./sale.service";
 import {DialogService} from "primeng";
-import {UserService} from "./user.service";
 import {WeighingScaleService} from "./weighing-scale.service";
 
 
@@ -17,7 +16,6 @@ import {WeighingScaleService} from "./weighing-scale.service";
         ProductService,
         SaleService,
         DialogService,
-        UserService,
         WeighingScaleService
     ]
 })

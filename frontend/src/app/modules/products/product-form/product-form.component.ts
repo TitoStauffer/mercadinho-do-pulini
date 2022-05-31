@@ -116,7 +116,6 @@ export class ProductFormComponent implements OnInit {
         }
         const image: string = await this.convertBase64(this.productImageElementRef.files[0]);
         const newProduct: ProductModel = {...this.productForm.value, image};
-        console.log(newProduct);
         if (this.currentAction === 'edit') {
             this.productService.update(newProduct).subscribe(
                 () => {

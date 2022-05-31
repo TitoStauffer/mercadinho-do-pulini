@@ -39,5 +39,4 @@ public class User implements Serializable {
     @Column(name = "rfid")
     private String rfid;
 
-
 }
