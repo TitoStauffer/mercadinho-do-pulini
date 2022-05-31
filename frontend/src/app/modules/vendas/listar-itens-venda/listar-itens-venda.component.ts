@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Column} from "@nuvem/primeng-components";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProdutoVendaModel} from "../../../models/produto-venda.model";
 
 @Component({
@@ -21,9 +20,15 @@ export class ListarItensVendaComponent implements OnInit {
 
     @Input() itens: ProdutoVendaModel[] = [];
 
+    @Output() remove = new EventEmitter();
+
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    removeItem(product: ProdutoVendaModel) {
+        this.remove.emit(product)
     }
 
 }
