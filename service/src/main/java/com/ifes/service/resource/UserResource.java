@@ -64,10 +64,4 @@ public class UserResource {
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
         return  new ResponseEntity<>(userService.save(userDTO), HttpStatus.OK);
     }
-
-    @GetMapping("/rfid/{rfid}")
-    public ResponseEntity<UserDTO> getByRfid(@PathVariable("rfid") String rfid) {
-        return ResponseEntity.ok(userService.getByRfid(rfid));
-    }
-
 }

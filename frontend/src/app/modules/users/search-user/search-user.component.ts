@@ -45,7 +45,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     search() {
-        this.userService.findByRfid(this.form.value.cpf)
+        this.userService.findByRFID(this.form.value.cpf)
             .subscribe(user => {
                     this.pageNotification.addSuccessMessage('Usuário encontrado com sucesso');
                     this.loadSale(user);
