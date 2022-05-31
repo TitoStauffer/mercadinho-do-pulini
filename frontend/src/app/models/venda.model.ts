@@ -4,4 +4,5 @@ export class VendaModel {
     id: number;
     userId: number;
     products: ProdutoVendaModel[];
+    otherUserIds: number[] = [];
 }

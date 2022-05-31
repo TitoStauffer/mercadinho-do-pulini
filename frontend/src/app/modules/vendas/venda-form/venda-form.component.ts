@@ -19,7 +19,7 @@ import {DialogConfig} from "../../../shared/Utils/dialog-config";
 export class VendaFormComponent implements OnInit {
 
     principalUser: UserModel;
-    nameOtherClients: string[] = [];
+    nameOtherClients: any[] = [];
     itens: ProdutoVendaModel[] = [];
     totalPrice: number;
     lastProduct: ProdutoVendaModel = new ProdutoVendaModel();
@@ -48,12 +48,13 @@ export class VendaFormComponent implements OnInit {
                     if (!this.principalUser) {
                         this.principalUser = res.user;
                         this.itens = res.products;
+                        this.totalPrice = this.sumTotal()
                         return;
-                    } else {
-                        if (!this.userAlreadyAdded(res.user)) {
-                            res.products.forEach(item => this.itens.push(item));
-                            this.nameOtherClients.push(res.user.name);
-                        }
+                    }
+                    if (!this.userAlreadyAdded(res.user)) {
+                        res.products.forEach(item => this.itens.push(item));
+                        this.nameOtherClients.push({id: res.user.id, name: res.user.name});
+                        this.totalPrice = this.sumTotal()
                     }
                 }
             }
@@ -61,8 +62,7 @@ export class VendaFormComponent implements OnInit {
     }
 
     userAlreadyAdded(user: UserModel): boolean {
-        if (this.nameOtherClients.includes(user.name)) return true;
-        return this.principalUser.name == user.name;
+        return this.nameOtherClients.map(user => user.id).includes(user.id) || this.principalUser.name == user.name;
     }
 
     addProduct() {
@@ -81,16 +81,32 @@ export class VendaFormComponent implements OnInit {
         })
     }
 
-    sumTotal() {
-        return this.itens
-            .map(item => item.totalPrice)
-            .reduce((total, price) => total + price, 0);
-    }
+  removeProduct(product: ProdutoVendaModel) {
+      if(product.saleId) {
+          this.saleService.cancelSale({saleId: product.saleId, productId: product.id})
+              .subscribe(res => this.pageNotification.addSuccessMessage("Produto removido com sucesso"));
+      }
 
-    finishSale() {
-        const sale = new VendaModel();
-        sale.products = this.itens;
-        sale.userId = this.principalUser.id;
+      const index = this.itens.findIndex(prod => prod.id === product.id);
+
+      if(index !== -1) {
+          this.itens.splice(index, 1);
+          this.totalPrice = this.sumTotal();
+          this.pageNotification.addSuccessMessage("Produto removido com sucesso");
+      }
+  }
+
+  sumTotal() {
+      return this.itens
+          .map(item => item.totalPrice)
+          .reduce((total, price) => total + price, 0);
+  }
+
+  finishSale() {
+      const sale = new VendaModel();
+      sale.products = this.itens;
+      sale.userId = this.principalUser.id;
+      sale.otherUserIds = this.nameOtherClients.map(clients => clients.id);
 
         this.saleService.save(sale).subscribe(() => {
             this.resetPage();

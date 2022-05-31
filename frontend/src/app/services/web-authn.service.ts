@@ -36,7 +36,6 @@ export class WebAuthnService {
   // @ts-ignore
     webAuthnSignin(user: UserModel): Promise<CredentialType> {
     const allowCredentials: PublicKeyCredentialDescriptor[] = user.credentials.map(c => {
-      console.log(c.credentialId);
       return { type: 'public-key', id: Uint8Array.from(Object.values(c.credentialId)) };
     });
 

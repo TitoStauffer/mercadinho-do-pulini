@@ -36,9 +36,12 @@ public class SaleService {
     private static final String AWAITING = "Pendente";
 
     public void finishSale(SaleDTO sale, Boolean isCoffee){
-        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId());
-        sales.forEach(sale1 -> sale1.setStatus(Boolean.TRUE.equals(isCoffee) ? FINISHED : AWAITING));
+        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId(), isCoffee);
+        sales.forEach(sale1 -> sale1.setStatus(Boolean.FALSE.equals(isCoffee) ? FINISHED : AWAITING));
         saleRepository.saveAllAndFlush(sales);
+        if(Boolean.FALSE.equals(isCoffee)) {
+            saleRepository.finishCoffeeSales(sale.getUserId(), sale.getOtherUserIds());
+        }
     }
 
     public List<SaleDTO> findAllCoffeeSaleAndIsUserId(Long id, boolean isUserId) {
