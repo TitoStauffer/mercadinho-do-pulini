@@ -87,9 +87,11 @@ public class ProductService {
         List<Sale> sale = new ArrayList<>();
 
         saleProducts.forEach(saleProduct -> {
-            var product = this.findById(saleProduct.getId());
-            quantityAndHeightCalculator(saleProduct, product);
-            sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
+            if(Boolean.TRUE.equals(saleProduct.getAwaitingPayment())) {
+                var product = this.findById(saleProduct.getId());
+                quantityAndHeightCalculator(saleProduct, product);
+                sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
+            }
         });
 
         return sale;

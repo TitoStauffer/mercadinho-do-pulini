@@ -19,6 +19,7 @@ public class ProductSaleDTO implements Serializable {
     private String image;
     private Double totalPrice;
     private String rfid;
+    private Boolean awaitingPayment = false;
 
     public ProductSaleDTO(Long id, String description, Double price, String barCode, String image) {
         this.id = id;
