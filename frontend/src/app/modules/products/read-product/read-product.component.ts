@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ProductService} from "../../../shared/services/product.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProdutoVendaModel} from "../../../models/produto-venda.model";
 
 @Component({
     selector: 'app-read-product',
@@ -37,9 +36,9 @@ export class ReadProductComponent implements OnInit {
             return;
         }
 
-        this.productService.findByBarCode(this.form.controls['barCode'].value).subscribe(
+        this.productService.findByBarCodeForSale(this.form.controls['barCode'].value).subscribe(
             produto => {
-                if(!produto) {
+                if (!produto) {
                     this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
                     return;
                 }

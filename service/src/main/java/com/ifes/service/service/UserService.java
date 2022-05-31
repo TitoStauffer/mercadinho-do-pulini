@@ -74,4 +74,8 @@ public class UserService {
                 .orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
         return userMapper.toDTO(entity);
     }
+    public UserDTO findByRFID(String rfid) {
+        User user = userRepository.findByRfid(rfid).orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
+        return userMapper.toDTO(user);
+    }
 }

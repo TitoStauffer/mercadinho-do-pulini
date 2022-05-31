@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import {UserService} from "../../services/user.service";
-import {PerfilEnum} from "../../shared/Utils/PerfilEnum";
+import {PerfilEnum} from "../../shared/utils/PerfilEnum";
 import {SelectItem} from "primeng";
 import {WebAuthnService} from "../../services/web-authn.service";
-import * as CBOR from '../../shared/Utils/cbor.js';
+import * as CBOR from '../../shared/utils/cbor.js';
 
 export interface DecodedAttestionObj {
     attStmt: {
@@ -48,6 +48,7 @@ export class UserComponent implements OnInit {
             cpf: [null, [Validators.required]],
             name: [null, [Validators.required]],
             profile: [null, [Validators.required]],
+            rfid: [null],
             fingerprint: [null]
         },{updateOn:"change"})
     }

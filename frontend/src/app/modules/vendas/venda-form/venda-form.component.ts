@@ -9,6 +9,7 @@ import {VendaModel} from "../../../models/venda.model";
 import {SaleService} from "../../../shared/services/sale.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
 import {ThermalPrinterService} from "../../../shared/services/thermal-printer.service";
+import {DialogConfig} from "../../../shared/Utils/dialog-config";
 
 @Component({
   selector: 'app-venda-form',
@@ -38,7 +39,7 @@ export class VendaFormComponent implements OnInit {
   readCard() {
     const modal = this.modalService.open(
         SearchUserModalComponent,
-        {}
+        new DialogConfig(null, 'Buscar cliente')
     );
 
     modal.onClose.subscribe(res => {
@@ -58,7 +59,7 @@ export class VendaFormComponent implements OnInit {
   addProduct(){
       const modal = this.modalService.open(
           ReadProductModalComponent,
-          {}
+          new DialogConfig(null, 'Buscar produto')
       );
 
       modal.onClose.subscribe(res => {
@@ -78,14 +79,11 @@ export class VendaFormComponent implements OnInit {
   }
 
   finishSale() {
-      console.log(this.itens);
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;
-      console.log(sale.products[0]);
-      this.printService.printSale(sale.products[0]);
+
       this.saleService.save(sale).subscribe(() =>{
-          console.log("TEste");
           this.resetPage();
           this.pageNotification.addSuccessMessage('Venda finalizada com sucesso');
       });

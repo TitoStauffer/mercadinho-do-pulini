@@ -3,28 +3,28 @@
         <h2> Realizar Venda</h2>
     </div>
     <div class="ui-g-12">
-        <div class="ui-g-6">
+        <div class="ui-g-8">
             <p-table [value]="itens">
-                <ng-template pTemplate="header" let-columns>
+                <ng-template pTemplate="header">
                     <tr>
                         <th>Quantidade</th>
                         <th>Imagem</th>
                         <th>Produto</th>
                         <th>Valor (unitário)</th>
                         <th>Valor Total</th>
-                        <th></th>
+                        <th>Alterar Quantidade</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
                     <tr>
                         <td>{{item.amount || 0}}</td>
-                        <td><img [src]="getImage(item)" alt="Imagem Produto" width="100rem"></td>
+                        <td><img [src]="getImage(item)" alt="Imagem Produto" width="50rem"></td>
                         <td>{{item.description}}</td>
                         <td>{{item.price | currency: 'R$'}}</td>
                         <td>{{(item.totalPrice || 0.0) | currency: 'R$'}}</td>
                         <td>
-                            <div class="ui-g-12">
-                                <button pButton style="margin: 5px" class="p-button-raised p-button-rounded" icon="pi pi-plus" (click)="addAmount(item)"></button>
+                            <div class="ui-g-12" style="display: flex; justify-content: space-around; align-content: center; align-items: center">
+                                <button pButton class="p-button-raised p-button-rounded" icon="pi pi-plus" (click)="addAmount(item)"></button>
                                 <button pButton class="p-button-raised p-button-rounded" icon="pi pi-minus" (click)="removeAmount(item)"></button>
                             </div>
                         </td>
@@ -32,17 +32,14 @@
                 </ng-template>
             </p-table>
         </div>
-        <div class="ui-g-6" style="padding-left: 15px">
-            <h3>
-                Valor Total: {{getTotalValue()}}
-            </h3>
-            <div class="ui-g-6">
-                <div class="ui-g-4">
-                    <button pButton label="Voltar"></button>
-                </div>
-                <div class="ui-g-8">
-                    <button pButton label="Finalizar Compra" (click)="finishSale()"></button>
-                </div>
+        <div class="ui-g-4" style="padding-left: 15px">
+            <div class="ui-g" style="display:flex;">
+                <h3 class="ui-g-12">
+                    Valor Total: {{getTotalValue() | currency: 'R$'}}
+                </h3>
+            </div>
+            <div class="ui-g">
+                <button class="ui-g-6" pButton label="Finalizar Compra" (click)="finishSale()"></button>
             </div>
         </div>
     </div>

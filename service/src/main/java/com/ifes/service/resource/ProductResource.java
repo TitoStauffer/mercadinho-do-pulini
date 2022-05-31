@@ -5,6 +5,8 @@ import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
+import com.ifes.service.service.dto.Relatorio1RequestDTO;
+import com.ifes.service.service.dto.Relatorio1ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,11 @@ public class ProductResource {
                 .buildAndExpand(persisted.getId()).toUri();
         response.setHeader("Location", uri.toASCIIString());
         return ResponseEntity.created(uri).body(persisted);
+    }
+
+    @PostMapping("/relatorio1")
+    public ResponseEntity<List<Relatorio1ResponseDTO>> getRelatorioProdutos(@RequestBody Relatorio1RequestDTO dto) {
+        return ResponseEntity.ok(productService.getRelatorio1Result(dto));
     }
 
     @PutMapping
@@ -87,6 +94,11 @@ public class ProductResource {
     @GetMapping("/rfid/sale")
     public ResponseEntity<ProductSaleDTO> getByRfidForSale(@RequestParam(name = "rfid") String rfid) {
         return ResponseEntity.ok(productService.getByRfidForSale(rfid));
+    }
+
+    @GetMapping("/bar-code/sale")
+    public ResponseEntity<ProductSaleDTO> getByBarCodeForSale(@RequestParam(name = "barCode") String barCode) {
+        return ResponseEntity.ok(productService.getByBarCodeForSale(barCode));
     }
 
     @GetMapping("/dropdown")

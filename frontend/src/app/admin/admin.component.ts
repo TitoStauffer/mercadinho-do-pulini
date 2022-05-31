@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, 
 import {MenuItem, ScrollPanel} from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 import {UserModel} from "../models/user.model";
-import {PerfilEnum} from "../shared/Utils/PerfilEnum";
+import {PerfilEnum} from "../shared/utils/PerfilEnum";
 
 @Component({
   selector: 'app-admin',
@@ -64,7 +64,9 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
               { label: 'Entrada de produto', icon: 'people', routerLink: ['./produtos/entrada'] },
               { label: 'Venda', icon: 'people', routerLink: ['./vendas'] },
               { label: 'Código de Barra', icon: 'people', routerLink: ['./barcodes'] },
-              { label: 'Cafeteria', icon: 'people', routerLink: ['./vendas/cafeteria'] }
+              { label: 'Cafeteria', icon: 'people', routerLink: ['./vendas/cafeteria'] },
+              { label: 'Relatorio 1', icon: 'people', routerLink: ['./relatorio1'] },
+              { label: 'Relatorio 2', icon: 'people', routerLink: ['./relatorio2'] },
           ];
       }
       if (PerfilEnum.Caixa === perfil) {

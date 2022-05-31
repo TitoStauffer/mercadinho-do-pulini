@@ -45,9 +45,14 @@ public class UserResource {
         return  new ResponseEntity<>(userService.findByCPF(cpf), HttpStatus.OK);
     }
 
+    @GetMapping("/rfid/{rfid}")
+    public ResponseEntity<UserDTO> findByRFID(@PathVariable String rfid) {
+        return  new ResponseEntity<>(userService.findByRFID(rfid), HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
-        return  new ResponseEntity<>(userService.login(loginDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.login(loginDTO), HttpStatus.OK);
     }
 
     @PostMapping

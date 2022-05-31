@@ -7,9 +7,8 @@ import {UserModel} from "../admin/models/userModel";
 export class WebAuthnService {
 
   constructor() { }
-
-  // @ts-ignore
-    webAuthnSignup(user: UserModel): Promise<CredentialType> {
+// @ts-ignore
+  webAuthnSignup(user: UserModel): Promise<CredentialType> {
     const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
       challenge: Uint8Array.from('someChallengeIsHereComOn', c => c.charCodeAt(0)),
       rp: {

@@ -10,11 +10,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO implements Serializable {
+public class Relatorio1ResponseDTO implements Serializable {
     private Long id;
-    private String name;
-    private String profile;
-    private String cpf;
-    private String fingerprint;
-    private String rfid;
+    private String description;
+    private String totalValue;
+    private String quantidade;
+
 }

@@ -8,6 +8,9 @@ import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
+import com.ifes.service.service.dto.Relatorio1RequestDTO;
+import com.ifes.service.service.dto.Relatorio1ResponseDTO;
+import com.ifes.service.service.exception.RegraNegocioException;
 import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductDropdownMapper;
 import com.ifes.service.service.mapper.ProductEditMapper;
@@ -80,51 +83,59 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException(MSG)));
     }
 
-    public List<Sale> stockOff(List<ProductSaleDTO> products, Long userId){
-        List<Long> productsIds = getProductsIds(products);
-        List<Product> stocksProducts = productRepository.findAllById(productsIds);
+    public List<Sale> stockOff(List<ProductSaleDTO> saleProducts, Long userId){
+        List<Sale> sale = new ArrayList<>();
 
-        return setStockOff(stocksProducts, products, userId);
+        saleProducts.forEach(saleProduct -> {
+            var product = this.findById(saleProduct.getId());
+            quantityAndHeightCalculator(saleProduct, product);
+            sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
+        });
+
+        return sale;
     }
 
-    private List<Sale> setStockOff(List<Product> stocksProducts, List<ProductSaleDTO> products, Long userId) {
-        List<Sale> sales = new ArrayList<>();
-        stocksProducts.forEach(stockProduct -> products.forEach( product -> {
-            if(product.getId().equals(stockProduct.getId())){
-                if(Objects.nonNull(stockProduct.getInventoryAmount()) && Objects.nonNull(product.getAmount())) {
-                    stockProduct.setInventoryAmount(stockProduct.getInventoryAmount() - product.getAmount());
-                }
-                if(Objects.nonNull(stockProduct.getInventoryWeight()) && Objects.nonNull(product.getWeight())) {
-                    stockProduct.setInventoryWeight(stockProduct.getInventoryWeight() - product.getWeight());
-                }
-                sales.add(createSale(stockProduct, product, userId));
+    private void quantityAndHeightCalculator(ProductSaleDTO saleProduct, Product product){
+        if (Objects.nonNull(product.getInventoryAmount()) && Objects.nonNull(saleProduct.getAmount())) {
+            this.quantityValidator(saleProduct, product);
+        } else {
+            this.weightValidator(saleProduct, product);
+        }
+        productRepository.saveAndFlush(product);
+    }
+
+    private void quantityValidator(ProductSaleDTO saleProduct, Product product) {
+            if (saleProduct.getAmount() <= product.getInventoryAmount()) {
+                product.setInventoryAmount(product.getInventoryAmount() - saleProduct.getAmount());
+            } else {
+                throw new RegraNegocioException("Quantidade do produto na venda maior do que a quantidade em estoque");
             }
-        }));
-        productRepository.saveAllAndFlush(stocksProducts);
-        return sales;
+        }
+
+    private void weightValidator(ProductSaleDTO saleProduct, Product product){
+        if(saleProduct.getWeight() <= product.getInventoryWeight()){
+            product.setInventoryWeight(product.getInventoryWeight() - saleProduct.getWeight());
+        }else {
+            throw new RegraNegocioException("Peso do produto na venda maior do que a peso em estoque");
+        }
     }
 
-    private Sale createSale(Product stockProduct, ProductSaleDTO product, Long userId) {
-        Sale sale = new Sale();
-        sale.setProduct(stockProduct);
-        sale.setAmount(Double.parseDouble(product.getAmount().toString()));
-        sale.setWeight(product.getWeight());
-        sale.setProductPrice(stockProduct.getSalePrice());
-        User user = new User();
+    private Sale newCreateSale(ProductSaleDTO productSale, Product product, Long userId){
+        var sale = new Sale();
+        var user = new User();
+
         user.setId(userId);
+        sale.setAmount(Objects.nonNull(productSale.getAmount()) ? Double.parseDouble(productSale.getAmount().toString()) : null);
+        sale.setWeight(Objects.nonNull(productSale.getWeight()) ? productSale.getWeight() : null);
+        sale.setProduct(product);
+        sale.setProductPrice(productSale.getPrice());
         sale.setUser(user);
 
         return sale;
     }
 
-    private List<Long> getProductsIds(List<ProductSaleDTO> products) {
-        List<Long> ids = new ArrayList<>();
-        products.forEach(product -> {
-            if(!ids.contains(product.getId())){
-                ids.add(product.getId());
-            }
-        });
-        return ids;
+    private Product findById(Long id){
+        return productRepository.findById(id).orElseThrow(() -> new RegraNegocioException("Produto não encontrado"));
     }
 
     public ProductEditDTO registerEntry(Long id, double amount) {
@@ -140,10 +151,24 @@ public class ProductService {
     }
 
     public List<ProductSaleDTO> findAllByIsCoffe() {
-        return productRepository.findAllByIsCoffe();
+        if(productRepository.findAllByIsCoffe().isPresent() && productRepository.findAllByIsCoffe().get().size() != 0){
+            return productRepository.findAllByIsCoffe().get();
+        }else {
+            throw new RegraNegocioException("Nenhum produto cadastrado");
+        }
     }
 
     public List<ProductDropdownDTO> getAllProductDropDown(){
         return productDropdownMapper.toDTO(productRepository.findAll());
+    }
+
+    public ProductSaleDTO getByBarCodeForSale(String barCode) {
+        return productSaleMapper.toDTO(productRepository
+                .findByBarCode(barCode)
+                .orElseThrow(() -> new RuntimeException(MSG)));
+    }
+
+    public List<Relatorio1ResponseDTO> getRelatorio1Result(Relatorio1RequestDTO id) {
+        return null;
     }
 }

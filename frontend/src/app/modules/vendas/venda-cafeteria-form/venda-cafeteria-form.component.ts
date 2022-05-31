@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ProdutoVendaModel} from "../../../models/produto-venda.model";
-import {ProductModel} from "../../../models/product.model";
-import {DialogService} from "primeng";
-import {SearchUserModalComponent} from "../../users/search-user/search-user-modal.component";
+import {DialogService, MessageService} from "primeng";
 import {VendaModel} from "../../../models/venda.model";
 import {SaleService} from "../../../shared/services/sale.service";
 import {ProductService} from "../../../shared/services/product.service";
+import {SearchUserRfidModalComponent} from "../../users/search-user-rfid/search-user-rfid-modal.component";
 
 @Component({
   selector: 'app-venda-cafeteria-form',
@@ -14,15 +13,11 @@ import {ProductService} from "../../../shared/services/product.service";
 })
 export class VendaCafeteriaFormComponent implements OnInit {
 
-    itens: ProdutoVendaModel[] = [
-        {id: 1, description: 'Café Expresso', price: 6.5, barCode: ''},
-        {id: 2, description: 'Pão de Queijo', price: 5.0, barCode: ''},
-        {id: 3, description: 'Misto Quente', price: 8, barCode: ''},
-        {id: 4, description: 'Café comum', price: 2.3, barCode: ''},
-    ];
+    itens: ProdutoVendaModel[] = [];
     itensSelecionados: ProdutoVendaModel[] = [];
 
     constructor(
+        private messageService: MessageService,
         private dialogService: DialogService,
         private saleService: SaleService,
         private productService: ProductService
@@ -35,8 +30,11 @@ export class VendaCafeteriaFormComponent implements OnInit {
     loadProducts() {
         this.productService.findAllByCoffee()
             .subscribe(res => {
-                this.itens = res;
-            })
+                if(res){
+                    this.itens = res;
+                    this.messageService.add({severity: "success", summary: "Sucesso", detail: 'Produtos listados'});
+                }
+                },(error) => this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message}));
     }
 
     getImage(item) {
@@ -68,16 +66,20 @@ export class VendaCafeteriaFormComponent implements OnInit {
     }
 
     removeAmount(item) {
-        const index = this.itensSelecionados.findIndex(produto => produto.id === item.id);
+        if(item.amount > 0 ){
+            const index = this.itensSelecionados.findIndex(produto => produto.id === item.id);
 
-        if(index !== -1) {
-            this.itensSelecionados[index].amount--;
-            this.setTotalPrice(item);
+            if(index !== -1) {
+                this.itensSelecionados[index].amount--;
+                this.setTotalPrice(item);
+            }
+        }else{
+            this.messageService.add({severity: "warn", summary: "Atenção", detail: 'Quantidade já está em 0'});
         }
     }
 
     finishSale() {
-        const modal = this.dialogService.open(SearchUserModalComponent, {});
+        const modal = this.dialogService.open(SearchUserRfidModalComponent, {});
 
         modal.onClose.subscribe(res => {
             if(res) {
@@ -85,7 +87,9 @@ export class VendaCafeteriaFormComponent implements OnInit {
                 sale.products = this.itens;
                 sale.userId = res.id;
 
-                this.saleService.save(sale).subscribe(res => {});
+                this.saleService.save(sale).subscribe(
+                    () => this.messageService.add({severity: "success", summary: "Sucesso", detail: 'Venda Cadastrada com Pendente favor acertar no caixa'})
+            , (error) => this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message}));
             }
         })
     }
