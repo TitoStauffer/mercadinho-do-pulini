@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../shared/services/product.service';
-import {FormControl, FormGroup} from '@angular/forms';
 import {ProductModel} from '../../../models/product.model';
 import {Router} from '@angular/router';
 import {WeighingScaleService} from "../../../shared/services/weighing-scale.service";
@@ -40,7 +39,7 @@ export class ProductEntryComponent implements OnInit {
             product => {
                 this.products[0] = product;
                 this.barCode = '';
-                // if (product.inventoryWeight != null) this.getWeight();
+                if (product.inventoryWeight != null) this.getWeight();
             },
             () => alert('Produto não encontrado')
         );
@@ -64,6 +63,9 @@ export class ProductEntryComponent implements OnInit {
         this.weighingScaleService.getWeightWeighingScale().subscribe(
             weight => {
                 this.addAmount = weight;
+            },
+            () => {
+                console.log("Balança não encontrada"!);
             }
         );
     }
