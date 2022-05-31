@@ -4,8 +4,8 @@ import {PageNotificationService} from "@nuvem/primeng-components";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-read-product',
-  templateUrl: './read-product.component.html'
+    selector: 'app-read-product',
+    templateUrl: './read-product.component.html'
 })
 export class ReadProductComponent implements OnInit {
 
@@ -15,7 +15,8 @@ export class ReadProductComponent implements OnInit {
     constructor(
         private productService: ProductService,
         private pageNotification: PageNotificationService,
-        private formBuilder: FormBuilder) { }
+        private formBuilder: FormBuilder) {
+    }
 
     ngOnInit(): void {
         this.form = this.buildReactiveForm();
@@ -30,14 +31,14 @@ export class ReadProductComponent implements OnInit {
     }
 
     searchProduct() {
-        if(!this.validateForm()) {
+        if (!this.validateForm()) {
             this.pageNotification.addErrorMessage('Campos preenchidos incorretamente. Preencha o código de barras e infome a medida');
             return;
         }
 
         this.productService.findByBarCodeForSale(this.form.controls['barCode'].value).subscribe(
             produto => {
-                if(!produto) {
+                if (!produto) {
                     this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
                     return;
                 }
@@ -51,7 +52,7 @@ export class ReadProductComponent implements OnInit {
     setMeasureProduct(product: any) {
         product.weight = this.form.controls['weight'].value;
         product.amount = this.form.controls['amount'].value;
-        if(product.amount) {
+        if (product.amount) {
             product.totalPrice = product.price * product.amount;
             return product;
         }
@@ -63,12 +64,12 @@ export class ReadProductComponent implements OnInit {
         return this.form.valid && (this.form.controls['amount'].value || this.form.controls['weight'].value);
     }
 
-    disableMeasure(){
-        if(this.form.controls['weight'].value) {
+    disableMeasure() {
+        if (this.form.controls['weight'].value) {
             this.disableAndEnableFields('amount', 'weight');
             return
         }
-        if(this.form.controls['amount'].value) {
+        if (this.form.controls['amount'].value) {
             this.disableAndEnableFields('weight', 'amount');
             return
         }
