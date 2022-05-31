@@ -32,7 +32,7 @@ public class SaleService {
     private static final String AWAITING = "Pendente";
 
     public void finishSale(SaleDTO sale, Boolean isCoffee){
-        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId());
+        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId(), isCoffee);
         sales.forEach(sale1 -> sale1.setStatus(isCoffee ? FINISHED : AWAITING));
         saleRepository.saveAllAndFlush(sales);
         saleRepository.finishCoffeeSales(sale.getUserId(), sale.getOtherUserIds());

@@ -18,7 +18,7 @@ import {DialogConfig} from "../../../shared/Utils/dialog-config";
 export class VendaFormComponent implements OnInit {
 
     principalUser: UserModel;
-    nameOtherClients: string[] = [];
+    nameOtherClients: any[] = [];
     itens: ProdutoVendaModel[] = [];
     totalPrice: number;
     lastProduct: ProdutoVendaModel = new ProdutoVendaModel();
@@ -46,7 +46,7 @@ export class VendaFormComponent implements OnInit {
                 this.principalUser = res;
                 return;
             }
-            this.nameOtherClients.push(res.name);
+            this.nameOtherClients.push({id: res.id, name: res.name});
         }
     })
   }
@@ -67,6 +67,21 @@ export class VendaFormComponent implements OnInit {
       })
   }
 
+  removeProduct(product: ProdutoVendaModel) {
+      if(product.saleId) {
+          this.saleService.cancelSale({saleId: product.saleId, productId: product.id})
+              .subscribe(res => this.pageNotification.addSuccessMessage("Produto removido com sucesso"));
+      }
+
+      const index = this.itens.findIndex(prod => prod.id === product.id);
+
+      if(index !== -1) {
+          this.itens.splice(index, 1);
+          this.totalPrice = this.sumTotal();
+          this.pageNotification.addSuccessMessage("Produto removido com sucesso");
+      }
+  }
+
   sumTotal() {
       return this.itens
           .map(item => item.totalPrice)
@@ -77,6 +92,7 @@ export class VendaFormComponent implements OnInit {
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;
+      sale.otherUserIds = this.nameOtherClients.map(clients => clients.id);
 
       this.saleService.save(sale).subscribe(() =>{
           this.resetPage();

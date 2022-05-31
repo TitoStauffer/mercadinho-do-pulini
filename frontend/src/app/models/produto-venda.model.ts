@@ -7,4 +7,5 @@ export class ProdutoVendaModel {
     barCode: string;
     image?: string;
     totalPrice?: number;
+    saleId: number;
 }
