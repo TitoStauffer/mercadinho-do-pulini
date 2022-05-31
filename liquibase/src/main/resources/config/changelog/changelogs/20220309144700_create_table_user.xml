@@ -15,6 +15,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="fingerprint" type="text"/>
+            <column name="rfid" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 

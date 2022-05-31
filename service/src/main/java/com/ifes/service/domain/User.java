@@ -36,5 +36,7 @@ public class User implements Serializable {
     @Column(name = "fingerprint")
     private String fingerprint;
 
+    @Column(name = "rfid")
+    private String rfid;
 
 }

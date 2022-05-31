@@ -44,8 +44,11 @@ export class VendaFormComponent implements OnInit {
     modal.onClose.subscribe(res => {
         if(res) {
             if(!this.principalUser) {
-                this.principalUser = res;
+                this.principalUser = res.user;
+                this.itens = res.products;
                 return;
+            } else {
+                res.products.forEach(item => this.itens.push(item));
             }
             this.nameOtherClients.push(res.name);
         }
@@ -75,6 +78,7 @@ export class VendaFormComponent implements OnInit {
   }
 
   finishSale() {
+      console.log(this.itens);
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;
