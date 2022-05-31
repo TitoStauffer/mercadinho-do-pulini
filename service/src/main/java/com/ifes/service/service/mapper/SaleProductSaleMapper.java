@@ -15,6 +15,7 @@ public interface SaleProductSaleMapper extends EntityMapper<Sale, ProductSaleDTO
     @Mapping(source = "image", target = "product.image")
     @Mapping(source = "rfid", target = "product.rfid")
     @Mapping(source = "saleId", target = "id")
+    @Mapping(source = "id", target = "product.id")
     Sale toEntity(ProductSaleDTO dto);
 
     @Override

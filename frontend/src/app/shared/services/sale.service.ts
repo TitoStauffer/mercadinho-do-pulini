@@ -19,6 +19,10 @@ export class SaleService {
         return this.http.post(this.resource, sale);
     }
 
+    saveCoffee(sale: VendaModel): Observable<any> {
+        return this.http.post(this.resource + '/cafeteria', sale);
+    }
+
     cancelSale(sale): Observable<any> {
         return this.http.post(this.http + '/cancelar', sale);
     }

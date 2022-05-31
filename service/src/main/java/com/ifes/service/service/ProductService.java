@@ -87,11 +87,11 @@ public class ProductService {
         List<Sale> sale = new ArrayList<>();
 
         saleProducts.forEach(saleProduct -> {
+            var product = this.findById(saleProduct.getId());
             if(Boolean.FALSE.equals(isCoffeeShop)) {
-                var product = this.findById(saleProduct.getId());
                 quantityAndHeightCalculator(saleProduct, product);
-                sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
             }
+            sale.add(newCreateSale(saleProduct, this.findById(saleProduct.getId()), userId));
         });
 
         return sale;

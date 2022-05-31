@@ -22,6 +22,6 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findAllByUserIdAndStatus(Long userId, String status);
 
     @Modifying
-    @Query("update Sale s set s.status = 'Pendente' where s.user.id = :userId or s.user.id in :otherUsers")
+    @Query("update Sale s set s.status = 'Finalizado' where s.user.id = :userId or s.user.id in :otherUsers")
     void finishCoffeeSales(@Param("userId") Long userId, @Param("otherUsers") List<Long> otherUserIds);
 }

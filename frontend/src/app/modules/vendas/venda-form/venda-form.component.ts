@@ -48,12 +48,13 @@ export class VendaFormComponent implements OnInit {
                     if (!this.principalUser) {
                         this.principalUser = res.user;
                         this.itens = res.products;
+                        this.totalPrice = this.sumTotal()
                         return;
-                    } else {
-                        if (!this.userAlreadyAdded(res.user)) {
-                            res.products.forEach(item => this.itens.push(item));
-                            this.nameOtherClients.push({id: res.id, name: res.name});
-                        }
+                    }
+                    if (!this.userAlreadyAdded(res.user)) {
+                        res.products.forEach(item => this.itens.push(item));
+                        this.nameOtherClients.push({id: res.user.id, name: res.user.name});
+                        this.totalPrice = this.sumTotal()
                     }
                 }
             }
