@@ -7,7 +7,7 @@
         <p>Data Fim</p>
         <p-calendar [(ngModel)]="dateFim"></p-calendar>
     </div>
-    <input type="button" pButton value="Buscar" routerLink="save"/>
+    <input type="button" pButton value="Buscar" (click)="findAll()"/>
 </div>
 <p-table [columns]="cols" [value]="itens" responsiveLayout="scroll">
     <ng-template pTemplate="header" let-columns>

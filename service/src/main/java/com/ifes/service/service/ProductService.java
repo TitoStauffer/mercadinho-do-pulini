@@ -98,7 +98,7 @@ public class ProductService {
     private void quantityAndHeightCalculator(ProductSaleDTO saleProduct, Product product){
         if (Objects.nonNull(product.getInventoryAmount()) && Objects.nonNull(saleProduct.getAmount())) {
             this.quantityValidator(saleProduct, product);
-        } else {
+        } else if (Objects.nonNull(product.getInventoryWeight()) && Objects.nonNull(saleProduct.getWeight())){
             this.weightValidator(saleProduct, product);
         }
         productRepository.saveAndFlush(product);

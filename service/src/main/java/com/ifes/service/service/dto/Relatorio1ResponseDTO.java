@@ -11,9 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class Relatorio1ResponseDTO implements Serializable {
-    private Long id;
     private String description;
-    private String totalValue;
-    private String quantidade;
+    private Double totalValue;
+    private Double quantidade;
 
 }

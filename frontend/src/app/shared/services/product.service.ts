@@ -5,6 +5,8 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ProductListBarcode} from "../../models/product-list-barcode";
+import {Relatorio1Model} from "../../models/relatorio1.model";
+import {Relatorio1RequestModel} from "../../models/relatorio1Request.model";
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +14,8 @@ import {ProductListBarcode} from "../../models/product-list-barcode";
 export class ProductService {
 
     baseUrl = environment.apiUrl + 'product';
+
+    relatorioUrl = environment.apiUrl + 'sale/relatorio';
 
     constructor(private http: HttpClient) {
     }
@@ -30,6 +34,10 @@ export class ProductService {
 
     read(): Observable<ProductModel[]> {
         return this.http.get<ProductModel[]>(this.baseUrl);
+    }
+
+    relatorio1(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'1', dto);
     }
 
     readById(id: number): Observable<ProductModel> {
