@@ -13,8 +13,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {UserListComponent} from "./user-list/user-list.component";
 import {DashboardComponent} from "../components/dashboard/dashboard.component";
 import {PermissionListComponent} from "./permission-list/permission-list.component";
-import {Relatorio1Component} from "./relatorio1/relatorio1.component";
-import {Relatorio2Component} from "./relatorio2/relatorio2.component";
+import {RelatoriosComponent} from "./relatorios/relatorios.component";
 
 
 @NgModule({
@@ -26,8 +25,7 @@ import {Relatorio2Component} from "./relatorio2/relatorio2.component";
     UserListComponent,
     DashboardComponent,
     PermissionListComponent,
-    Relatorio1Component,
-    Relatorio2Component
+    RelatoriosComponent
   ],
     imports: [
         CommonModule,

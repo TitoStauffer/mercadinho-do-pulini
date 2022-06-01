@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Relatorio1ResponseDTO implements Serializable {
-    private String description;
-    private Double totalValue;
-    private Double quantidade;
-
+public class RelatorioRequestDTO implements Serializable {
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFim;
 }

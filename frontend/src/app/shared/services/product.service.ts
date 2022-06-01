@@ -42,6 +42,18 @@ export class ProductService {
         return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'1', dto);
     }
 
+    relatorio2(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'2', dto);
+    }
+
+    relatorio3(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'3', dto);
+    }
+
+    relatorio4(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'4', dto);
+    }
+
     readById(id: number): Observable<ProductModel> {
         return this.http.get<ProductModel>(`${this.baseUrl}/${id}`);
     }

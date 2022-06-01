@@ -1,9 +1,8 @@
 package com.ifes.service.resource;
 
-import com.ifes.service.domain.Sale;
 import com.ifes.service.service.SaleService;
-import com.ifes.service.service.dto.Relatorio1RequestDTO;
-import com.ifes.service.service.dto.Relatorio1ResponseDTO;
+import com.ifes.service.service.dto.RelatorioRequestDTO;
+import com.ifes.service.service.dto.RelatorioResponseDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.dto.SaleCancelProductDTO;
 import com.ifes.service.service.dto.SaleDTO;
@@ -56,7 +55,24 @@ public class SaleResource {
     }
 
     @PostMapping("/relatorio1")
-    public List<Relatorio1ResponseDTO> findRelatorio1(@RequestBody Relatorio1RequestDTO relatorio1RequestDTO){
-        return this.saleService.findRelatorio1(relatorio1RequestDTO);
+    public List<RelatorioResponseDTO> findRelatorio1(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio1(relatorioRequestDTO);
     }
+
+    @PostMapping("/relatorio2")
+    public List<RelatorioResponseDTO> findRelatorio2(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio2(relatorioRequestDTO);
+    }
+
+    @PostMapping("/relatorio3")
+    public List<RelatorioResponseDTO> findRelatorio3(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio3(relatorioRequestDTO);
+    }
+
+
+    @PostMapping("/relatorio4")
+    public List<RelatorioResponseDTO> findRelatorio4(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio4(relatorioRequestDTO);
+    }
+
 }
