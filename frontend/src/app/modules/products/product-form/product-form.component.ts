@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductModel} from '../../../models/product.model';
-import {FileUpload, SelectItem} from 'primeng';
+import {FileUpload, MessageService, SelectItem} from 'primeng';
 import {ProductService} from '../../../shared/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -23,6 +23,7 @@ export class ProductFormComponent implements OnInit {
     @ViewChild('productImage') productImageElementRef: FileUpload;
 
     constructor(
+        private messageService: MessageService,
         private route: ActivatedRoute,
         private productService: ProductService,
         private router: Router
@@ -61,12 +62,9 @@ export class ProductFormComponent implements OnInit {
 
     loadProduct(): void {
         this.currentProductId = Number(this.route.snapshot.paramMap.get('productId'));
-        this.productService.readById(this.currentProductId).subscribe(
-            product => {
-                this.updateForm(product);
-            },
-            error => alert('Falha ao carregar o produto!')
-        );
+        this.productService.readById(this.currentProductId)
+            .subscribe((product) => this.updateForm(product),
+                       (error) => this.messageService.add({severity: "error", summary: "Erro", detail: "error.error.message"}))
     }
 
     updateForm(product: ProductModel): void {
@@ -75,16 +73,13 @@ export class ProductFormComponent implements OnInit {
     }
 
     getCategories(): void {
-        this.categories = [
-            {
-                value: 1,
-                label: 'Massas'
-            },
-            {
-                value: 2,
-                label: 'Destilados'
-            }
-        ];
+        this.productService.findAllCategories().subscribe(
+            (res) => {
+                if(res){
+                    this.categories = res;
+                    this.messageService.add({severity: "success", summary: "Sucesso", detail: "Categorias Listadas"});
+                }
+            }, (error) => this.messageService.add({severity: "error", summary: "error", detail: "error.error.detail"}))
     }
 
     private base64ToFile(base64: string, filename: string): File {
@@ -116,20 +111,18 @@ export class ProductFormComponent implements OnInit {
 
     async handleSubmitForm(): Promise<void> {
         if (this.productForm.invalid || this.hasProductImage) {
-            alert('Formulário Inválido');
+            this.messageService.add({severity: "error", summary: "Erro", detail: "Formulário Inválido"});
             return;
         }
         const image: string = await this.convertBase64(this.productImageElementRef.files[0]);
         const newProduct: ProductModel = {...this.productForm.value, image};
-        console.log(newProduct);
         if (this.currentAction === 'edit') {
             this.productService.update(newProduct).subscribe(
                 () => {
-                    alert('Produto alterado com sucesso!');
+                    this.messageService.add({severity: "success", summary: "Sucesso", detail: "Produto alterado com sucesso!"});
                     this.router.navigateByUrl('admin/produtos');
                 },
-                () => alert('Erro ao alterar produto!')
-            );
+                () => this.messageService.add({severity: "error", summary: "Erro", detail: "Erro ao alterar produto!"}));
         } else {
             if (this.productForm.value.weight) newProduct.inventoryAmount = null;
             else newProduct.inventoryWeight = null;
@@ -138,8 +131,7 @@ export class ProductFormComponent implements OnInit {
                     alert('Produto criado com sucesso!');
                     this.router.navigateByUrl('admin/produtos');
                 },
-                () => alert('Erro ao criar produto!')
-            );
+                () => this.messageService.add({severity: "error", summary: "Erro", detail: "Erro ao criar produto!"}));
         }
     }
 

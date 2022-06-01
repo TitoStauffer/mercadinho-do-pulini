@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {ProductListBarcode} from "../../models/product-list-barcode";
 import {Relatorio1Model} from "../../models/relatorio1.model";
 import {Relatorio1RequestModel} from "../../models/relatorio1Request.model";
+import {SelectItem} from "primeng";
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ import {Relatorio1RequestModel} from "../../models/relatorio1Request.model";
 export class ProductService {
 
     baseUrl = environment.apiUrl + 'product';
+    baseUrlCategory = environment.apiUrl + 'category';
 
     relatorioUrl = environment.apiUrl + 'sale/relatorio';
 
@@ -66,5 +68,9 @@ export class ProductService {
 
     findByBarCodeForSale(barCode: string): Observable<ProdutoVendaModel> {
         return this.http.get<ProdutoVendaModel>(`${this.baseUrl}/bar-code/sale?barCode=${barCode}`);
+    }
+
+    findAllCategories():Observable<SelectItem[]> {
+        return this.http.get<SelectItem[]>(`${this.baseUrlCategory}`);
     }
 }

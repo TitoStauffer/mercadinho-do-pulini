@@ -11,7 +11,7 @@
             <column name="inventory_weight" type="numeric(6,2)"/>
             <column name="inventory_amount" type="int8"/>
             <column name="bar_code" type="varchar(13)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="rfid" type="varchar(255)">
                 <constraints nullable="false"/>

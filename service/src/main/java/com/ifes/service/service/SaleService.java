@@ -11,6 +11,7 @@ import com.ifes.service.service.dto.SaleCancelProductDTO;
 import com.ifes.service.service.dto.SaleDTO;
 import com.ifes.service.service.mapper.ProductSaleMapper;
 import com.ifes.service.service.mapper.SaleMapper;
+import com.ifes.service.service.mapper.SaleProductSaleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,16 +38,21 @@ public class SaleService {
 
     private final ProductSaleMapper productSaleMapper;
 
+    private final SaleProductSaleMapper saleProductSaleMapper;
+
     private static final String FINISHED = "Finalizado";
     private static final String AWAITING = "Pendente";
 
     public void finishSale(SaleDTO sale, Boolean isCoffee){
-        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId());
+        List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId(), isCoffee);
         sales.forEach(sale1 -> {
             sale1.setStatus(isCoffee ? FINISHED : AWAITING);
             sale1.setSaleDate(LocalDateTime.now());
         });
         saleRepository.saveAllAndFlush(sales);
+        if(Boolean.FALSE.equals(isCoffee)) {
+            saleRepository.finishCoffeeSales(sale.getUserId(), sale.getOtherUserIds());
+        }
     }
 
     public List<SaleDTO> findAllCoffeeSaleAndIsUserId(Long id, boolean isUserId) {
@@ -111,23 +118,5 @@ public class SaleService {
             }
         });
         return salesDTO;
-    }
-
-    public List<Relatorio1ResponseDTO> findRelatorio1(Relatorio1RequestDTO relatorio1RequestDTO) {
-        List<Sale> sales = saleRepository.findAllBySaleDateBetween(relatorio1RequestDTO.getDataInicio(), relatorio1RequestDTO.getDataFim());
-        List<Product> products = productRepository.findAll();
-
-        return products.stream().map(product -> {
-            Relatorio1ResponseDTO dto = new Relatorio1ResponseDTO();
-            List<Sale> productSale = findAllSaleByProduct(product.getId(), sales);
-            dto.setDescription(productSale.get(0).getProduct().getDescription());
-            dto.setQuantidade(productSale.stream().map(Sale::getAmount).mapToDouble(amount -> amount).sum());
-            dto.setTotalValue(productSale.stream().map(sale -> sale.getProductPrice() * sale.getAmount()).mapToDouble(price -> price).sum());
-            return dto;
-        }).toList();
-    }
-
-    private List<Sale> findAllSaleByProduct(Long id, List<Sale> sales) {
-        return sales.stream().filter(sale -> sale.getProduct().getId().equals(id)).collect(Collectors.toList());
     }
 }

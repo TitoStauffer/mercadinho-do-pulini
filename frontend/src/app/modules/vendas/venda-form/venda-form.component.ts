@@ -8,63 +8,92 @@ import {DetailsProductComponent} from "../../products/details-product/details-pr
 import {VendaModel} from "../../../models/venda.model";
 import {SaleService} from "../../../shared/services/sale.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
+import {ThermalPrinterService} from "../../../shared/services/thermal-printer.service";
 import {DialogConfig} from "../../../shared/Utils/dialog-config";
 
 @Component({
-  selector: 'app-venda-form',
-  templateUrl: './venda-form.component.html',
-  styleUrls: ['./venda-form.component.css']
+    selector: 'app-venda-form',
+    templateUrl: './venda-form.component.html',
+    styleUrls: ['./venda-form.component.css']
 })
 export class VendaFormComponent implements OnInit {
 
     principalUser: UserModel;
-    nameOtherClients: string[] = [];
+    nameOtherClients: any[] = [];
     itens: ProdutoVendaModel[] = [];
     totalPrice: number;
     lastProduct: ProdutoVendaModel = new ProdutoVendaModel();
 
     @ViewChild(DetailsProductComponent) detaislProduct: DetailsProductComponent;
 
-  constructor(
-      private modalService: DialogService,
-      private saleService: SaleService,
-      private pageNotification: PageNotificationService
-  ) { }
+    constructor(
+        private modalService: DialogService,
+        private saleService: SaleService,
+        private pageNotification: PageNotificationService,
+        private printService: ThermalPrinterService
+    ) {
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  readCard() {
-    const modal = this.modalService.open(
-        SearchUserModalComponent,
-        new DialogConfig(null, 'Buscar cliente')
-    );
+    readCard() {
+        const modal = this.modalService.open(
+            SearchUserModalComponent,
+            new DialogConfig(null, 'Buscar cliente')
+        );
 
-    modal.onClose.subscribe(res => {
-        if(res) {
-            if(!this.principalUser) {
-                this.principalUser = res;
-                return;
+        modal.onClose.subscribe(res => {
+                if (res) {
+                    if (!this.principalUser) {
+                        this.principalUser = res.user;
+                        this.itens = res.products;
+                        this.totalPrice = this.sumTotal()
+                        return;
+                    }
+                    if (!this.userAlreadyAdded(res.user)) {
+                        res.products.forEach(item => this.itens.push(item));
+                        this.nameOtherClients.push({id: res.user.id, name: res.user.name});
+                        this.totalPrice = this.sumTotal()
+                    }
+                }
             }
-            this.nameOtherClients.push(res.name);
-        }
-    })
-  }
+        )
+    }
 
-  addProduct(){
-      const modal = this.modalService.open(
-          ReadProductModalComponent,
-          new DialogConfig(null, 'Buscar produto')
-      );
+    userAlreadyAdded(user: UserModel): boolean {
+        return this.nameOtherClients.map(user => user.id).includes(user.id) || this.principalUser.name == user.name;
+    }
 
-      modal.onClose.subscribe(res => {
-          if(res) {
-              this.itens.push(res);
-              this.lastProduct = res;
-              this.detaislProduct.onLoadEntity(res);
-              this.totalPrice = this.sumTotal();
-          }
-      })
+    addProduct() {
+        const modal = this.modalService.open(
+            ReadProductModalComponent,
+            new DialogConfig(null, 'Buscar produto')
+        );
+
+        modal.onClose.subscribe(res => {
+            if (res) {
+                this.itens.push(res);
+                this.lastProduct = res;
+                this.detaislProduct.onLoadEntity(res);
+                this.totalPrice = this.sumTotal();
+            }
+        })
+    }
+
+  removeProduct(product: ProdutoVendaModel) {
+      if(product.saleId) {
+          this.saleService.cancelSale({saleId: product.saleId, productId: product.id})
+              .subscribe(res => this.pageNotification.addSuccessMessage("Produto removido com sucesso"));
+      }
+
+      const index = this.itens.findIndex(prod => prod.id === product.id);
+
+      if(index !== -1) {
+          this.itens.splice(index, 1);
+          this.totalPrice = this.sumTotal();
+          this.pageNotification.addSuccessMessage("Produto removido com sucesso");
+      }
   }
 
   sumTotal() {
@@ -77,20 +106,21 @@ export class VendaFormComponent implements OnInit {
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;
+      sale.otherUserIds = this.nameOtherClients.map(clients => clients.id);
 
-      this.saleService.save(sale).subscribe(() =>{
-          this.resetPage();
-          this.pageNotification.addSuccessMessage('Venda finalizada com sucesso');
-      });
-  }
+        this.saleService.save(sale).subscribe(() => {
+            this.resetPage();
+            this.pageNotification.addSuccessMessage('Venda finalizada com sucesso');
+        });
+    }
 
-  resetPage() {
-      this.itens = [];
-      this.principalUser = null;
-      this.nameOtherClients = [];
-      this.totalPrice = 0.0;
-      this.lastProduct = new ProdutoVendaModel();
-      this.detaislProduct.onLoadEntity(this.lastProduct);
-  }
+    resetPage() {
+        this.itens = [];
+        this.principalUser = null;
+        this.nameOtherClients = [];
+        this.totalPrice = 0.0;
+        this.lastProduct = new ProdutoVendaModel();
+        this.detaislProduct.onLoadEntity(this.lastProduct);
+    }
 
 }

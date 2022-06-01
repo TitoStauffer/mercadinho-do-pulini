@@ -4,9 +4,11 @@ import com.ifes.service.domain.Sale;
 import com.ifes.service.service.SaleService;
 import com.ifes.service.service.dto.Relatorio1RequestDTO;
 import com.ifes.service.service.dto.Relatorio1ResponseDTO;
+import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.dto.SaleCancelProductDTO;
 import com.ifes.service.service.dto.SaleDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +48,11 @@ public class SaleResource {
     @PostMapping("/cancelar")
     public void removeItemCoffeeShopSaleItem(@RequestBody SaleCancelProductDTO saleCancelProduct){
         this.saleService.removeItemCoffeeShopSale(saleCancelProduct);
+    }
+
+    @GetMapping("/aberta/{id}")
+    public ResponseEntity<List<ProductSaleDTO>> getOpenSalesByUserId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(saleService.getOpenSaleByUserId(id));
     }
 
     @PostMapping("/relatorio1")

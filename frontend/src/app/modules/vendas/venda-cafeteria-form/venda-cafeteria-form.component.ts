@@ -87,7 +87,7 @@ export class VendaCafeteriaFormComponent implements OnInit {
                 sale.products = this.itens;
                 sale.userId = res.id;
 
-                this.saleService.save(sale).subscribe(
+                this.saleService.saveCoffee(sale).subscribe(
                     () => this.messageService.add({severity: "success", summary: "Sucesso", detail: 'Venda Cadastrada com Pendente favor acertar no caixa'})
             , (error) => this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message}));
             }

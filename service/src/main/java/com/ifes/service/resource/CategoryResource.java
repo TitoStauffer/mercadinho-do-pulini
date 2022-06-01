@@ -1,7 +1,7 @@
 package com.ifes.service.resource;
 
 import com.ifes.service.service.CategoryService;
-import com.ifes.service.service.dto.CategoryViewDTO;
+import com.ifes.service.service.dto.SelectDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class CategoryResource {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryViewDTO>> getAll() {
+    public ResponseEntity<List<SelectDTO>> getAll() {
         return ResponseEntity.ok(categoryService.getAll());
     }
 }

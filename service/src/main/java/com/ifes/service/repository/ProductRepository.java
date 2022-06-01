@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByBarCode(String barCode);
     Optional<Product> findByRfid(String rfid);
 
-    @Query("select CONCAT(p.description, ' - R$ ', p.salePrice) from Product p where p.barCode = :barcode")
+    @Query("select CONCAT(p.description, ' - R$ ', p.salePrice, ' - Qtd: ', coalesce(p.inventoryAmount, p.inventoryWeight)) from Product p where p.barCode = :barcode")
     String getProductFromMicroterminal(@Param("barcode") String barCode);
 
     @Query("select new com.ifes.service.service.dto.ProductSaleDTO(p.id, p.description, p.salePrice, p.barCode, p.image) from Product p where p.isCoffeeShop = true")
