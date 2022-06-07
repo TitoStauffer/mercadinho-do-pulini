@@ -26,12 +26,12 @@
             <div class="ui-g-3">
                 <label for="float-input">Preço de compra</label>
                 <p-inputNumber formControlName="purchasePrice" mode="currency" currency="BRL"
-                               locale="pt-BR"></p-inputNumber>
+                               locale="pt-BR" min="0"></p-inputNumber>
             </div>
             <div class="ui-g-3">
                 <label for="float-input">Preço de venda</label>
                 <p-inputNumber formControlName="salePrice" mode="currency" currency="BRL"
-                               locale="pt-BR"></p-inputNumber>
+                               locale="pt-BR" min="0"></p-inputNumber>
             </div>
             <div class="ui-g-3">
                 <p-dropdown [options]="categories" formControlName="categoryId"></p-dropdown>
