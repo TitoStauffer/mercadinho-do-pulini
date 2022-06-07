@@ -1,0 +1,25 @@
+<div style="padding-left: 15px; display: flex; flex-direction: row">
+    <div style="margin: 10px;">
+        <p>Data Inicio</p>
+        <p-calendar [(ngModel)]="dataInicio"></p-calendar>
+    </div>
+    <div style="margin: 10px;">
+        <p>Data Fim</p>
+        <p-calendar [(ngModel)]="dateFim"></p-calendar>
+    </div>
+</div>
+<div style="padding: 10px; display: flex; flex-direction: row">
+    <div style="padding: 20px;">
+        <input type="button" pButton value="Relatorio 1" (click)="findAll('relatorio1')"/>
+    </div>
+    <div style="padding: 20px;">
+        <input type="button" pButton value="Relatorio 2" (click)="findAll('relatorio2')"/>
+    </div>
+    <div style="padding: 20px;">
+        <input type="button" pButton value="Relatorio 3" (click)="findAll('relatorio3')"/>
+    </div>
+    <div style="padding: 20px;">
+        <input type="button" pButton value="Relatorio 4" (click)="findAll('relatorio4')"/>
+    </div>
+</div>
+

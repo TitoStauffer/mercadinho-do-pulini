@@ -5,6 +5,9 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ProductListBarcode} from "../../models/product-list-barcode";
+import {Relatorio1Model} from "../../models/relatorio1.model";
+import {Relatorio1RequestModel} from "../../models/relatorio1Request.model";
+import {SelectItem} from "primeng";
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +15,9 @@ import {ProductListBarcode} from "../../models/product-list-barcode";
 export class ProductService {
 
     baseUrl = environment.apiUrl + 'product';
+    baseUrlCategory = environment.apiUrl + 'category';
+
+    relatorioUrl = environment.apiUrl + 'sale/relatorio';
 
     constructor(private http: HttpClient) {
     }
@@ -30,6 +36,22 @@ export class ProductService {
 
     read(): Observable<ProductModel[]> {
         return this.http.get<ProductModel[]>(this.baseUrl);
+    }
+
+    relatorio1(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'1', dto);
+    }
+
+    relatorio2(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'2', dto);
+    }
+
+    relatorio3(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'3', dto);
+    }
+
+    relatorio4(dto: Relatorio1RequestModel): Observable<Relatorio1Model[]> {
+        return this.http.post<Relatorio1Model[]>(this.relatorioUrl +'4', dto);
     }
 
     readById(id: number): Observable<ProductModel> {
@@ -58,5 +80,9 @@ export class ProductService {
 
     findByBarCodeForSale(barCode: string): Observable<ProdutoVendaModel> {
         return this.http.get<ProdutoVendaModel>(`${this.baseUrl}/bar-code/sale?barCode=${barCode}`);
+    }
+
+    findAllCategories():Observable<SelectItem[]> {
+        return this.http.get<SelectItem[]>(`${this.baseUrlCategory}`);
     }
 }

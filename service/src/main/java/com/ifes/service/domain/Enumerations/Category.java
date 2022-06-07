@@ -7,8 +7,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Category {
 
-    teste(1L, "teste");
+    Massas(1L, "Massas"),
+    Bebidas(2L, "Bebidas");
 
     private final Long code;
     private final String description;
+
+    public static String getDescriptionByCode(Long code) {
+        for(Category value : Category.values()) {
+            if(value.getCode().equals(code)) {
+                return value.getDescription();
+            }
+        }
+        throw new IllegalArgumentException("Cutting Register Status not found");
+    }
 }

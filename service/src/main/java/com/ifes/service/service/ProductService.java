@@ -8,8 +8,8 @@ import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
-import com.ifes.service.service.dto.Relatorio1RequestDTO;
-import com.ifes.service.service.dto.Relatorio1ResponseDTO;
+import com.ifes.service.service.dto.RelatorioRequestDTO;
+import com.ifes.service.service.dto.RelatorioResponseDTO;
 import com.ifes.service.service.exception.RegraNegocioException;
 import com.ifes.service.service.mapper.ProductCreateMapper;
 import com.ifes.service.service.mapper.ProductDropdownMapper;
@@ -100,7 +100,7 @@ public class ProductService {
     private void quantityAndHeightCalculator(ProductSaleDTO saleProduct, Product product){
         if (Objects.nonNull(product.getInventoryAmount()) && Objects.nonNull(saleProduct.getAmount())) {
             this.quantityValidator(saleProduct, product);
-        } else {
+        } else if (Objects.nonNull(product.getInventoryWeight()) && Objects.nonNull(saleProduct.getWeight())){
             this.weightValidator(saleProduct, product);
         }
         productRepository.saveAndFlush(product);
@@ -171,7 +171,7 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException(MSG)));
     }
 
-    public List<Relatorio1ResponseDTO> getRelatorio1Result(Relatorio1RequestDTO id) {
+    public List<RelatorioResponseDTO> getRelatorio1Result(RelatorioRequestDTO id) {
         return null;
     }
 }

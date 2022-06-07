@@ -1,6 +1,8 @@
 package com.ifes.service.resource;
 
 import com.ifes.service.service.SaleService;
+import com.ifes.service.service.dto.RelatorioRequestDTO;
+import com.ifes.service.service.dto.RelatorioResponseDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
 import com.ifes.service.service.dto.SaleCancelProductDTO;
 import com.ifes.service.service.dto.SaleDTO;
@@ -51,4 +53,26 @@ public class SaleResource {
     public ResponseEntity<List<ProductSaleDTO>> getOpenSalesByUserId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(saleService.getOpenSaleByUserId(id));
     }
+
+    @PostMapping("/relatorio1")
+    public List<RelatorioResponseDTO> findRelatorio1(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio1(relatorioRequestDTO);
+    }
+
+    @PostMapping("/relatorio2")
+    public List<RelatorioResponseDTO> findRelatorio2(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio2(relatorioRequestDTO);
+    }
+
+    @PostMapping("/relatorio3")
+    public List<RelatorioResponseDTO> findRelatorio3(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio3(relatorioRequestDTO);
+    }
+
+
+    @PostMapping("/relatorio4")
+    public List<RelatorioResponseDTO> findRelatorio4(@RequestBody RelatorioRequestDTO relatorioRequestDTO){
+        return this.saleService.findRelatorio4(relatorioRequestDTO);
+    }
+
 }

@@ -10,10 +10,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Relatorio1ResponseDTO implements Serializable {
-    private Long id;
+public class RelatorioResponseDTO implements Serializable {
     private String description;
-    private String totalValue;
-    private String quantidade;
-
+    private Double totalValue;
+    private Double quantidade;
 }

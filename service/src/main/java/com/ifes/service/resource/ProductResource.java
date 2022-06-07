@@ -5,8 +5,8 @@ import com.ifes.service.service.dto.ProductCreateDTO;
 import com.ifes.service.service.dto.ProductDropdownDTO;
 import com.ifes.service.service.dto.ProductEditDTO;
 import com.ifes.service.service.dto.ProductSaleDTO;
-import com.ifes.service.service.dto.Relatorio1RequestDTO;
-import com.ifes.service.service.dto.Relatorio1ResponseDTO;
+import com.ifes.service.service.dto.RelatorioRequestDTO;
+import com.ifes.service.service.dto.RelatorioResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,7 @@ public class ProductResource {
     }
 
     @PostMapping("/relatorio1")
-    public ResponseEntity<List<Relatorio1ResponseDTO>> getRelatorioProdutos(@RequestBody Relatorio1RequestDTO dto) {
+    public ResponseEntity<List<RelatorioResponseDTO>> getRelatorioProdutos(@RequestBody RelatorioRequestDTO dto) {
         return ResponseEntity.ok(productService.getRelatorio1Result(dto));
     }
 

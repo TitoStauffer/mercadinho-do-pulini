@@ -19,6 +19,9 @@
             <column name="status" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="sale_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="sale" baseColumnNames="user_id" constraintName="fk_sale_user_id"

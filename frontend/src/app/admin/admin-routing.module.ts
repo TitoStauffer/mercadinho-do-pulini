@@ -9,8 +9,7 @@ import {ProductsModule} from "../modules/products/products.module";
 import {VendasModule} from "../modules/vendas/vendas.module";
 import {PermissionGuard} from "../guard/permission.guard";
 import {PermissionListComponent} from "./permission-list/permission-list.component";
-import {Relatorio1Component} from "./relatorio1/relatorio1.component";
-import {Relatorio2Component} from "./relatorio2/relatorio2.component";
+import {RelatoriosComponent} from "./relatorios/relatorios.component";
 import {BarCodeModule} from "../modules/bar-code/bar-code.module";
 
 
@@ -25,8 +24,7 @@ const routes: Routes = [
           { path: 'produtos',  loadChildren: () => ProductsModule, canActivate: [PermissionGuard] },
           { path: 'barcodes',  loadChildren: () => BarCodeModule, canActivate: [PermissionGuard] },
           { path: 'user/save',  component: UserComponent, canActivate: [PermissionGuard] },
-          { path: 'relatorio1',  component: Relatorio1Component, canActivate: [PermissionGuard] },
-          { path: 'relatorio2',  component: Relatorio2Component, canActivate: [PermissionGuard] },
+          { path: 'relatorios',  component: RelatoriosComponent, canActivate: [PermissionGuard] },
     ]
   }
 ];

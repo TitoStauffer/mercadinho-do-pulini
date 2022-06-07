@@ -2,11 +2,12 @@ package com.ifes.service.repository;
 
 import com.ifes.service.domain.Sale;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findAllByUserId(Long id);
 
     ArrayList<Sale> findAllByProductIsCoffeeShopAndId(boolean isCoffee, Long id);
+
+    List<Sale> findAllBySaleDateBetween(@Param("dataInicio") LocalDateTime dataInicio, @Param("dataFim") LocalDateTime dataFim);
+
 
     List<Sale> findAllByUserIdAndStatus(Long userId, String status);
 
