@@ -123,4 +123,8 @@ export class VendaFormComponent implements OnInit {
         this.detaislProduct.onLoadEntity(this.lastProduct);
     }
 
+    readProductEvent(event) {
+        console.log(event)
+    }
+
 }

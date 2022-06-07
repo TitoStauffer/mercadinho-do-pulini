@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ProductService} from "../../../shared/services/product.service";
 import {PageNotificationService} from "@nuvem/primeng-components";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {WeighingScaleService} from "../../../shared/services/weighing-scale.service";
 
 @Component({
     selector: 'app-read-product',
@@ -14,6 +15,7 @@ export class ReadProductComponent implements OnInit {
 
     constructor(
         private productService: ProductService,
+        private weighingScaleService: WeighingScaleService,
         private pageNotification: PageNotificationService,
         private formBuilder: FormBuilder) {
     }
@@ -43,25 +45,27 @@ export class ReadProductComponent implements OnInit {
                     return;
                 }
                 this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
-                this.fechar.emit(this.setMeasureProduct(produto));
+                this.setMeasureProduct(produto);
             }
         );
 
     }
 
+    sendProduct(product) {
+        this.fechar.emit(product);
+    }
+
     setMeasureProduct(product: any) {
-        product.weight = this.form.controls['weight'].value;
-        product.amount = this.form.controls['amount'].value;
-        if (product.amount) {
-            product.totalPrice = product.price * product.amount;
-            return product;
+        if(product.weight) {
+            return this.getWeight(product);
         }
-        product.totalPrice = product.price * product.weight;
-        return product;
+        product.amount = this.form.controls['amount'].value || 1;
+        product.totalPrice = product.price * product.amount;
+        this.sendProduct(product);
     }
 
     validateForm() {
-        return this.form.valid && (this.form.controls['amount'].value || this.form.controls['weight'].value);
+        return this.form.valid;
     }
 
     disableMeasure() {
@@ -82,4 +86,19 @@ export class ReadProductComponent implements OnInit {
         this.form.controls[enableField].enable();
     }
 
+    enterEvent(event) {
+        if(event === 'Enter') {
+            this.searchProduct();
+        }
+    }
+
+    getWeight(product: any) {
+        this.weighingScaleService.getWeightWeighingScale().subscribe(
+            weight => {
+                product.totalPrice = product.price * weight;
+                product.weight = weight;
+                this.sendProduct(product);
+            }
+        );
+    }
 }

@@ -1,9 +1,9 @@
 <div class="ui-g ui-fluid">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (keydown)="enterEvent($event.key)">
         <div class="ui-g-12" [style]="{margin: '5px'}">
             <span class="p-float-label">
                 <label for="barCode">Código de Barras</label>
-                <input id="barCode" type="text" formControlName="barCode" pInputText>
+                <input id="barCode" type="text" autofocus formControlName="barCode" pInputText>
             </span>
             <span class="p-float-label">
                 <label for="amount">Quantidade</label>
