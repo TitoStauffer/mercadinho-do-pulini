@@ -51,7 +51,7 @@ public class SaleService {
     public void finishSale(SaleDTO sale, Boolean isCoffee){
         List<Sale> sales = productService.stockOff(sale.getProducts(), sale.getUserId(), isCoffee);
         sales.forEach(sale1 -> {
-            sale1.setStatus(isCoffee ? FINISHED : AWAITING);
+            sale1.setStatus(!isCoffee ? FINISHED : AWAITING);
             sale1.setSaleDate(LocalDateTime.now());
         });
         saleRepository.saveAllAndFlush(sales);
