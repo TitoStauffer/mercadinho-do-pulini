@@ -1,4 +1,4 @@
-<div class="card ui-g ui-g-flex" (keydown)="readProductEvent($event)">
+<div class="card ui-g ui-g-flex">
     <div class="ui-card-title">
         <h2> Realizar Venda</h2>
     </div>
@@ -17,6 +17,10 @@
         </p-fieldset>
     </div>
 
+    <p-fieldset *ngIf="principalUser" legend="Adicionar produto" class="ui-g-12">
+        <app-read-product (fechar)="addProduct($event)"></app-read-product>
+    </p-fieldset>
+
     <p-fieldset *ngIf="principalUser" [legend]="'Itens da venda'" class="ui-g-12">
         <div class="ui-g-12">
             <div class="ui-g-6">
@@ -26,7 +30,6 @@
                 <app-details-product [product]="lastProduct"></app-details-product>
             </div>
         </div>
-        <button pButton label="Adicionar produto" (click)="addProduct()"></button>
         <button pButton label="Finalizar compra" (click)="finishSale()"></button>
     </p-fieldset>
 

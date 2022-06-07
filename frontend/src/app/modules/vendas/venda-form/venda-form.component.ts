@@ -65,23 +65,16 @@ export class VendaFormComponent implements OnInit {
         return this.nameOtherClients.map(user => user.id).includes(user.id) || this.principalUser.name == user.name;
     }
 
-    addProduct() {
-        const modal = this.modalService.open(
-            ReadProductModalComponent,
-            new DialogConfig(null, 'Buscar produto')
-        );
-
-        modal.onClose.subscribe(res => {
-            if (res) {
-                this.itens.push(res);
-                this.lastProduct = res;
-                this.detaislProduct.onLoadEntity(res);
-                this.totalPrice = this.sumTotal();
-            }
-        })
+    addProduct(product){
+        if(product) {
+            this.itens.push(product);
+            this.lastProduct = product;
+            this.detaislProduct.onLoadEntity(product);
+            this.totalPrice = this.sumTotal();
+        }
     }
 
-  removeProduct(product: ProdutoVendaModel) {
+    removeProduct(product: ProdutoVendaModel) {
       if(product.saleId) {
           this.saleService.cancelSale({saleId: product.saleId, productId: product.id})
               .subscribe(res => this.pageNotification.addSuccessMessage("Produto removido com sucesso"));
@@ -94,15 +87,15 @@ export class VendaFormComponent implements OnInit {
           this.totalPrice = this.sumTotal();
           this.pageNotification.addSuccessMessage("Produto removido com sucesso");
       }
-  }
+    }
 
-  sumTotal() {
+    sumTotal() {
       return this.itens
           .map(item => item.totalPrice)
           .reduce((total, price) => total + price, 0);
-  }
+    }
 
-  finishSale() {
+    finishSale() {
       const sale = new VendaModel();
       sale.products = this.itens;
       sale.userId = this.principalUser.id;

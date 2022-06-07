@@ -27,7 +27,7 @@ export class ReadProductComponent implements OnInit {
     buildReactiveForm() {
         return this.formBuilder.group({
             barCode: [null, [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
-            amount: [null],
+            amount: [1],
             weight: [null]
         });
     }
@@ -44,7 +44,6 @@ export class ReadProductComponent implements OnInit {
                     this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
                     return;
                 }
-                this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
                 this.setMeasureProduct(produto);
             }
         );
@@ -52,15 +51,18 @@ export class ReadProductComponent implements OnInit {
     }
 
     sendProduct(product) {
+        this.form.reset();
         this.fechar.emit(product);
     }
 
     setMeasureProduct(product: any) {
         if(product.weight) {
-            return this.getWeight(product);
+            this.getWeight(product);
+            return;
         }
         product.amount = this.form.controls['amount'].value || 1;
         product.totalPrice = product.price * product.amount;
+        this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
         this.sendProduct(product);
     }
 
@@ -98,7 +100,8 @@ export class ReadProductComponent implements OnInit {
                 product.totalPrice = product.price * weight;
                 product.weight = weight;
                 this.sendProduct(product);
-            }
+                this.pageNotification.addSuccessMessage('Produto localizado com sucesso!');
+            }, error => this.pageNotification.addErrorMessage("Impossível fazer comunicação com a balança!")
         );
     }
 }
