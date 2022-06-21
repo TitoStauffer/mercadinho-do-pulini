@@ -77,21 +77,39 @@ export class ThermalPrinterService {
         ;
     }
 
-    printSale(product: ProdutoVendaModel): void {
+    printSale(products: ProdutoVendaModel[]): void {
         if (!this.printerStatus) return;
+        let total: number = 0;
         this.printService.init();
         this.printService
             .setBold(true)
-            .writeLine("CUPOM FISCAL")
+            .writeLine("                 CUPOM FISCAL")
+            .feed(1)
+            .writeLine("------------------------------------------------")
             .setBold(false)
             .feed(1)
-            .writeLine(`Descricao: ${product.description}`)
-            .writeLine(`Preco do produto: ${product.price}`)
-            .writeLine(`Quantidade: ${product.amount || product.weight} ${product.weight ? 'kg' : 'un'}`)
-            .writeLine(`Preco Total: ${product.totalPrice}`)
-            .feed(1)
-            .cut('full')
-            .flush()
-        ;
+            .writeLine(
+                `NOME`.slice(0, 12).padEnd(12, ' ') +
+                `QUANTIDADE`.slice(0, 12).padEnd(12, ' ') +
+                `VALOR`.slice(0, 12).padEnd(12, ' ') +
+                `Total`.slice(0, 12).padEnd(12, ' '))
+
+        products.forEach((product, index) => {
+            total += product.totalPrice;
+            this.printService
+                .writeLine(
+                    `${product.description}`.slice(0, 12).padEnd(12, ' ') +
+                    `${product.amount || product.weight} ${product.weight ? 'kg' : 'un'} `.slice(0, 12).padEnd(12, ' ') +
+                    `${product.price} `.slice(0, 12).padEnd(12, ' ') +
+                    `R$ ${product.totalPrice}`.slice(0, 12).padEnd(12, ' '));
+            if (index === products.length - 1) {
+                this.printService
+                    .writeLine("------------------------------------------------")
+                    .writeLine(`TOTAL                               `.slice(0, 36).padEnd(0, ' ') + `R$ ${total}`.slice(0, 9).padEnd(9, ' '))
+                    .cut('full')
+                    .flush();
+            }
+        });
+
     }
 }

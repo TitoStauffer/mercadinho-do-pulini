@@ -12,6 +12,7 @@ export class ReadProductComponent implements OnInit {
 
     form: FormGroup;
     @Output('fechar') fechar = new EventEmitter();
+    searchRefi = false;
 
     constructor(
         private productService: ProductService,
@@ -48,6 +49,26 @@ export class ReadProductComponent implements OnInit {
             }
         );
 
+    }
+
+    async searchRFID() {
+        this.searchRefi = !this.searchRefi;
+        while (this.searchRefi) {
+            await new Promise(f => setTimeout(f, 1000));
+            this.productService.findByRfid2().subscribe( rfid => {
+                if (rfid) {
+                    this.productService.findByRfid(rfid).subscribe(
+                        produto => {
+                            if (!produto) {
+                                this.pageNotification.addErrorMessage('Não foi possível localizar o produto');
+                                return;
+                            }
+                            this.setMeasureProduct(produto);
+                        }
+                    );
+                }
+            })
+        }
     }
 
     sendProduct(product) {

@@ -104,6 +104,7 @@ export class VendaFormComponent implements OnInit {
         this.saleService.save(sale).subscribe(() => {
             this.resetPage();
             this.pageNotification.addSuccessMessage('Venda finalizada com sucesso');
+            this.printService.printSale(sale.products);
         });
     }
 

@@ -63,7 +63,11 @@ export class ProductService {
     }
 
     findByRfid(rfid: string): Observable<ProductModel> {
-        return this.http.get<ProductModel>(`${this.baseUrl}/rfid?rfid=${rfid}`);
+        return this.http.get<ProductModel>(`${this.baseUrl}/rfid/sale?rfid=${rfid}`);
+    }
+
+    findByRfid2(): Observable<string> {
+        return this.http.get<string>(`http://localhost:3333/search`);
     }
 
     registerEntry(id: number, amount: number): Observable<ProductModel> {
