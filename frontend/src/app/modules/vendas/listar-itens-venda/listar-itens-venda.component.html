@@ -9,7 +9,12 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr class="listProducts">
             <td *ngFor="let col of columns">
-                {{rowData[col.field]}}
+                <ng-container *ngIf="col.field == 'price' || col.field == 'totalPrice'">
+                    {{rowData[col.field] | currency}}}}
+                </ng-container>
+                <ng-container *ngIf="col.field != 'price' || col.field != 'totalPrice'">
+                    {{rowData[col.field]}}}}
+                </ng-container>
             </td>
             <td>
                 <div class="ui-g-12" style="display: flex; justify-content: space-around; align-content: center; align-items: center">
