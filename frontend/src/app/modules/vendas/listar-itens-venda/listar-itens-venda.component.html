@@ -10,10 +10,10 @@
         <tr class="listProducts">
             <td *ngFor="let col of columns">
                 <ng-container *ngIf="col.field == 'price' || col.field == 'totalPrice'">
-                    {{rowData[col.field] | currency}}}}
+                    {{rowData[col.field] | currency}}
                 </ng-container>
                 <ng-container *ngIf="col.field != 'price' || col.field != 'totalPrice'">
-                    {{rowData[col.field]}}}}
+                    {{rowData[col.field]}}
                 </ng-container>
             </td>
             <td>

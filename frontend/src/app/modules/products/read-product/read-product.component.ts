@@ -67,7 +67,7 @@ export class ReadProductComponent implements OnInit {
                         }
                     );
                 }
-            })
+            }, () => {})
         }
     }
 

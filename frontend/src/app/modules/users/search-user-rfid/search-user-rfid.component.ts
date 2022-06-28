@@ -37,7 +37,10 @@ export class SearchUserRfidComponent implements OnInit {
     search() {
         this.userService.findByRFID(this.form.value.rfid)
             .subscribe(user => this.userFound = user,
-                (error) => this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message}));
+                (error) => {
+                    this.messageService.add({severity: "error", summary: "Erro", detail: error.error.message});
+                    this.fechar.emit();
+                });
     }
 
     finishCoffeeSale(){

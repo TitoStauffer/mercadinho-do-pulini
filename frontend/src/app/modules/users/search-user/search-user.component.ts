@@ -40,7 +40,8 @@ export class SearchUserComponent implements OnInit {
                     this.fechar.emit({user, products});
                 },
                 erro => {
-                    this.pageNotification.addErrorMessage(erro.title);
+                    this.pageNotification.addErrorMessage('Produtos não encontrado');
+                    this.fechar.emit();
                 });
     }
 
@@ -50,8 +51,9 @@ export class SearchUserComponent implements OnInit {
                     this.pageNotification.addSuccessMessage('Usuário encontrado com sucesso');
                     this.loadSale(user);
                 },
-                erro => {
-                    this.pageNotification.addErrorMessage(erro.title);
+                () => {
+                    this.pageNotification.addErrorMessage('Usuário não encontrado');
+                    this.fechar.emit();
                 });
     }
 
