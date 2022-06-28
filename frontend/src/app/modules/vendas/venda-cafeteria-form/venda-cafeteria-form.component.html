@@ -20,8 +20,8 @@
                         <td>{{item.amount || 0}}</td>
                         <td><img [src]="getImage(item)" alt="Imagem Produto" width="50rem"></td>
                         <td>{{item.description}}</td>
-                        <td>{{item.price | currency: 'R$'}}</td>
-                        <td>{{(item.totalPrice || 0.0) | currency: 'R$'}}</td>
+                        <td>{{item.price | currency : 'BRL' : 'symbol' : '2.2-2'}}</td>
+                        <td>{{(item.totalPrice || 0.0) | currency : 'BRL' : 'symbol' : '2.2-2'}}</td>
                         <td>
                             <div class="ui-g-12" style="display: flex; justify-content: space-around; align-content: center; align-items: center">
                                 <button pButton class="p-button-raised p-button-rounded" icon="pi pi-plus" (click)="addAmount(item)"></button>
@@ -35,7 +35,7 @@
         <div class="ui-g-4" style="padding-left: 15px">
             <div class="ui-g" style="display:flex;">
                 <h3 class="ui-g-12">
-                    Valor Total: {{getTotalValue() | currency: 'R$'}}
+                    Valor Total: {{getTotalValue() | currency : 'BRL' : 'symbol' : '2.2-2'}}
                 </h3>
             </div>
             <div class="ui-g">

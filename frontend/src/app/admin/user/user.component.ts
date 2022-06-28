@@ -71,11 +71,17 @@ export class UserComponent implements OnInit {
 
     save() {
         if (this.form.value.id) {
-            this.userService.update(this.form.value).subscribe(() => this.goBack());
+            this.userService.update(this.form.value).subscribe(() => {
+                this.notification.addSuccessMessage("Usuário editado com sucesso.");
+                this.goBack();
+            });
             return
         }
         this.userService.insert(this.form.value)
-            .subscribe(() => this.goBack());
+            .subscribe(() => {
+                this.notification.addSuccessMessage("Usuário salvo com sucesso.");
+                this.goBack();
+            });
     }
 
     salvarBiometria() {
@@ -86,6 +92,7 @@ export class UserComponent implements OnInit {
                 console.log('credentials.create RESPONSE', credential);
             }).catch((error) => {
             console.log('credentials.create ERROR', error);
+            this.notification.addErrorMessage("Erro ao salvar biometria do usuário.");
         });
     }
 
