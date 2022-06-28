@@ -1,28 +1,38 @@
-<div class="login">
+<p-card>
+    <h2>Cadastro de Usuário</h2>
     <form [formGroup]="form" (ngSubmit)="save()">
-        <div class="form-group">
-            <div style="padding: 12px">
-                <label for="name">Nome </label>
-                <input pInputText class="form-control input input-lg" id="name" formControlName="name" type="text" placeholder="Nome">
+        <div class="ui-g form-group">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="name">Nome </label>
+                    <input pInputText class="form-control input input-lg" id="name" formControlName="name" type="text" placeholder="Nome">
+                </div>
+                <div class="ui-g-3">
+                    <label for="rfid">Rfid </label>
+                    <input pInputText class="form-control input input-lg" id="rfid" formControlName="rfid" type="text" placeholder="rfid">
+                </div>
             </div>
-            <div style="padding: 12px">
-                <label for="rfid">Rfid </label>
-                <input pInputText class="form-control input input-lg" id="rfid" formControlName="rfid" type="text" placeholder="rfid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="cpf">CPF </label>
+                    <input pInputText class="form-control input input-lg" id="cpf" formControlName="cpf" type="text" placeholder="cpf">
+                </div>
+                <div class="ui-g-3">
+                    <label>Perfil </label>
+                    <p-dropdown [options]="perfils" formControlName="profile" placeholder="Selecione um perfil" [showClear]="true"></p-dropdown>
+                </div>
+                <div class="ui-g-3">
+                    <button pButton type="button" (click)="salvarBiometria()" label="Salvar Biometria" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit"></button>
+                </div>
             </div>
-            <div style="padding: 12px">
-                <label for="cpf">CPF </label>
-                <input pInputText class="form-control input input-lg" id="cpf" formControlName="cpf" type="text" placeholder="cpf">
-            </div>
-            <div style="padding: 12px">
-                <p-dropdown [options]="perfils" formControlName="profile" placeholder="Selecione um perfil" [showClear]="true"></p-dropdown>
+
+            <div class="ui-g-12">
+                <div class="ui-g-12">
+                    <button pButton type="submit" label="Salvar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit"></button>
+                </div>
             </div>
         </div>
-        <div style="padding: 12px">
-            <input pButton type="submit" value="Salvar" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
-        </div>
-        <div style="padding: 12px" *ngIf="this.form.value.id">
-            <input pButton type="button" (click)="salvarBiometria()" value="Salvar Biometria" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || submit">
-        </div>
+
     </form>
-</div>
+</p-card>
 
